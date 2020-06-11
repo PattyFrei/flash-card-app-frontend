@@ -1,6 +1,4 @@
 name: Build and Deploy
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: 
@@ -12,11 +10,16 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1 # this installs node and npm
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Node # this installs node and npm
+      uses: actions/setup-node@v1 
       with:
         node-version: '12.x'
-    - uses: actions/cache@v2 # this allows for re-using node_modules caching, making builds a bit faster.
+    
+    - name: Cache # this allows for re-using node_modules caching, making builds a bit faster.
+      uses: actions/cache@v2 
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -32,5 +35,6 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BASE_BRANCH: master
         BRANCH: gh-pages
         FOLDER: dist/flashcard-app-frontend
