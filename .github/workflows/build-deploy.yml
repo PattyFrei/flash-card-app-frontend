@@ -13,11 +13,11 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout
-      uses: actions/checkout@v2
-      uses: actions/setup-node@v2 # this installs node and npm
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2 # this installs node and npm
       with:
         node-version: '12.x'
-      uses: actions/cache@v2 # this allows for re-using node_modules caching, making builds a bit faster.
+    - uses: actions/cache@v2 # this allows for re-using node_modules caching, making builds a bit faster.
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
