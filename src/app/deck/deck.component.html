@@ -1,0 +1,15 @@
+<h2>Mein Fragenkatalog</h2>
+
+<p>Dieser Fragenkatalog hat {{ cards.length }} Fragen.</p>
+
+<ul class="cards">
+  <li
+    *ngFor="let card of cards; index as i"
+    [class.selected]="card === selectedCard"
+    (click)="onSelect(card)"
+  >
+    <span class="question">{{ i + 1 }}. </span>{{ card.question }}
+  </li>
+</ul>
+
+<app-card [card]="selectedCard"></app-card>
