@@ -9,22 +9,22 @@ export const CARDS: Card[] = [
       {
         id: '497a2402',
         correctAnswer: false,
-        text: 'adfaf',
+        text: '55',
       },
       {
         id: '794a941e',
         correctAnswer: true,
-        text: 'adfaf',
+        text: '25',
       },
       {
         id: 'c9dd252b',
         correctAnswer: false,
-        text: 'adfaf',
+        text: '10',
       },
       {
         id: 'bd08e312',
         correctAnswer: false,
-        text: 'adfaf',
+        text: '20',
       },
     ],
   },
@@ -36,22 +36,22 @@ export const CARDS: Card[] = [
       {
         id: '497a2402',
         correctAnswer: false,
-        text: 'adfaf',
+        text: '33',
       },
       {
         id: '794a941e',
         correctAnswer: true,
-        text: 'adfaf',
+        text: '9',
       },
       {
         id: 'c9dd252b',
         correctAnswer: false,
-        text: 'adfaf',
+        text: '13',
       },
       {
         id: 'bd08e312',
         correctAnswer: false,
-        text: 'adfaf',
+        text: '30',
       },
     ],
   },
