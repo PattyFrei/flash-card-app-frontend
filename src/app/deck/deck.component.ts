@@ -21,7 +21,10 @@ export class DeckComponent implements OnInit {
   } // hock method, fetch data here
 
   getCards(): void {
-    this.cards = this.deckService.getCards();
+    // subscribe() passes the emitted array to the callback,
+    // which sets the component's cards property
+    this.deckService.getCards().subscribe((cards) => (this.cards = cards));
+    // this.cards = this.deckService.getCards();
   }
 
   onSelect(card: Card): void {
