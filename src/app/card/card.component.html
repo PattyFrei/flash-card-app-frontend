@@ -1,0 +1,14 @@
+<div *ngIf="card">
+  <h2>Ausgewählte Frage</h2>
+  <p>{{ card.question }}</p>
+
+  <ul class="cards">
+    <li
+      *ngFor="let answer of card.answers; index as i"
+      [class.selected]="answer === selectedAnswer"
+      (click)="onSelect(answer)"
+    >
+      <span class="answer">{{ i + 1 }}. </span>{{ answer.text }}
+    </li>
+  </ul>
+</div>
