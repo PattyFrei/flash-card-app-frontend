@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Card } from './../card/card';
-import { CARDS } from './../card/mock-cards';
+import { DeckService } from './../deck.service';
 
 @Component({
   selector: 'app-deck',
@@ -8,12 +8,21 @@ import { CARDS } from './../card/mock-cards';
   styleUrls: ['./deck.component.scss'],
 })
 export class DeckComponent implements OnInit {
-  cards = CARDS;
   selectedCard: Card;
+  cards: Card[];
 
-  constructor() {}
+  constructor(private deckService: DeckService) {
+    // init local variables with values
+    // wire parameters to props
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getCards();
+  } // hock method, fetch data here
+
+  getCards(): void {
+    this.cards = this.deckService.getCards();
+  }
 
   onSelect(card: Card): void {
     this.selectedCard = card;
