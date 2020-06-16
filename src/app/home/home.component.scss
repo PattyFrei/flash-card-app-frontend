@@ -1,0 +1,50 @@
+div.catalogue-table {
+  border: 0px solid #c8e1ff;
+  background-color: #ffffff;
+  width: 90%;
+  text-align: left;
+  border-collapse: collapse;
+}
+.divTable.catalogue-table .divTableCell,
+.divTable.catalogue-table .divTableHead {
+  border: 1px solid #d3d3d3;
+  padding: 6px 6px;
+}
+.divTable.catalogue-table .divTableBody .divTableCell {
+  font-size: 13px;
+  color: #24292e;
+}
+.divTable.catalogue-table .divTableRow:nth-child(even) {
+  background: #f8f8f8;
+}
+.divTable.catalogue-table .divTableHeading {
+  background: #f1f8ff;
+}
+.divTable.catalogue-table .divTableHeading .divTableHead {
+  font-size: 15px;
+  font-weight: normal;
+  color: #24292e;
+  text-align: center;
+}
+.divTable {
+  display: table;
+}
+.divTableRow {
+  display: table-row;
+}
+.divTableHeading {
+  display: table-header-group;
+}
+.divTableCell,
+.divTableHead {
+  display: table-cell;
+}
+.divTableHeading {
+  display: table-header-group;
+}
+.divTableFoot {
+  display: table-footer-group;
+}
+.divTableBody {
+  display: table-row-group;
+}
