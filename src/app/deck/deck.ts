@@ -6,5 +6,5 @@ export interface Deck {
   topic: string;
   course?: string;
   author: string;
-  questions: Card[];
+  questions?: Card[];
 }
