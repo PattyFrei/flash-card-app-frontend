@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-// import { Card } from './card/card';
-// import { CARDS } from './card/mock-cards';
 import { Deck } from './deck/deck';
-// import { DECKS } from './deck/mock-decks';
 import { Observable, throwError, of } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
@@ -12,14 +9,6 @@ import { catchError } from 'rxjs/operators';
 })
 export class DeckService {
   constructor(private httpClient: HttpClient) {}
-
-  // getCards(): Observable<Card[]> {
-  //   return of(CARDS);
-  // }
-
-  // getDecks(): Observable<Deck[]> {
-  //   return of(DECKS);
-  // }
 
   getDecks(): Observable<Deck[]> {
     return this.httpClient
