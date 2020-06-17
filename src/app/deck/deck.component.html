@@ -1,10 +1,10 @@
 <h2>Mein Fragenkatalog</h2>
 
-<p>Dieser Fragenkatalog hat {{ cards.length }} Fragen.</p>
+<p>Dieser Fragenkatalog hat {{ deck.questions.length }} Fragen.</p>
 
 <ul class="cards">
   <li
-    *ngFor="let card of cards; index as i"
+    *ngFor="let card of deck.questions; index as i"
     [class.selected]="card === selectedCard"
     (click)="onSelect(card)"
   >

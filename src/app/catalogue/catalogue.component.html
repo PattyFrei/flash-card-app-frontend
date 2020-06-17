@@ -1,0 +1,26 @@
+<h3>Öffentliche Fragenkataloge</h3>
+
+<div class="divTable catalogue-table">
+  <div class="divTableHeading">
+    <div class="divTableRow">
+      <div class="divTableHead">Name</div>
+      <div class="divTableHead">Thema</div>
+      <div class="divTableHead">Kurs</div>
+      <div class="divTableHead">Autor</div>
+    </div>
+  </div>
+  <div class="divTableBody">
+    <a
+      class="divTableRow"
+      *ngFor="let deck of decks"
+      [class.selected]="deck === selectedDeck"
+      (click)="onSelect(deck)"
+      routerLink="/deck"
+    >
+      <div class="divTableCell">{{ deck.name }}</div>
+      <div class="divTableCell">{{ deck.topic }}</div>
+      <div class="divTableCell">{{ deck.course }}</div>
+      <div class="divTableCell">{{ deck.author }}</div>
+    </a>
+  </div>
+</div>
