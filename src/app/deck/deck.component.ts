@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Card } from './../card/card';
+import { Deck } from './deck';
 import { DeckService } from './../deck.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { DeckService } from './../deck.service';
 })
 export class DeckComponent implements OnInit {
   selectedCard: Card;
-  cards: Card[];
+  // cards: Card[];
+  deck: Deck;
 
   constructor(private deckService: DeckService) {
     // init local variables with values
@@ -17,15 +19,12 @@ export class DeckComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCards();
-  } // hock method, fetch data here
-
-  getCards(): void {
     // subscribe() passes the emitted array to the callback,
     // which sets the component's cards property
-    this.deckService.getCards().subscribe((cards) => (this.cards = cards));
-    // this.cards = this.deckService.getCards();
-  }
+    this.deckService
+      .getDeck(this.deck.id)
+      .subscribe((deck) => (this.deck = deck));
+  } // hock method, fetch data here
 
   onSelect(card: Card): void {
     this.selectedCard = card;

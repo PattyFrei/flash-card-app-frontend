@@ -1,24 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { CatalogueComponent } from './catalogue/catalogue.component';
 import { CardComponent } from './card/card.component';
 import { DeckComponent } from './deck/deck.component';
+import { httpInterceptorProviders } from './http-interseptors/index';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    CatalogueComponent,
     CardComponent,
-    DeckComponent
+    DeckComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  providers: [httpInterceptorProviders],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

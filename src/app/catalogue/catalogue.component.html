@@ -1,0 +1,27 @@
+<h3>Öffentliche Fragenkataloge</h3>
+
+<table *ngIf="isDataLoaded">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Thema</th>
+      <th>Kurs</th>
+      <th>Autor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let deck of decks"
+      (click)="onSelect(deck)"
+      routerLink="/deck/{{ deck.id }}"
+    >
+      <td>{{ deck.name }}</td>
+      <td>{{ deck.topic }}</td>
+      <td>{{ deck.course }}</td>
+      <td>{{ deck.author }}</td>
+    </tr>
+  </tbody>
+</table>
+<!-- (click)="onSelect(deck)" 
+      [class.selected]="deck.id === selectedDeck?.id"
+-->
