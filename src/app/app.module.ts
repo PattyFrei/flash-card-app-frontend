@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
 import { CardComponent } from './card/card.component';
 import { DeckComponent } from './deck/deck.component';
-import { NoopInterceptor } from './http.interceptor';
+import { httpInterceptorProviders } from './http-interseptors/index';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { NoopInterceptor } from './http.interceptor';
     DeckComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
-  providers: [NoopInterceptor],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
