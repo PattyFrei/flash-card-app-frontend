@@ -1,27 +1,27 @@
 <h3>Öffentliche Fragenkataloge</h3>
 
-<div class="divTable catalogue-table">
-  <div class="divTableHeading">
-    <div class="divTableRow">
-      <div class="divTableHead">Name</div>
-      <div class="divTableHead">Thema</div>
-      <div class="divTableHead">Kurs</div>
-      <div class="divTableHead">Autor</div>
-    </div>
-  </div>
-  <div class="divTableBody">
-    <a
-      class="divTableRow"
+<table *ngIf="isDataLoaded">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Thema</th>
+      <th>Kurs</th>
+      <th>Autor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
       *ngFor="let deck of decks"
-      [class.selected]="deck.id === selectedDeck?.id"
+      (click)="onSelect(deck)"
       routerLink="/deck/{{ deck.id }}"
     >
-      <div class="divTableCell">{{ deck.name }}</div>
-      <div class="divTableCell">{{ deck.topic }}</div>
-      <div class="divTableCell">{{ deck.course }}</div>
-      <div class="divTableCell">{{ deck.author }}</div>
-    </a>
-  </div>
-</div>
-
-<!-- (click)="onSelect(deck)" -->
+      <td>{{ deck.name }}</td>
+      <td>{{ deck.topic }}</td>
+      <td>{{ deck.course }}</td>
+      <td>{{ deck.author }}</td>
+    </tr>
+  </tbody>
+</table>
+<!-- (click)="onSelect(deck)" 
+      [class.selected]="deck.id === selectedDeck?.id"
+-->

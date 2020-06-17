@@ -9,20 +9,28 @@ import { DeckService } from '../deck.service';
 })
 export class CatalogueComponent implements OnInit {
   decks: Deck[];
-  selectedDeck: Deck;
-  selectedId: string;
+  // decksObs: Observable<Deck[]>;
+  selectedDeckId: string;
+  isLoading = false;
+
+  get isDataLoaded(): boolean {
+    return this.decks !== undefined;
+  }
 
   constructor(private deckService: DeckService) {}
 
   ngOnInit() {
-    this.decks = this.getDecks();
+    this.isLoading = true;
+    this.deckService.getDecks().subscribe((decks) => this.dataLoaded(decks));
+    // this.decksObs = this.deckService.getDecks();
   }
 
-  getDecks(): any {
-    this.deckService.getDecks().subscribe((decks) => (this.decks = decks));
+  private dataLoaded(decks: Deck[]): void {
+    this.isLoading = false;
+    this.decks = decks;
   }
 
   onSelect(deck: Deck): void {
-    this.selectedId = deck.id;
+    this.selectedDeckId = deck.id;
   }
 }

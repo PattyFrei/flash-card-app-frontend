@@ -1,50 +1,48 @@
-div.catalogue-table {
+table {
   border: 0px solid #c8e1ff;
   background-color: #ffffff;
-  width: 90%;
+  width: 100%;
+  max-width: 600px;
   text-align: left;
   border-collapse: collapse;
 }
-.divTable.catalogue-table .divTableCell,
-.divTable.catalogue-table .divTableHead {
+table td,
+table th {
   border: 1px solid #d3d3d3;
   padding: 6px 6px;
 }
-.divTable.catalogue-table .divTableBody .divTableCell {
+table tbody td {
   font-size: 13px;
   color: #24292e;
 }
-.divTable.catalogue-table .divTableRow:nth-child(even) {
+table tr:nth-child(even) {
   background: #f8f8f8;
 }
-.divTable.catalogue-table .divTableHeading {
+table thead {
   background: #f1f8ff;
 }
-.divTable.catalogue-table .divTableHeading .divTableHead {
+table thead th {
   font-size: 15px;
   font-weight: normal;
   color: #24292e;
   text-align: center;
 }
-.divTable {
+table {
   display: table;
 }
-.divTableRow {
+tr {
   display: table-row;
 }
-.divTableHeading {
+thead {
   display: table-header-group;
 }
-.divTableCell,
-.divTableHead {
+td,
+th {
   display: table-cell;
 }
-.divTableHeading {
+thead {
   display: table-header-group;
 }
-.divTableFoot {
-  display: table-footer-group;
-}
-.divTableBody {
+tbody {
   display: table-row-group;
 }
