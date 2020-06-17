@@ -13,9 +13,8 @@
     <a
       class="divTableRow"
       *ngFor="let deck of decks"
-      [class.selected]="deck === selectedDeck"
-      (click)="onSelect(deck)"
-      routerLink="/deck"
+      [class.selected]="deck.id === selectedDeck?.id"
+      routerLink="/deck/{{ deck.id }}"
     >
       <div class="divTableCell">{{ deck.name }}</div>
       <div class="divTableCell">{{ deck.topic }}</div>
@@ -24,3 +23,5 @@
     </a>
   </div>
 </div>
+
+<!-- (click)="onSelect(deck)" -->

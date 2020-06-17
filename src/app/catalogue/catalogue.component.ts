@@ -14,11 +14,11 @@ export class CatalogueComponent implements OnInit {
 
   constructor(private deckService: DeckService) {}
 
-  ngOnInit(): void {
-    this.getDecks();
+  ngOnInit() {
+    this.decks = this.getDecks();
   }
 
-  getDecks(): void {
+  getDecks(): any {
     this.deckService.getDecks().subscribe((decks) => (this.decks = decks));
   }
 
