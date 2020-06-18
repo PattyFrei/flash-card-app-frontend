@@ -1,4 +1,8 @@
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
+
 import { Card } from './../card/card';
 import { Deck } from './deck';
 import { DeckService } from './../deck.service';
@@ -10,23 +14,37 @@ import { DeckService } from './../deck.service';
 })
 export class DeckComponent implements OnInit {
   selectedCard: Card;
-  // cards: Card[];
-  deck: Deck;
+  isLoading = false;
+  deck$: Observable<Deck>;
 
-  constructor(private deckService: DeckService) {
+  constructor(
+    private deckService: DeckService,
+    private location: Location, // enables navigation back
+    private route: ActivatedRoute, // extracts param from URL
+    private router: Router
+  ) {
     // init local variables with values
     // wire parameters to props
   }
 
   ngOnInit(): void {
-    // subscribe() passes the emitted array to the callback,
-    // which sets the component's cards property
-    this.deckService
-      .getDeck(this.deck.id)
-      .subscribe((deck) => (this.deck = deck));
+    const id = this.route.snapshot.paramMap.get('id');
+    this.deck$ = this.deckService.getDeck(id);
+    console.log(this.deck$);
   } // hock method, fetch data here
 
-  onSelect(card: Card): void {
-    this.selectedCard = card;
+  // gotoDecks(deck: Deck) {
+  //   const deckId = deck ? deck.id : null;
+  //   // Pass along the item id if available
+  //   // so that the Catalogue component can select that item.
+  //   this.router.navigate(['/catalogue', { id: deckId }]);
+  // }
+
+  // onSelect(card: Card): void {
+  //   this.selectedCard = card;
+  // }
+
+  goBack(): void {
+    this.location.back();
   }
 }

@@ -1,10 +1,11 @@
 import { Card } from './../card/card';
 
 export interface Deck {
-  id: string;
+  _id?: string;
+  id?: string;
   name: string;
   topic: string;
-  course?: string;
+  course: string;
   author: string;
-  questions?: Card[];
+  questions: Card[];
 }

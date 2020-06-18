@@ -5,8 +5,8 @@ import { CatalogueComponent } from './catalogue/catalogue.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/catalogue', pathMatch: 'full' },
-  { path: 'deck', component: DeckComponent },
   { path: 'catalogue', component: CatalogueComponent },
+  { path: 'deck/:id', component: DeckComponent },
 ];
 
 @NgModule({

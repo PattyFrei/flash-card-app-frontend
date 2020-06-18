@@ -18,7 +18,7 @@ export class DeckService {
 
   getDeck(id: string): Observable<Deck> {
     return this.httpClient
-      .get<Deck>(`deck/${id}`)
+      .get<Deck>(`decks/${id}`)
       .pipe(catchError(this.handleError));
   }
 
