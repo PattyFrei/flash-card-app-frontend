@@ -15,7 +15,7 @@ table tbody td {
   font-size: 13px;
   color: #24292e;
 }
-table tr:nth-child(even) {
+table .clickable-tr:nth-child(even) {
   background: #f8f8f8;
 }
 table thead {
@@ -30,7 +30,8 @@ table thead th {
 table {
   display: table;
 }
-tr {
+tr,
+.clickable-tr {
   display: table-row;
 }
 thead {
@@ -45,4 +46,7 @@ thead {
 }
 tbody {
   display: table-row-group;
+}
+a {
+  text-decoration: none;
 }

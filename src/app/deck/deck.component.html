@@ -1,15 +1,50 @@
-<h2>Mein Fragenkatalog</h2>
+<div *ngIf="deck$ | async as deck">
+  <h2>Ausgewählter Fragenkatalog: {{ deck.name }}</h2>
 
-<p>Dieser Fragenkatalog hat {{ deck.questions.length }} Fragen.</p>
+  <table class="deck-details">
+    <tbody>
+      <tr>
+        <th>Titel</th>
+        <td>{{ deck.name }}</td>
+      </tr>
+      <tr>
+        <th>Thema</th>
+        <td>{{ deck.topic }}</td>
+      </tr>
+      <tr>
+        <th>Fachgebiet</th>
+        <td>...</td>
+      </tr>
+      <tr>
+        <th>Autor</th>
+        <td>{{ deck.author }}</td>
+      </tr>
+      <tr>
+        <th>Kurs</th>
+        <td>{{ deck.course }}</td>
+      </tr>
+      <tr>
+        <th>Semster</th>
+        <td>...</td>
+      </tr>
+      <tr>
+        <th>Schwierigkeitsgrad</th>
+        <td>Anfänger/ Fortgeschritten/ Experte/ Prüfungsvorbereitung</td>
+      </tr>
+      <tr>
+        <th>Anzahl der Fragen</th>
+        <td>{{ deck.questions.length }}</td>
+      </tr>
+    </tbody>
+  </table>
 
-<ul class="cards">
-  <li
-    *ngFor="let card of deck.questions; index as i"
-    [class.selected]="card === selectedCard"
-    (click)="onSelect(card)"
-  >
-    <span class="question">{{ i + 1 }}. </span>{{ card.question }}
-  </li>
-</ul>
+  <p>Fragen:</p>
 
-<app-card [card]="selectedCard"></app-card>
+  <ul class="cards">
+    <li *ngFor="let question of deck.questions; index as i">
+      <span class="question">{{ i + 1 }}. </span>{{ question.question }}
+    </li>
+  </ul>
+  <button routerLink="/quiz">Start Quiz</button>
+</div>
+<button (click)="goBack()">Zurück</button>

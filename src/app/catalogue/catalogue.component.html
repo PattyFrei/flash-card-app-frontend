@@ -10,18 +10,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr
+    <a
+      class="clickable-tr"
       *ngFor="let deck of decks"
-      (click)="onSelect(deck)"
       routerLink="/deck/{{ deck.id }}"
     >
       <td>{{ deck.name }}</td>
       <td>{{ deck.topic }}</td>
       <td>{{ deck.course }}</td>
       <td>{{ deck.author }}</td>
-    </tr>
+    </a>
   </tbody>
 </table>
-<!-- (click)="onSelect(deck)" 
-      [class.selected]="deck.id === selectedDeck?.id"
--->
