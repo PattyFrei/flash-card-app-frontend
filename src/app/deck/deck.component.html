@@ -1,4 +1,5 @@
-<div *ngIf="deck$ | async as deck">
+<!-- <div *ngIf="deck$ | async as deck"> -->
+<div *ngIf="isDataLoaded">
   <h2>Ausgewählter Fragenkatalog: {{ deck.name }}</h2>
 
   <table class="deck-details">
@@ -38,13 +39,8 @@
     </tbody>
   </table>
 
-  <p>Fragen:</p>
-
-  <ul class="cards">
-    <li *ngFor="let question of deck.questions; index as i">
-      <span class="question">{{ i + 1 }}. </span>{{ question.question }}
-    </li>
-  </ul>
-  <button routerLink="/quiz">Start Quiz</button>
+  <p>
+    <button routerLink="/quiz/{{ deck._id }}">Start Quiz</button>
+    <button (click)="goBack()">Zurück</button>
+  </p>
 </div>
-<button (click)="goBack()">Zurück</button>
