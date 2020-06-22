@@ -12,7 +12,7 @@ https://bapaha.github.io/flashcard-app-frontend/
 - Check version with `node -v` and `npm -v` command in console
 - Clone this repo with `git clone <url>` in console
 - Type `cd flashcard-app-frontend` and then `npm install`
-- Run `ng serve` for a dev server
+- Run `git checkout dev` and then `ng serve` for a dev server
 - Navigate to `http://localhost:4200/`
 - The app will automatically reload if you change any of the source files
 
