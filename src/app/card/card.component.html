@@ -1,14 +1,29 @@
-<div *ngIf="card">
-  <h2>Ausgewählte Frage</h2>
-  <p>{{ card.question }}</p>
+<div *ngIf="isDataLoaded">
+  <h2>Frage {{ currentCardIndex }} von {{ deck.questions.length }}</h2>
+  <p>{{ currentCard.question }}</p>
 
   <ul class="cards">
     <li
-      *ngFor="let answer of card.answers; index as i"
+      *ngFor="let answer of currentCard.answers; index as i"
       [class.selected]="answer === selectedAnswer"
       (click)="onSelect(answer)"
     >
       <span class="answer">{{ i + 1 }}. </span>{{ answer.text }}
     </li>
   </ul>
+  <button (click)="onCheck()" [disabled]="!toggleCheck">Überprüfen</button>
+  <button (click)="onNext()" [disabled]="!toggleNext">
+    Nächste Frage
+  </button>
+  <div *ngIf="toggleExplanation">Leider ist die Antwort nicht richtig.</div>
+</div>
+
+<div *ngIf="isQuizCompleted">
+  <p>Glückwunsch, du hast den Fragenkatalog abgeschlossen!</p>
+  <p>
+    Du hast {{ totalCorrectAnswers }} von {{ deck.questions.length }} richtig
+    beantwortet!
+  </p>
+  <button routerLink="/deck/{{ deck._id }}">Quiz erneut starten</button>
+  <button routerLink="/catalogue">Zurück zu den Fragenkatalogen</button>
 </div>
