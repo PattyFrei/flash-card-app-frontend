@@ -15,9 +15,6 @@ table tbody td {
   font-size: 13px;
   color: #24292e;
 }
-table .clickable-tr:nth-child(even) {
-  background: #f8f8f8;
-}
 table thead {
   background: #f1f8ff;
 }
@@ -33,6 +30,9 @@ table {
 tr,
 .clickable-tr {
   display: table-row;
+}
+.clickable-tr:hover {
+  background-color: #cdf1ff;
 }
 thead {
   display: table-header-group;
