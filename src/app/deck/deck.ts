@@ -1,8 +1,7 @@
 import { Card } from './../card/card';
 
 export interface Deck {
-  _id?: string;
-  id?: string;
+  id: string;
   name: string;
   topic: string;
   course: string;
