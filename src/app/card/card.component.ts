@@ -11,13 +11,15 @@ import { DeckService } from '../deck.service';
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent implements OnInit {
+  answerResultColor: string;
   currentCard: Card;
   currentCardIndex = 0;
   deck: Deck;
+  explanationText: string;
   isLoading = false;
+  questionTypeText: string;
   selectedAnswer: Answer;
   toggleCheck = false;
-  toggleExplanation = false;
   toggleResults = false;
   toggleNext = false;
   totalCorrectAnswers = 0;
@@ -41,35 +43,58 @@ export class CardComponent implements OnInit {
     this.deckService.getDeck(id).subscribe((deck) => this.dataLoaded(deck));
   }
 
-  onSelect(answer: Answer): void {
-    this.selectedAnswer = answer;
-    this.toggleCheck = true;
-  }
-
   onCheck(): void {
     if (this.selectedAnswer.correctAnswer) {
-      // mark answer with green
+      this.answerResultColor = 'isCorrect';
+      this.setExplanationText(true);
       this.totalCorrectAnswers++;
     } else {
-      // mark answer with red and show explanation text
-      this.toggleExplanation = true;
+      this.answerResultColor = 'isWrong';
+      this.setExplanationText(false);
     }
     this.toggleNext = true;
     this.toggleCheck = false;
+  }
+
+  onNext(): void {
+    if (this.currentCardIndex < this.deck.questions.length) {
+      this.setCurrentCard();
+      this.explanationText = '';
+      this.answerResultColor = '';
+    } else {
+      this.toggleResults = true;
+    }
+  }
+
+  onSelect(answer: Answer): void {
+    this.selectedAnswer = answer;
+    this.toggleCheck = true;
   }
 
   setCurrentCard(): void {
     this.toggleNext = false;
     this.currentCard = this.deck.questions[this.currentCardIndex];
     this.currentCardIndex++;
+    this.setQuestionTypeText();
   }
 
-  onNext(): void {
-    if (this.currentCardIndex < this.deck.questions.length) {
-      this.setCurrentCard();
-      this.toggleExplanation = false;
+  setExplanationText(result: boolean): void {
+    if (result) {
+      this.explanationText = 'Die Antwort ist richtig!';
     } else {
-      this.toggleResults = true;
+      // refactor with text from db
+      this.explanationText = 'Leider ist die Antwort nicht richtig.';
+    }
+  }
+
+  setQuestionTypeText(): void {
+    if (this.currentCard.questionType === 'single-choice') {
+      this.questionTypeText = 'Wählen Sie eine Antwort aus.';
+    } else if (this.currentCard.questionType === 'multiple-choice') {
+      this.questionTypeText =
+        'Wählen Sie eine oder mehrere richtige Antworten aus.';
+    } else {
+      this.questionTypeText = 'Geben Sie eine Antwort ein.';
     }
   }
 
