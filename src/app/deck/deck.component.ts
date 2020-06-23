@@ -1,6 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 
 import { Card } from './../card/card';
 import { Deck } from './deck';
@@ -22,7 +21,6 @@ export class DeckComponent implements OnInit {
 
   constructor(
     private deckService: DeckService,
-    private location: Location, // enables navigation back
     private route: ActivatedRoute // extracts param from URL
   ) {
     // init local variables with values
@@ -38,9 +36,5 @@ export class DeckComponent implements OnInit {
   private dataLoaded(deck: Deck): void {
     this.isLoading = false;
     this.deck = deck;
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 }

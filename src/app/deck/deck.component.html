@@ -1,4 +1,3 @@
-<!-- <div *ngIf="deck$ | async as deck"> -->
 <div *ngIf="isDataLoaded">
   <h2>Ausgewählter Fragenkatalog: {{ deck.name }}</h2>
 
@@ -41,6 +40,6 @@
 
   <p>
     <button routerLink="/quiz/{{ deck._id }}">Start Quiz</button>
-    <button (click)="goBack()">Zurück</button>
+    <button routerLink="/catalogue">Zurück</button>
   </p>
 </div>
