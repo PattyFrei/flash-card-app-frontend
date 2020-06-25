@@ -39,7 +39,11 @@
   </table>
 
   <p>
-    <button routerLink="/quiz/{{ deck.id }}">Start Quiz</button>
-    <button routerLink="/catalogue">Zurück</button>
+    <button mat-flat-button color="primary" routerLink="/quiz/{{ deck.id }}">
+      Start Quiz
+    </button>
+    <button mat-flat-button routerLink="/catalogue">
+      Zurück
+    </button>
   </p>
 </div>
