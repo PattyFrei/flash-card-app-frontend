@@ -7,10 +7,13 @@ import { AppComponent } from './app.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
 import { CardComponent } from './card/card.component';
 import { DeckComponent } from './deck/deck.component';
+// import { SortedTableComponent } from './shared/sortedTable.component';
 import { httpInterceptorProviders } from './http-interseptors/index';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     BrowserAnimationsModule,
     MatButtonModule,
     MatProgressBarModule,
+    MatTableModule,
+    MatDividerModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

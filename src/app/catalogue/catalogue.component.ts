@@ -9,6 +9,7 @@ import { DeckService } from '../deck.service';
   styleUrls: ['./catalogue.component.scss'],
 })
 export class CatalogueComponent implements OnInit {
+  columnsToDisplay = ['name', 'topic', 'course', 'author'];
   decks: Deck[];
   isLoading = false;
   selectedId: string;
