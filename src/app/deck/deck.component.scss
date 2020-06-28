@@ -3,7 +3,6 @@ table {
   border: 0px solid #c8e1ff;
   background-color: #ffffff;
   width: 100%;
-  max-width: 600px;
   text-align: left;
   border-collapse: collapse;
 }
@@ -101,4 +100,18 @@ a {
 
 button {
   margin: 15px 10px 15px 0;
+}
+
+.icon {
+  padding: 0 14px;
+  margin: 0;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.button-row {
+  width: 100%;
+  display: flex;
 }

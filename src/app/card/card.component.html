@@ -1,4 +1,4 @@
-<div *ngIf="isDataLoaded">
+<div class="content-container" *ngIf="isDataLoaded">
   <mat-progress-bar
     mode="determinate"
     value="{{ currentCardIndex * 10 }}"
@@ -46,7 +46,8 @@
   </button>
 </div>
 
-<div *ngIf="isQuizCompleted">
+<div class="content-container" *ngIf="isQuizCompleted">
+  <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
   <p>Du hast den Fragenkatalog abgeschlossen.</p>
   <p>
     Du hast {{ totalCorrectAnswers }} von {{ deck.questions.length }} richtig
