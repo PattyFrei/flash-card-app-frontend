@@ -1,57 +1,168 @@
-<h3>Öffentliche Fragenkataloge</h3>
+<div class="content-container">
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Öffentliche Kataloge">
+      <h3>Beliebte Fragenkataloge</h3>
 
-<table *ngIf="isDataLoaded">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Thema</th>
-      <th>Kurs</th>
-      <th>Autor</th>
-    </tr>
-  </thead>
-  <tbody>
-    <a
-      class="clickable-tr"
-      *ngFor="let deck of decks"
-      routerLink="/deck/{{ deck.id }}"
-    >
-      <td>{{ deck.name }}</td>
-      <td>{{ deck.topic }}</td>
-      <td>{{ deck.course }}</td>
-      <td>{{ deck.author }}</td>
-    </a>
-  </tbody>
-</table>
+      <!-- <table *ngIf="isDataLoaded">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Thema</th>
+            <th>Kurs</th>
+            <th>Autor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <a
+            class="clickable-tr"
+            *ngFor="let deck of decks"
+            routerLink="/deck/{{ deck.id }}"
+          >
+            <td>{{ deck.name }}</td>
+            <td>{{ deck.topic }}</td>
+            <td>{{ deck.course }}</td>
+            <td>{{ deck.author }}</td>
+          </a>
+        </tbody>
+      </table>
 
-<mat-divider></mat-divider>
+      <mat-divider></mat-divider> -->
 
-<table mat-table [dataSource]="decks" class="mat-elevation-z4">
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Titel</th>
-    <td mat-cell *matCellDef="let deck">{{ deck.name }}</td>
-  </ng-container>
+      <table mat-table [dataSource]="decks" class="mat-elevation-z2">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Titel</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.name }}</td>
+        </ng-container>
 
-  <ng-container matColumnDef="topic">
-    <th mat-header-cell *matHeaderCellDef>Thema</th>
-    <td mat-cell *matCellDef="let deck">{{ deck.topic }}</td>
-  </ng-container>
+        <ng-container matColumnDef="topic">
+          <th mat-header-cell color="primary" *matHeaderCellDef>Thema</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.topic }}</td>
+        </ng-container>
 
-  <ng-container matColumnDef="course">
-    <th mat-header-cell *matHeaderCellDef>Kurs</th>
-    <td mat-cell *matCellDef="let deck">{{ deck.course }}</td>
-  </ng-container>
+        <ng-container matColumnDef="course">
+          <th mat-header-cell *matHeaderCellDef>Kurs</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.course }}</td>
+        </ng-container>
 
-  <ng-container matColumnDef="author">
-    <th mat-header-cell *matHeaderCellDef>Autor</th>
-    <td mat-cell *matCellDef="let deck">{{ deck.author }}</td>
-  </ng-container>
+        <ng-container matColumnDef="author">
+          <th mat-header-cell *matHeaderCellDef>Autor</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.author }}</td>
+        </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr
-    mat-row
-    *matRowDef="let row; columns: columnsToDisplay"
-    routerLink="/deck/{{ row.id }}"
-  ></tr>
-</table>
+        <tr
+          mat-header-row
+          color="primary"
+          *matHeaderRowDef="columnsToDisplay"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: columnsToDisplay"
+          routerLink="/deck/{{ row.id }}"
+        ></tr>
+      </table>
+
+      <mat-divider></mat-divider>
+      <h3>Beliebte Fragenkataloge aus dem Fachgebiet XYZ</h3>
+      <table mat-table [dataSource]="decks" class="mat-elevation-z2">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Titel</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="topic">
+          <th mat-header-cell color="primary" *matHeaderCellDef>Thema</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.topic }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="course">
+          <th mat-header-cell *matHeaderCellDef>Kurs</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.course }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="author">
+          <th mat-header-cell *matHeaderCellDef>Autor</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.author }}</td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          color="primary"
+          *matHeaderRowDef="columnsToDisplay"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: columnsToDisplay"
+          routerLink="/deck/{{ row.id }}"
+        ></tr>
+      </table>
+    </mat-tab>
+
+    <mat-tab label="Meine Kataloge">
+      <h3>Meine erstellten Fragenkataloge</h3>
+
+      <table mat-table [dataSource]="decks" class="mat-elevation-z2">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Titel</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="topic">
+          <th mat-header-cell *matHeaderCellDef>Thema</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.topic }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="course">
+          <th mat-header-cell *matHeaderCellDef>Kurs</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.course }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="author">
+          <th mat-header-cell *matHeaderCellDef>Autor</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.author }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: columnsToDisplay"
+          routerLink="/deck/{{ row.id }}"
+        ></tr>
+      </table>
+
+      <mat-divider></mat-divider>
+
+      <h3>Meine Favoriten</h3>
+
+      <table mat-table [dataSource]="decks" class="mat-elevation-z2">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Titel</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="topic">
+          <th mat-header-cell *matHeaderCellDef>Thema</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.topic }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="course">
+          <th mat-header-cell *matHeaderCellDef>Kurs</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.course }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="author">
+          <th mat-header-cell *matHeaderCellDef>Autor</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.author }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: columnsToDisplay"
+          routerLink="/deck/{{ row.id }}"
+        ></tr>
+      </table>
+    </mat-tab>
+  </mat-tab-group>
+</div>
 
 <!-- <app-sorted-table [dataSource]="decks"></app-sorted-table> -->
