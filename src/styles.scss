@@ -1,8 +1,13 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #f7f7f7;
-  margin: 2em;
   font-family: 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
@@ -10,4 +15,8 @@ h1 {
   color: #1c4670;
   font-family: 'Abril Fatface', cursive;
   font-size: 250%;
+}
+
+.content-container {
+  margin: 2em;
 }
