@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 import { Deck } from '../deck/deck';
 import { DeckService } from '../deck.service';
@@ -8,27 +10,32 @@ import { DeckService } from '../deck.service';
   templateUrl: './catalogue.component.html',
   styleUrls: ['./catalogue.component.scss'],
 })
-export class CatalogueComponent implements OnInit {
+export class CatalogueComponent implements OnInit, AfterViewInit {
   columnsToDisplay = ['name', 'topic', 'course', 'author'];
-  decks: Deck[];
-  isLoading = false;
   selectedId: string;
+  decks = new MatTableDataSource<Deck>();
 
-  get isDataLoaded(): boolean {
-    return this.decks !== undefined;
-  }
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private deckService: DeckService) {}
 
   ngOnInit() {
-    this.isLoading = true;
     // subscribe() passes the emitted array to the callback,
     // which sets the component's deck property
-    this.deckService.getDecks().subscribe((decks) => this.dataLoaded(decks));
+    this.getAllDecks();
   }
 
-  private dataLoaded(decks: Deck[]): void {
-    this.isLoading = false;
-    this.decks = decks;
+  ngAfterViewInit(): void {
+    this.decks.sort = this.sort;
   }
+
+  getAllDecks(): void {
+    this.deckService.getDecks().subscribe((res) => {
+      this.decks.data = res as Deck[];
+    });
+  }
+
+  doFilter = (value: string) => {
+    this.decks.filter = value.trim().toLocaleLowerCase();
+  };
 }

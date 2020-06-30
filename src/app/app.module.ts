@@ -16,6 +16,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatTabsModule,
     MatToolbarModule,
     MatIconModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

@@ -2,7 +2,6 @@ table {
   border: 0px solid #c8e1ff;
   background-color: #ffffff;
   width: 100%;
-  // max-width: 600px;
   text-align: left;
   border-collapse: collapse;
 }
@@ -52,7 +51,6 @@ a {
 }
 mat-divider {
   margin: 20px 0;
-  max-width: 650px;
 }
 
 table.mat-table {
@@ -108,4 +106,14 @@ td.mat-cell:nth-child(3) {
 
 h3 {
   margin-top: 10px;
+}
+
+.form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.input-full-width {
+  width: 100%;
 }
