@@ -1,4 +1,4 @@
-<div *ngIf="isDataLoaded">
+<div class="content-container" *ngIf="isDataLoaded">
   <h2>Ausgewählter Fragenkatalog: {{ deck.name }}</h2>
 
   <table class="deck-details">
@@ -35,11 +35,32 @@
         <th>Anzahl der Fragen</th>
         <td>{{ deck.questions.length }}</td>
       </tr>
+      <tr>
+        <th>Beschreibung</th>
+        <td>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, quae
+          atque qui molestias iste excepturi! Asperiores, facilis? Perferendis
+          adipisci quia tempore, magnam numquam excepturi obcaecati libero
+          reiciendis, pariatur iste dolorem!
+        </td>
+      </tr>
     </tbody>
   </table>
 
-  <p>
-    <button routerLink="/quiz/{{ deck.id }}">Start Quiz</button>
-    <button routerLink="/catalogue">Zurück</button>
+  <p class="button-row">
+    <button mat-flat-button color="primary" routerLink="/quiz/{{ deck.id }}">
+      Start Quiz
+    </button>
+    <button mat-flat-button routerLink="/catalogue">
+      Zurück
+    </button>
+    <span class="spacer"></span>
+    <button
+      mat-icon-button
+      class="icon"
+      aria-label="icon-button with settings icon"
+    >
+      <mat-icon>favorite_border</mat-icon>
+    </button>
   </p>
 </div>

@@ -3,7 +3,6 @@ table {
   border: 0px solid #c8e1ff;
   background-color: #ffffff;
   width: 100%;
-  max-width: 600px;
   text-align: left;
   border-collapse: collapse;
 }
@@ -97,4 +96,21 @@ a {
   height: 1.8em;
   margin-right: 0.8em;
   border-radius: 4px 0 0 4px;
+}
+
+button {
+  margin: 15px 10px 15px 0;
+}
+
+.icon {
+  margin: 10px 10x;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.button-row {
+  width: 100%;
+  display: flex;
 }
