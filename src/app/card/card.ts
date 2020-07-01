@@ -7,7 +7,6 @@ export interface Card {
 }
 
 export interface Answer {
-  id: string;
   correctAnswer: boolean;
   text: string;
 }

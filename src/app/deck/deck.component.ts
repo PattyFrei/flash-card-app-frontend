@@ -1,5 +1,8 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+
 import { Card } from './../card/card';
+import { Deck } from './deck';
 import { DeckService } from './../deck.service';
 
 @Component({
@@ -9,25 +12,29 @@ import { DeckService } from './../deck.service';
 })
 export class DeckComponent implements OnInit {
   selectedCard: Card;
-  cards: Card[];
+  isLoading = false;
+  deck: Deck;
 
-  constructor(private deckService: DeckService) {
+  get isDataLoaded(): boolean {
+    return this.deck !== undefined;
+  }
+
+  constructor(
+    private deckService: DeckService,
+    private route: ActivatedRoute // extracts param from URL
+  ) {
     // init local variables with values
     // wire parameters to props
   }
 
   ngOnInit(): void {
-    this.getCards();
+    this.isLoading = true;
+    const id = this.route.snapshot.paramMap.get('id');
+    this.deckService.getDeck(id).subscribe((deck) => this.dataLoaded(deck));
   } // hock method, fetch data here
 
-  getCards(): void {
-    // subscribe() passes the emitted array to the callback,
-    // which sets the component's cards property
-    this.deckService.getCards().subscribe((cards) => (this.cards = cards));
-    // this.cards = this.deckService.getCards();
-  }
-
-  onSelect(card: Card): void {
-    this.selectedCard = card;
+  private dataLoaded(deck: Deck): void {
+    this.isLoading = false;
+    this.deck = deck;
   }
 }

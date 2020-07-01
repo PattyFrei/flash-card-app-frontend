@@ -1,7 +1,60 @@
+// Deck overview
+table {
+  border: 0px solid #c8e1ff;
+  background-color: #ffffff;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+table td,
+table th {
+  border: 1px solid #d3d3d3;
+  padding: 6px 6px;
+}
+table tbody td {
+  font-size: 13px;
+  color: #24292e;
+}
+table tr:nth-child(even) {
+  background: #f8f8f8;
+}
+table thead {
+  background: #f1f8ff;
+}
+table thead th {
+  font-size: 15px;
+  font-weight: normal;
+  color: #24292e;
+  text-align: center;
+}
+table {
+  display: table;
+}
+tr {
+  display: table-row;
+}
+thead {
+  display: table-header-group;
+}
+td,
+th {
+  display: table-cell;
+}
+thead {
+  display: table-header-group;
+}
+tbody {
+  display: table-row-group;
+}
+a {
+  text-decoration: none;
+}
+
+// Cards
 .cards {
   margin: 0 0 2em 0;
   list-style-type: none;
-  width: 15em;
+  width: 550px;
   padding: 0;
   color: white;
 }
@@ -43,4 +96,21 @@
   height: 1.8em;
   margin-right: 0.8em;
   border-radius: 4px 0 0 4px;
+}
+
+button {
+  margin: 15px 10px 15px 0;
+}
+
+.icon {
+  margin: 10px 10x;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.button-row {
+  width: 100%;
+  display: flex;
 }

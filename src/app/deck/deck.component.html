@@ -1,15 +1,66 @@
-<h2>Mein Fragenkatalog</h2>
+<div class="content-container" *ngIf="isDataLoaded">
+  <h2>Ausgewählter Fragenkatalog: {{ deck.name }}</h2>
 
-<p>Dieser Fragenkatalog hat {{ cards.length }} Fragen.</p>
+  <table class="deck-details">
+    <tbody>
+      <tr>
+        <th>Titel</th>
+        <td>{{ deck.name }}</td>
+      </tr>
+      <tr>
+        <th>Thema</th>
+        <td>{{ deck.topic }}</td>
+      </tr>
+      <tr>
+        <th>Fachgebiet</th>
+        <td>...</td>
+      </tr>
+      <tr>
+        <th>Autor</th>
+        <td>{{ deck.author }}</td>
+      </tr>
+      <tr>
+        <th>Kurs</th>
+        <td>{{ deck.course }}</td>
+      </tr>
+      <tr>
+        <th>Semster</th>
+        <td>...</td>
+      </tr>
+      <tr>
+        <th>Schwierigkeitsgrad</th>
+        <td>Anfänger/ Fortgeschritten/ Experte/ Prüfungsvorbereitung</td>
+      </tr>
+      <tr>
+        <th>Anzahl der Fragen</th>
+        <td>{{ deck.questions.length }}</td>
+      </tr>
+      <tr>
+        <th>Beschreibung</th>
+        <td>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, quae
+          atque qui molestias iste excepturi! Asperiores, facilis? Perferendis
+          adipisci quia tempore, magnam numquam excepturi obcaecati libero
+          reiciendis, pariatur iste dolorem!
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<ul class="cards">
-  <li
-    *ngFor="let card of cards; index as i"
-    [class.selected]="card === selectedCard"
-    (click)="onSelect(card)"
-  >
-    <span class="question">{{ i + 1 }}. </span>{{ card.question }}
-  </li>
-</ul>
-
-<app-card [card]="selectedCard"></app-card>
+  <p class="button-row">
+    <button mat-flat-button color="primary" routerLink="/quiz/{{ deck.id }}">
+      Start Quiz
+    </button>
+    <button mat-flat-button routerLink="/catalogue">
+      Zurück
+    </button>
+    <span class="spacer"></span>
+    <button
+      mat-icon-button
+      class="icon"
+      aria-label="icon-button with settings icon"
+    >
+      <mat-icon>favorite_border</mat-icon>
+    </button>
+  </p>
+</div>
