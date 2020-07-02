@@ -11,12 +11,12 @@ import { DeckService } from '../deck.service';
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent implements OnInit {
-  answerResultColor: string;
   currentCard: Card;
   currentCardIndex = 0;
   deck: Deck;
   explanationText: string;
   isLoading = false;
+  isDisabled = false;
   questionTypeText: string;
   selectedAnswer: Answer;
   toggleCheck = false;
@@ -43,15 +43,19 @@ export class CardComponent implements OnInit {
     this.deckService.getDeck(id).subscribe((deck) => this.dataLoaded(deck));
   }
 
+  onChange(answer: Answer): void {
+    this.selectedAnswer = answer;
+    this.toggleCheck = true;
+  }
+
   onCheck(): void {
     if (this.selectedAnswer.correctAnswer) {
-      this.answerResultColor = 'isCorrect';
       this.setExplanationText(true);
       this.totalCorrectAnswers++;
     } else {
-      this.answerResultColor = 'isWrong';
       this.setExplanationText(false);
     }
+    this.isDisabled = true;
     this.toggleNext = true;
     this.toggleCheck = false;
   }
@@ -60,15 +64,10 @@ export class CardComponent implements OnInit {
     if (this.currentCardIndex < this.deck.questions.length) {
       this.setCurrentCard();
       this.explanationText = '';
-      this.answerResultColor = '';
+      this.isDisabled = false;
     } else {
       this.toggleResults = true;
     }
-  }
-
-  onSelect(answer: Answer): void {
-    this.selectedAnswer = answer;
-    this.toggleCheck = true;
   }
 
   setCurrentCard(): void {
@@ -89,12 +88,12 @@ export class CardComponent implements OnInit {
 
   setQuestionTypeText(): void {
     if (this.currentCard.questionType === 'single-choice') {
-      this.questionTypeText = 'Wählen Sie eine Antwort aus.';
+      this.questionTypeText = 'Wählen Sie eine Antwort aus:';
     } else if (this.currentCard.questionType === 'multiple-choice') {
       this.questionTypeText =
-        'Wählen Sie eine oder mehrere richtige Antworten aus.';
+        'Wählen Sie eine oder mehrere richtige Antworten aus:';
     } else {
-      this.questionTypeText = 'Geben Sie eine Antwort ein.';
+      this.questionTypeText = 'Geben Sie eine Antwort ein:';
     }
   }
 
