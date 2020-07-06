@@ -5,7 +5,7 @@
   ></mat-progress-bar>
   <h2>Frage {{ currentCardIndex }} von {{ deck.questions.length }}</h2>
 
-  <p>{{ currentCard.question }}</p>
+  <p>{{ currentCard.questionText }}</p>
   <p>{{ questionTypeText }}</p>
 
   <ul class="cards">
@@ -24,7 +24,7 @@
       "
       (click)="onSelect(answer)"
     >
-      <span class="answer"> o </span>{{ answer.text }}
+      <span class="answer"> o </span>{{ answer.answerText }}
     </li>
   </ul>
   <p class="explanation-box">{{ explanationText }}</p>

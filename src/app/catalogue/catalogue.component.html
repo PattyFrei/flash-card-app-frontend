@@ -50,6 +50,11 @@
           <td mat-cell *matCellDef="let deck">{{ deck.topic }}</td>
         </ng-container>
 
+        <!-- <ng-container matColumnDef="subject">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Fachgebiet</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.subject }}</td>
+        </ng-container> -->
+
         <ng-container matColumnDef="course">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Kurs</th>
           <td mat-cell *matCellDef="let deck">{{ deck.course }}</td>
@@ -59,6 +64,11 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Autor</th>
           <td mat-cell *matCellDef="let deck">{{ deck.author }}</td>
         </ng-container>
+
+        <!-- <ng-container matColumnDef="creationDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Erstellt</th>
+          <td mat-cell *matCellDef="let deck">{{ deck.creationDate }}</td>
+        </ng-container> -->
 
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
         <tr
