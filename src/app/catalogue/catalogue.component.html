@@ -3,31 +3,6 @@
     <mat-tab label="Öffentliche Kataloge">
       <h3>Beliebte Fragenkataloge</h3>
 
-      <!-- <table *ngIf="isDataLoaded">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Thema</th>
-            <th>Kurs</th>
-            <th>Autor</th>
-          </tr>
-        </thead>
-        <tbody>
-          <a
-            class="clickable-tr"
-            *ngFor="let deck of decks"
-            routerLink="/deck/{{ deck.id }}"
-          >
-            <td>{{ deck.name }}</td>
-            <td>{{ deck.topic }}</td>
-            <td>{{ deck.course }}</td>
-            <td>{{ deck.author }}</td>
-          </a>
-        </tbody>
-      </table>
-
-      <mat-divider></mat-divider> -->
-
       <form class="form">
         <mat-form-field class="input-full-width">
           <input
@@ -67,7 +42,9 @@
 
         <ng-container matColumnDef="creationDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Erstellt</th>
-          <td mat-cell *matCellDef="let deck">{{ deck.creationDate }}</td>
+          <td mat-cell *matCellDef="let deck">
+            {{ deck.creationDate | date: 'dd.MM.yyyy' }}
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
@@ -80,49 +57,6 @@
     </mat-tab>
 
     <mat-tab label="Meine Kataloge">
-      <h3>Meine erstellten Fragenkataloge</h3>
-
-      <table mat-table [dataSource]="decks" class="mat-elevation-z2" matSort>
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Titel</th>
-          <td mat-cell *matCellDef="let deck">{{ deck.name }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="topic">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Thema</th>
-          <td mat-cell *matCellDef="let deck">{{ deck.topic }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="subject">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Fachgebiet</th>
-          <td mat-cell *matCellDef="let deck">{{ deck.subject }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="course">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Kurs</th>
-          <td mat-cell *matCellDef="let deck">{{ deck.course }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="author">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Autor</th>
-          <td mat-cell *matCellDef="let deck">{{ deck.author }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="creationDate">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Erstellt</th>
-          <td mat-cell *matCellDef="let deck">{{ deck.creationDate }}</td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: columnsToDisplay"
-          routerLink="/deck/{{ row.id }}"
-        ></tr>
-      </table>
-
-      <mat-divider></mat-divider>
-
       <h3>Meine Favoriten</h3>
 
       <table mat-table [dataSource]="decks" class="mat-elevation-z2" matSort>
@@ -153,7 +87,9 @@
 
         <ng-container matColumnDef="creationDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Erstellt</th>
-          <td mat-cell *matCellDef="let deck">{{ deck.creationDate }}</td>
+          <td mat-cell *matCellDef="let deck">
+            {{ deck.creationDate | date: 'dd.MM.yyyy' }}
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>

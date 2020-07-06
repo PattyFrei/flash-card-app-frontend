@@ -42,7 +42,7 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
     });
   }
 
-  doFilter = (value: string) => {
+  doFilter(value: string): void {
     this.decks.filter = value.trim().toLocaleLowerCase();
-  };
+  }
 }
