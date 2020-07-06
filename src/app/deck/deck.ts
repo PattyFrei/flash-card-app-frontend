@@ -21,5 +21,5 @@ export interface Deck {
 }
 
 export interface Difficulty {
-  difficulties: string[];
+  level: string;
 }

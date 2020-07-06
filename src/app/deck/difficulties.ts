@@ -1,12 +1,8 @@
 import { Difficulty } from './deck';
 
 export const DIFFICULTIES: Difficulty[] = [
-  {
-    difficulties: [
-      'Anfänger',
-      'Fortgeschritten',
-      'Experte',
-      'Prüfungsvorbereitung',
-    ],
-  },
+  { level: 'Anfänger' },
+  { level: 'Fortgeschritten' },
+  { level: 'Experte' },
+  { level: 'Prüfungsvorbereitung' },
 ];

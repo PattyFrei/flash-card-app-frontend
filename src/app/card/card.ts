@@ -23,5 +23,5 @@ export interface Answer {
 }
 
 export interface Subject {
-  subjects: string[];
+  name: string;
 }
