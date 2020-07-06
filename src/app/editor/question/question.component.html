@@ -1,0 +1,49 @@
+<div class="content-container">
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Fragen">
+      <h3>Neue Frage erstellen</h3>
+      <form [formGroup]="questionForm" (submit)="submit()">
+        <mat-form-field
+          hintLabel="Gebe dem Quiz einen auffordernen Namen"
+          appearance="fill"
+        >
+          <mat-label>Name</mat-label>
+          <input matInput #input formControlName="name" required />
+          <mat-hint align="end">{{ input.value?.length || 0 }}/50</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field
+          hintLabel="z.B. Programmieren, Dynamik, Schnittmuster etc."
+          appearance="fill"
+        >
+          <mat-label>Thema</mat-label>
+          <input matInput formControlName="topic" />
+        </mat-form-field>
+
+        <mat-form-field
+          hintLabel="Wähle ein passendes Fachgebiet aus"
+          appearance="fill"
+        >
+          <mat-label>Fachgebiet</mat-label>
+          <mat-select [(value)]="selectedSubject" required>
+            <mat-option></mat-option>
+            <mat-option [value]="subject" *ngFor="let subject of subjects">{{
+              subject.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <p class="button-row">
+          <button mat-flat-button color="primary" type="submit">
+            Speichern
+          </button>
+          <button mat-flat-button color="warn" type="reset">
+            Verwerfen
+          </button>
+        </p>
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Kataloge"></mat-tab>
+  </mat-tab-group>
+</div>
