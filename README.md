@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Prod page on github pages
 
-https://bapaha.github.io/flashcard-app-frontend/
+https://bapaha.github.io/flashcard-app-frontend/index.html
 
 ## Local dev server
 

@@ -3,31 +3,36 @@
     mode="determinate"
     value="{{ currentCardIndex * 10 }}"
   ></mat-progress-bar>
+
   <h2>Frage {{ currentCardIndex }} von {{ deck.questions.length }}</h2>
-
   <p>{{ currentCard.questionText }}</p>
-  <p>{{ questionTypeText }}</p>
 
-  <ul class="cards">
-    <li
-      *ngFor="let answer of currentCard.answers; index as i"
-      [class.selected]="answer === selectedAnswer"
-      [class.correct]="
-        (answerResultColor === 'isCorrect' && answer === selectedAnswer) ||
-        (toggleNext && answer.correctAnswer)
-      "
-      [class.wrong]="
-        answerResultColor === 'isWrong' && answer === selectedAnswer
-      "
-      [class.inactive]="
-        toggleNext && !answer.correctAnswer && answer !== selectedAnswer
-      "
-      (click)="onSelect(answer)"
+  <label id="radio-group-label">{{ questionTypeText }}</label>
+  <mat-radio-group
+    aria-labelledby="radio-group-label"
+    class="radio-group"
+    [disabled]="isDisabled"
+  >
+    <mat-radio-button
+      class="radio-button"
+      *ngFor="let answer of currentCard.answers"
+      (change)="onChange(answer)"
+      [value]="answer.answerText"
     >
-      <span class="answer"> o </span>{{ answer.answerText }}
-    </li>
-  </ul>
-  <p class="explanation-box">{{ explanationText }}</p>
+      {{ answer.answerText }}
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <p class="explanation-box">
+    <span
+      *ngIf="explanationText"
+      [class.answer-correct]="selectedAnswer.correctAnswer"
+      [class.answer-wrong]="!selectedAnswer.correctAnswer"
+    >
+      {{ explanationText }}
+    </span>
+  </p>
+
   <button
     mat-flat-button
     color="primary"
@@ -55,13 +60,19 @@
   </p>
   <p>
     Das wäre eine ... Bewertung. <br />
-    Klasse! / Wiederhole den Fragenkatalog doch einfach noch ein Mal!
+    Klasse!
   </p>
   <button mat-flat-button color="primary" routerLink="/deck/{{ deck.id }}">
     Quiz erneut starten
   </button>
   <button mat-flat-button routerLink="/catalogue">
-    Zurück zu den Fragenkatalogen
+    Zurück zur Übersicht
   </button>
 </div>
+
 <!-- [class.some-css-class]="some-condition" -->
+<!-- (change)="onChange($event)" -->
+<!-- 
+[class.correct]="isDisabled && answer.correctAnswer"
+[class.wrong]="isDisabled && !answer.correctAnswer && answer === selectedAnswer
+" -->
