@@ -14,10 +14,10 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
   columnsToDisplay = [
     'name',
     'topic',
-    // 'subject',
+    'subject',
     'course',
     'author',
-    // 'creationDate',
+    'creationDate',
   ];
   selectedId: string;
   decks = new MatTableDataSource<Deck>();
