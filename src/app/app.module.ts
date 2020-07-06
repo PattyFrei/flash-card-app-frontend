@@ -21,6 +21,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
+import { QuestionComponent } from './editor/question/question.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     CatalogueComponent,
     CardComponent,
     DeckComponent,
+    QuestionComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +51,9 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatRadioModule,
     FormsModule,
+    MatExpansionModule,
+    ReactiveFormsModule,
+    MatSelectModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
