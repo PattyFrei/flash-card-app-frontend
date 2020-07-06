@@ -11,7 +11,14 @@ import { DeckService } from '../deck.service';
   styleUrls: ['./catalogue.component.scss'],
 })
 export class CatalogueComponent implements OnInit, AfterViewInit {
-  columnsToDisplay = ['name', 'topic', 'course', 'author'];
+  columnsToDisplay = [
+    'name',
+    'topic',
+    // 'subject',
+    'course',
+    'author',
+    // 'creationDate',
+  ];
   selectedId: string;
   decks = new MatTableDataSource<Deck>();
 
