@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Deck } from './deck/deck';
 import { Observable, throwError, of } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+
+import { Deck } from './deck/deck';
+import { Difficulty } from './deck/deck';
+import { DIFFICULTIES } from './deck/difficulties';
+import { Subject } from './card/card';
+import { SUBJECTS } from './card/subjects';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +25,14 @@ export class DeckService {
     return this.httpClient
       .get<Deck>(`decks/${id}`)
       .pipe(catchError(this.handleError));
+  }
+
+  getSubjects(): Observable<Subject[]> {
+    return of(SUBJECTS);
+  }
+
+  getDifficulties(): Observable<Difficulty[]> {
+    return of(DIFFICULTIES);
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -13,7 +13,7 @@
       </tr>
       <tr>
         <th>Fachgebiet</th>
-        <td>...</td>
+        <td>{{ deck.subject }}</td>
       </tr>
       <tr>
         <th>Autor</th>
@@ -25,11 +25,11 @@
       </tr>
       <tr>
         <th>Semster</th>
-        <td>...</td>
+        <td>{{ deck.semester }}</td>
       </tr>
       <tr>
         <th>Schwierigkeitsgrad</th>
-        <td>Anfänger/ Fortgeschritten/ Experte/ Prüfungsvorbereitung</td>
+        <td>{{ deck.difficulty }}</td>
       </tr>
       <tr>
         <th>Anzahl der Fragen</th>
@@ -38,10 +38,13 @@
       <tr>
         <th>Beschreibung</th>
         <td>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, quae
-          atque qui molestias iste excepturi! Asperiores, facilis? Perferendis
-          adipisci quia tempore, magnam numquam excepturi obcaecati libero
-          reiciendis, pariatur iste dolorem!
+          {{ deck.description }}
+        </td>
+      </tr>
+      <tr>
+        <th>Erstellt am</th>
+        <td>
+          {{ deck.creationDate | date: 'dd.MM.yyyy' }}
         </td>
       </tr>
     </tbody>

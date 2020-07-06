@@ -1,10 +1,25 @@
-import { Card } from './../card/card';
+import { Card, Subject } from './../card/card';
 
 export interface Deck {
   id: string;
   name: string;
-  topic: string;
-  course: string;
+  topic?: string;
+  subject: Subject;
   author: string;
-  questions: Card[];
+  course?: string;
+  semester?: string;
+  difficulty: Difficulty;
+  description?: string;
+  allowSecondGuess: boolean;
+  questions?: Card[];
+  shareUrl?: string;
+  shareUrlActive: boolean;
+  publicVisibility: boolean;
+  // owner: User;
+  creationDate: Date;
+  lastUpdatedDate: Date;
+}
+
+export interface Difficulty {
+  level: string;
 }

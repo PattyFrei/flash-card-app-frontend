@@ -5,7 +5,7 @@
   ></mat-progress-bar>
 
   <h2>Frage {{ currentCardIndex }} von {{ deck.questions.length }}</h2>
-  <p>{{ currentCard.question }}</p>
+  <p>{{ currentCard.questionText }}</p>
 
   <label id="radio-group-label">{{ questionTypeText }}</label>
   <mat-radio-group
@@ -17,9 +17,9 @@
       class="radio-button"
       *ngFor="let answer of currentCard.answers"
       (change)="onChange(answer)"
-      [value]="answer.text"
+      [value]="answer.answerText"
     >
-      {{ answer.text }}
+      {{ answer.answerText }}
     </mat-radio-button>
   </mat-radio-group>
 
