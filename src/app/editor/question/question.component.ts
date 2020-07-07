@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DeckService } from './../../deck.service';
 
@@ -10,12 +10,18 @@ import { DeckService } from './../../deck.service';
 })
 export class QuestionComponent implements OnInit {
   subjects: any;
-  selectedSubject: string;
+  selectedQuestionType: 'singleChoice';
 
   questionForm = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', Validators.required),
     topic: new FormControl(''),
-    subject: new FormControl(''),
+    subject: new FormControl('', Validators.required),
+    questionText: new FormControl('', Validators.required),
+    questionType: new FormControl('singleChoice', Validators.required),
+    answers: new FormArray([], Validators.required),
+    explanationText: new FormControl(''),
+    image: new FormControl(''),
+    srcCode: new FormControl(''),
   });
   constructor(private deckService: DeckService) {}
 
@@ -38,5 +44,10 @@ export class QuestionComponent implements OnInit {
     );
   }
 
-  submit(): void {}
+  onChange(event: any): void {
+    this.selectedQuestionType = event.value;
+    console.log(this.selectedQuestionType);
+  }
+
+  onSubmit(questionForm: FormGroup): void {}
 }
