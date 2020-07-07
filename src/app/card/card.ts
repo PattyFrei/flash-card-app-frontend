@@ -7,17 +7,17 @@ export interface Card {
   questionType: string;
   answers: Answer[];
   explanationText?: string;
-  image?: string;
-  srcCode?: string;
+  image?: string; // imageUrl
+  srcCode?: string; // srcCodeUrl
   // owner: User;
   creationDate: Date;
   lastUpdatedDate: Date;
-  hasSiblings?: Card[];
+  hasSiblings?: Card[]; // siblings
   // [propName: string]: any; // for any other props
 }
 
 export interface Answer {
-  correctAnswer: boolean;
+  correctAnswer: boolean; // isCorrectAnswer
   answerText: string;
   explanationText?: string;
 }
