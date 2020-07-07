@@ -99,6 +99,89 @@
           </mat-radio-button> -->
         </mat-radio-group>
 
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addAnswer(); $event.preventDefault()"
+        >
+          Antwort hinzufügen
+        </button>
+
+        <ng-container formArrayName="answers">
+          <!-- <mat-radio-group
+            aria-labelledby="radio-group-label"
+            formControlName="correctAnswer"
+            class="radio-group"
+          >
+            <div *ngFor="let answer of answers.controls; index as i">
+              <mat-radio-button
+                class="radio-button"
+                value="{{ i + 1 }}"
+                (change)="onCorrectAnswerChange($event)"
+                >Die {{ i + 1 }}. Antwort als richtig markieren
+              </mat-radio-button>
+            </div>
+          </mat-radio-group> -->
+
+          <div class="example-action-buttons">
+            <button
+              mat-raised-button
+              color="basic"
+              (click)="accordion.openAll(); $event.preventDefault()"
+            >
+              Alle aufklappen
+            </button>
+            <button
+              mat-raised-button
+              color="basic"
+              (click)="accordion.closeAll(); $event.preventDefault()"
+            >
+              Alle einklappen
+            </button>
+          </div>
+          <mat-accordion class="example-headers-align" multi>
+            <div *ngFor="let answer of answers.controls; index as i">
+              <ng-container [formGroupName]="i">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title> {{ i + 1 }}. Antwort </mat-panel-title>
+                    <mat-panel-description>
+                      Klicke um eine Eingabe für die {{ i + 1 }}. Antwort zu
+                      machen
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+
+                  <mat-radio-button class="radio-button" value="{{ i }}"
+                    >Als richtige Antwort markieren
+                  </mat-radio-button>
+
+                  <mat-form-field
+                    hintLabel="Gebe die {{ i + 1 }}. Antwort ein"
+                    appearance="fill"
+                    class="big-field"
+                  >
+                    <mat-label>Antworttext</mat-label>
+                    <input matInput formControlName="answerText" required
+                  /></mat-form-field>
+                  <mat-form-field
+                    hintLabel="Gebe eine Erklärung ein, warum die {{
+                      i + 1
+                    }}. Antwort richtig oder falsch ist"
+                    appearance="fill"
+                    class="big-field"
+                  >
+                    <mat-label>Erklärungstext</mat-label>
+                    <textarea
+                      matInput
+                      formControlName="explanationText"
+                    ></textarea>
+                  </mat-form-field>
+                </mat-expansion-panel>
+              </ng-container>
+            </div>
+          </mat-accordion>
+        </ng-container>
+
         <mat-error *ngIf="questionForm.hasError('required')">
           Überprüfe deine Angaben
         </mat-error>
@@ -111,6 +194,7 @@
             mat-raised-button
             color="basic"
             (click)="
+              $event.preventDefault();
               questionForm.patchValue({
                 name: '',
                 topic: '',

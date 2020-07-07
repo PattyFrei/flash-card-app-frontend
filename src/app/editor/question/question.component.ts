@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatAccordion } from '@angular/material/expansion';
 
 import { DeckService } from './../../deck.service';
 
@@ -9,6 +10,7 @@ import { DeckService } from './../../deck.service';
   styleUrls: ['./question.component.scss'],
 })
 export class QuestionComponent implements OnInit {
+  numberOfDefaultAnswers = 4;
   subjects: any;
   selectedQuestionType: 'singleChoice';
 
@@ -18,15 +20,44 @@ export class QuestionComponent implements OnInit {
     subject: new FormControl('', Validators.required),
     questionText: new FormControl('', Validators.required),
     questionType: new FormControl('singleChoice', Validators.required),
-    answers: new FormArray([], Validators.required),
+    answers: new FormArray(
+      [
+        new FormGroup({
+          correctAnswer: new FormControl(''),
+          answerText: new FormControl(''),
+          explanationText: new FormControl(''),
+        }),
+      ],
+      Validators.required
+    ),
     explanationText: new FormControl(''),
     image: new FormControl(''),
     srcCode: new FormControl(''),
   });
+
+  get answers() {
+    return this.questionForm.get('answers') as FormArray;
+  }
+
   constructor(private deckService: DeckService) {}
+
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 
   ngOnInit(): void {
     this.getSubjects();
+    for (let index = 1; index < this.numberOfDefaultAnswers; index++) {
+      this.addAnswer();
+    }
+  }
+
+  addAnswer(): void {
+    const answerGroup = new FormGroup({
+      correctAnswer: new FormControl(''),
+      answerText: new FormControl(''),
+      explanationText: new FormControl(''),
+    });
+
+    this.answers.push(answerGroup);
   }
 
   getSubjects(): void {

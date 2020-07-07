@@ -13,7 +13,7 @@ h3 {
   display: block;
   width: 100%;
   max-width: 600px;
-  margin: 10px 0;
+  // margin: 10px 0;
 }
 
 .radio-group-label {
@@ -31,8 +31,13 @@ mat-divider {
   width: 100%;
 }
 
+mat-expansion-panel {
+  max-width: 890px;
+  margin-left: 5px;
+}
+
 mat-radio-button {
-  margin: 12px 10px 0 10px;
+  margin: 12px 10px 12px 10px;
 }
 
 mat-radio-group {
