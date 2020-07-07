@@ -99,31 +99,16 @@
           </mat-radio-button> -->
         </mat-radio-group>
 
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="addAnswer(); $event.preventDefault()"
-        >
-          Antwort hinzufügen
-        </button>
-
         <ng-container formArrayName="answers">
-          <!-- <mat-radio-group
-            aria-labelledby="radio-group-label"
-            formControlName="correctAnswer"
-            class="radio-group"
-          >
-            <div *ngFor="let answer of answers.controls; index as i">
-              <mat-radio-button
-                class="radio-button"
-                value="{{ i + 1 }}"
-                (change)="onCorrectAnswerChange($event)"
-                >Die {{ i + 1 }}. Antwort als richtig markieren
-              </mat-radio-button>
-            </div>
-          </mat-radio-group> -->
+          <div class="action-buttons">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="addAnswer(); $event.preventDefault()"
+            >
+              Antwort hinzufügen
+            </button>
 
-          <div class="example-action-buttons">
             <button
               mat-raised-button
               color="basic"
@@ -182,11 +167,9 @@
           </mat-accordion>
         </ng-container>
 
-        <mat-error *ngIf="questionForm.hasError('required')">
-          Überprüfe deine Angaben
-        </mat-error>
+        <mat-divider></mat-divider>
 
-        <p class="button-row">
+        <div class="button-row">
           <button mat-raised-button color="primary" type="submit">
             Erstellen
           </button>
@@ -209,7 +192,7 @@
           >
             Verwerfen
           </button>
-        </p>
+        </div>
       </form>
     </mat-tab>
 
