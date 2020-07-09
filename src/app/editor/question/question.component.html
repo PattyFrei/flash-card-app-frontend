@@ -78,21 +78,21 @@
           <mat-radio-button
             class="radio-button"
             value="singleChoice"
-            (change)="onChange($event)"
+            (change)="onSelectedQuestionTypeChange($event)"
           >
             Eine richtige Antwort
           </mat-radio-button>
           <mat-radio-button
             class="radio-button"
             value="multipleChoice"
-            (change)="onChange($event)"
+            (change)="onSelectedQuestionTypeChange($event)"
           >
             Mehrere richtige Antworten
           </mat-radio-button>
           <!-- <mat-radio-button
             class="radio-button"
             value="textInput"
-            (change)="onChange($event)"
+            (change)="onSelectedQuestionTypeChange($event)"
             disabled
           >
             Freitext
@@ -100,7 +100,7 @@
         </mat-radio-group>
 
         <ng-container formArrayName="answers">
-          <div class="action-buttons">
+          <div class="answer-action-buttons">
             <button
               mat-raised-button
               color="primary"
@@ -108,7 +108,6 @@
             >
               Antwort hinzufügen
             </button>
-
             <button
               mat-raised-button
               color="basic"
@@ -124,21 +123,40 @@
               Alle einklappen
             </button>
           </div>
-          <mat-accordion class="example-headers-align" multi>
+          <mat-accordion class="headers-align" multi>
             <div *ngFor="let answer of answers.controls; index as i">
               <ng-container [formGroupName]="i">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title> {{ i + 1 }}. Antwort </mat-panel-title>
                     <mat-panel-description>
-                      Klicke um eine Eingabe für die {{ i + 1 }}. Antwort zu
-                      machen
+                      Klicke für eine Eingabe
+                      <button
+                        class="expansion-panel-header-del-button"
+                        [disabled]="i < 4"
+                        mat-icon-button
+                        aria-label="del"
+                        (click)="removeAnswer(i)"
+                      >
+                        <mat-icon>delete_forever</mat-icon>
+                      </button>
                     </mat-panel-description>
                   </mat-expansion-panel-header>
 
-                  <mat-radio-button class="radio-button" value="{{ i }}"
+                  <!-- formControlName="correctAnswer" -->
+                  <!-- <mat-radio-group
+                    aria-labelledby="radio-group-label"
+                    formControlName="correctAnswer"
+                    class="radio-group"
+                  > -->
+                  <mat-radio-button
+                    class="radio-button"
+                    formControlName="correctAnswer"
+                    value="{{ answers[i].correctAnswer }}"
+                    (change)="onCorrectAnswerChange($event)"
                     >Als richtige Antwort markieren
                   </mat-radio-button>
+                  <!-- </mat-radio-group> -->
 
                   <mat-form-field
                     hintLabel="Gebe die {{ i + 1 }}. Antwort ein"
