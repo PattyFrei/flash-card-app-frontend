@@ -89,14 +89,6 @@
           >
             Mehrere richtige Antworten
           </mat-radio-button>
-          <!-- <mat-radio-button
-            class="radio-button"
-            value="textInput"
-            (change)="onSelectedQuestionTypeChange($event)"
-            disabled
-          >
-            Freitext
-          </mat-radio-button> -->
         </mat-radio-group>
 
         <ng-container formArrayName="answers">
@@ -143,20 +135,14 @@
                     </mat-panel-description>
                   </mat-expansion-panel-header>
 
-                  <!-- formControlName="correctAnswer" -->
-                  <!-- <mat-radio-group
-                    aria-labelledby="radio-group-label"
+                  <mat-slide-toggle
+                    color="primary"
                     formControlName="correctAnswer"
-                    class="radio-group"
-                  > -->
-                  <mat-radio-button
-                    class="radio-button"
-                    formControlName="correctAnswer"
-                    value="{{ answers[i].correctAnswer }}"
+                    id="{{ i }}"
                     (change)="onCorrectAnswerChange($event)"
-                    >Als richtige Antwort markieren
-                  </mat-radio-button>
-                  <!-- </mat-radio-group> -->
+                  >
+                    Als richtige Antwort markieren
+                  </mat-slide-toggle>
 
                   <mat-form-field
                     hintLabel="Gebe die {{ i + 1 }}. Antwort ein"

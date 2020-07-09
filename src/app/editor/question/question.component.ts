@@ -12,8 +12,7 @@ import { DeckService } from './../../deck.service';
 export class QuestionComponent implements OnInit {
   numberOfDefaultAnswers = 4;
   subjects: any;
-  selectedQuestionType: 'singleChoice';
-  selectedCorrectAnswer = 0;
+  selectedQuestionType = 'singleChoice';
 
   questionForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -110,8 +109,27 @@ export class QuestionComponent implements OnInit {
   }
 
   onCorrectAnswerChange(event: any): void {
-    this.selectedCorrectAnswer = event.value;
-    console.log(this.selectedCorrectAnswer);
+    const selectedAnswer = event.source.id;
+    const isCorrectAnswer = event.checked;
+
+    console.log(selectedAnswer, isCorrectAnswer);
+    console.log(this.selectedQuestionType);
+    console.log('nbr of answers:', this.answers.length);
+
+    if (this.selectedQuestionType === 'singleChoice') {
+      for (let index = 0; index < this.answers.length; index++) {
+        // console.log(index);
+        this.answers.at(index).get('correctAnswer').patchValue(false);
+      }
+      this.answers.at(selectedAnswer).get('correctAnswer').patchValue(true);
+    } else {
+      isCorrectAnswer
+        ? this.answers.at(selectedAnswer).get('correctAnswer').patchValue(true)
+        : this.answers
+            .at(selectedAnswer)
+            .get('correctAnswer')
+            .patchValue(false);
+    }
   }
 
   onSubmit(questionForm: FormGroup): void {
