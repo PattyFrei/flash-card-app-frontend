@@ -13,6 +13,7 @@ export class QuestionComponent implements OnInit {
   numberOfDefaultAnswers = 4;
   subjects: any;
   selectedQuestionType: 'singleChoice';
+  selectedCorrectAnswer = 0;
 
   questionForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -23,8 +24,23 @@ export class QuestionComponent implements OnInit {
     answers: new FormArray(
       [
         new FormGroup({
-          correctAnswer: new FormControl(''),
-          answerText: new FormControl(''),
+          correctAnswer: new FormControl(true),
+          answerText: new FormControl('', Validators.required),
+          explanationText: new FormControl(''),
+        }),
+        new FormGroup({
+          correctAnswer: new FormControl(false),
+          answerText: new FormControl('', Validators.required),
+          explanationText: new FormControl(''),
+        }),
+        new FormGroup({
+          correctAnswer: new FormControl(false),
+          answerText: new FormControl('', Validators.required),
+          explanationText: new FormControl(''),
+        }),
+        new FormGroup({
+          correctAnswer: new FormControl(false),
+          answerText: new FormControl('', Validators.required),
           explanationText: new FormControl(''),
         }),
       ],
@@ -45,19 +61,32 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSubjects();
-    for (let index = 1; index < this.numberOfDefaultAnswers; index++) {
-      this.addAnswer();
-    }
+    // for (let index = 0; index < this.numberOfDefaultAnswers - 1; index++) {
+    //   this.addAnswer();
+    // }
   }
 
   addAnswer(): void {
     const answerGroup = new FormGroup({
-      correctAnswer: new FormControl(''),
-      answerText: new FormControl(''),
+      correctAnswer: new FormControl(false),
+      answerText: new FormControl('', Validators.required),
       explanationText: new FormControl(''),
     });
-
     this.answers.push(answerGroup);
+  }
+
+  removeAnswer(index: number): void {
+    this.answers.removeAt(index);
+    // remove correctAnswer flag if has one, select 1st answer
+  }
+
+  moveAnswer(
+    toBeRemovedAtIndex: number,
+    toBeInsertedAtIndex: number,
+    answer: FormGroup
+  ): void {
+    this.answers.removeAt(toBeRemovedAtIndex);
+    this.answers.insert(toBeInsertedAtIndex, answer);
   }
 
   getSubjects(): void {
@@ -75,10 +104,17 @@ export class QuestionComponent implements OnInit {
     );
   }
 
-  onChange(event: any): void {
+  onSelectedQuestionTypeChange(event: any): void {
     this.selectedQuestionType = event.value;
     console.log(this.selectedQuestionType);
   }
 
-  onSubmit(questionForm: FormGroup): void {}
+  onCorrectAnswerChange(event: any): void {
+    this.selectedCorrectAnswer = event.value;
+    console.log(this.selectedCorrectAnswer);
+  }
+
+  onSubmit(questionForm: FormGroup): void {
+    console.log(questionForm);
+  }
 }
