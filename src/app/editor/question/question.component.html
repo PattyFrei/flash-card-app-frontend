@@ -96,7 +96,7 @@
             <button
               mat-raised-button
               color="primary"
-              (click)="addAnswer(); $event.preventDefault()"
+              (click)="addAnswer(false); $event.preventDefault()"
             >
               Antwort hinzufügen
             </button>
@@ -115,6 +115,7 @@
               Alle einklappen
             </button>
           </div>
+
           <mat-accordion class="headers-align" multi>
             <div *ngFor="let answer of answers.controls; index as i">
               <ng-container [formGroupName]="i">
@@ -174,27 +175,11 @@
         <mat-divider></mat-divider>
 
         <div class="button-row">
-          <button mat-raised-button color="primary" type="submit">
+          <button mat-raised-button color="primary">
             Erstellen
           </button>
-          <button
-            mat-raised-button
-            color="basic"
-            (click)="
-              $event.preventDefault();
-              questionForm.patchValue({
-                name: '',
-                topic: '',
-                subject: '',
-                questionText: '',
-                answers: [],
-                explanationText: '',
-                image: '',
-                srcCode: ''
-              })
-            "
-          >
-            Verwerfen
+          <button mat-raised-button color="basic" (click)="resetForm()">
+            Zurücksetzen
           </button>
         </div>
       </form>

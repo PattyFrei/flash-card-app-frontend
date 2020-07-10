@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
+import { MatRadioChange } from '@angular/material/radio';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { DeckService } from './../../deck.service';
 
@@ -20,31 +22,7 @@ export class QuestionComponent implements OnInit {
     subject: new FormControl('', Validators.required),
     questionText: new FormControl('', Validators.required),
     questionType: new FormControl('singleChoice', Validators.required),
-    answers: new FormArray(
-      [
-        new FormGroup({
-          correctAnswer: new FormControl(true),
-          answerText: new FormControl('', Validators.required),
-          explanationText: new FormControl(''),
-        }),
-        new FormGroup({
-          correctAnswer: new FormControl(false),
-          answerText: new FormControl('', Validators.required),
-          explanationText: new FormControl(''),
-        }),
-        new FormGroup({
-          correctAnswer: new FormControl(false),
-          answerText: new FormControl('', Validators.required),
-          explanationText: new FormControl(''),
-        }),
-        new FormGroup({
-          correctAnswer: new FormControl(false),
-          answerText: new FormControl('', Validators.required),
-          explanationText: new FormControl(''),
-        }),
-      ],
-      Validators.required
-    ),
+    answers: new FormArray([], Validators.required),
     explanationText: new FormControl(''),
     image: new FormControl(''),
     srcCode: new FormControl(''),
@@ -60,14 +38,14 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSubjects();
-    // for (let index = 0; index < this.numberOfDefaultAnswers - 1; index++) {
-    //   this.addAnswer();
-    // }
+    for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
+      index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
+    }
   }
 
-  addAnswer(): void {
+  addAnswer(correctAnswer: boolean): void {
     const answerGroup = new FormGroup({
-      correctAnswer: new FormControl(false),
+      correctAnswer: new FormControl(correctAnswer),
       answerText: new FormControl('', Validators.required),
       explanationText: new FormControl(''),
     });
@@ -103,18 +81,25 @@ export class QuestionComponent implements OnInit {
     );
   }
 
-  onSelectedQuestionTypeChange(event: any): void {
+  resetForm(): void {
+    this.answers.clear();
+    for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
+      index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
+    }
+  }
+
+  onSelectedQuestionTypeChange(event: MatRadioChange): void {
     this.selectedQuestionType = event.value;
     console.log(this.selectedQuestionType);
   }
 
-  onCorrectAnswerChange(event: any): void {
-    const selectedAnswer = event.source.id;
+  onCorrectAnswerChange(event: MatSlideToggleChange): void {
+    const selectedAnswer = parseInt(event.source.id, 10);
     const isCorrectAnswer = event.checked;
 
-    console.log(selectedAnswer, isCorrectAnswer);
-    console.log(this.selectedQuestionType);
-    console.log('nbr of answers:', this.answers.length);
+    // console.log(selectedAnswer, isCorrectAnswer);
+    // console.log(this.selectedQuestionType);
+    // console.log('nbr of answers:', this.answers.length);
 
     if (this.selectedQuestionType === 'singleChoice') {
       for (let index = 0; index < this.answers.length; index++) {
@@ -133,6 +118,6 @@ export class QuestionComponent implements OnInit {
   }
 
   onSubmit(questionForm: FormGroup): void {
-    console.log(questionForm);
+    // console.log(questionForm);
   }
 }
