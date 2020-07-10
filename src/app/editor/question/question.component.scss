@@ -36,6 +36,10 @@ mat-expansion-panel {
   margin-left: 5px;
 }
 
+.answer-action-buttons {
+  margin: 10px 0;
+}
+
 mat-radio-button {
   margin: 12px 10px 12px 10px;
 }
@@ -51,7 +55,7 @@ mat-radio-group {
 }
 
 button {
-  margin: 10px 10px 15px 0;
+  margin: 0 10px 10px 0;
 }
 
 ::ng-deep.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
@@ -65,4 +69,23 @@ button {
 ::ng-deep.mat-radio-button.mat-accent.mat-radio-checked
   .mat-radio-outer-circle {
   border-color: #3f51b5 !important;
+}
+
+.headers-align .mat-expansion-panel-header-title,
+.headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.headers-align .mat-expansion-panel-header-title,
+.headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expansion-panel-header-del-button {
+  margin: auto 0;
+}
+
+mat-slide-toggle {
+  margin-bottom: 10px;
 }

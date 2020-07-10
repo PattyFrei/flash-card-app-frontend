@@ -25,6 +25,7 @@ import { QuestionComponent } from './editor/question/question.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatExpansionModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatSlideToggleModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

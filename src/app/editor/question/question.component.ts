@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
+import { MatRadioChange } from '@angular/material/radio';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { DeckService } from './../../deck.service';
 
@@ -12,7 +14,7 @@ import { DeckService } from './../../deck.service';
 export class QuestionComponent implements OnInit {
   numberOfDefaultAnswers = 4;
   subjects: any;
-  selectedQuestionType: 'singleChoice';
+  selectedQuestionType = 'singleChoice';
 
   questionForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -20,16 +22,7 @@ export class QuestionComponent implements OnInit {
     subject: new FormControl('', Validators.required),
     questionText: new FormControl('', Validators.required),
     questionType: new FormControl('singleChoice', Validators.required),
-    answers: new FormArray(
-      [
-        new FormGroup({
-          correctAnswer: new FormControl(''),
-          answerText: new FormControl(''),
-          explanationText: new FormControl(''),
-        }),
-      ],
-      Validators.required
-    ),
+    answers: new FormArray([], Validators.required),
     explanationText: new FormControl(''),
     image: new FormControl(''),
     srcCode: new FormControl(''),
@@ -45,19 +38,32 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSubjects();
-    for (let index = 1; index < this.numberOfDefaultAnswers; index++) {
-      this.addAnswer();
+    for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
+      index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
     }
   }
 
-  addAnswer(): void {
+  addAnswer(correctAnswer: boolean): void {
     const answerGroup = new FormGroup({
-      correctAnswer: new FormControl(''),
-      answerText: new FormControl(''),
+      correctAnswer: new FormControl(correctAnswer),
+      answerText: new FormControl('', Validators.required),
       explanationText: new FormControl(''),
     });
-
     this.answers.push(answerGroup);
+  }
+
+  removeAnswer(index: number): void {
+    this.answers.removeAt(index);
+    // remove correctAnswer flag if has one, select 1st answer
+  }
+
+  moveAnswer(
+    toBeRemovedAtIndex: number,
+    toBeInsertedAtIndex: number,
+    answer: FormGroup
+  ): void {
+    this.answers.removeAt(toBeRemovedAtIndex);
+    this.answers.insert(toBeInsertedAtIndex, answer);
   }
 
   getSubjects(): void {
@@ -75,10 +81,43 @@ export class QuestionComponent implements OnInit {
     );
   }
 
-  onChange(event: any): void {
+  resetForm(): void {
+    this.answers.clear();
+    for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
+      index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
+    }
+  }
+
+  onSelectedQuestionTypeChange(event: MatRadioChange): void {
     this.selectedQuestionType = event.value;
     console.log(this.selectedQuestionType);
   }
 
-  onSubmit(questionForm: FormGroup): void {}
+  onCorrectAnswerChange(event: MatSlideToggleChange): void {
+    const selectedAnswer = parseInt(event.source.id, 10);
+    const isCorrectAnswer = event.checked;
+
+    // console.log(selectedAnswer, isCorrectAnswer);
+    // console.log(this.selectedQuestionType);
+    // console.log('nbr of answers:', this.answers.length);
+
+    if (this.selectedQuestionType === 'singleChoice') {
+      for (let index = 0; index < this.answers.length; index++) {
+        // console.log(index);
+        this.answers.at(index).get('correctAnswer').patchValue(false);
+      }
+      this.answers.at(selectedAnswer).get('correctAnswer').patchValue(true);
+    } else {
+      isCorrectAnswer
+        ? this.answers.at(selectedAnswer).get('correctAnswer').patchValue(true)
+        : this.answers
+            .at(selectedAnswer)
+            .get('correctAnswer')
+            .patchValue(false);
+    }
+  }
+
+  onSubmit(questionForm: FormGroup): void {
+    // console.log(questionForm);
+  }
 }
