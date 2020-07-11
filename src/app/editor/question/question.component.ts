@@ -5,6 +5,7 @@ import { MatRadioChange } from '@angular/material/radio';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { DeckService } from './../../deck.service';
+import { Card } from 'src/app/card/card';
 
 @Component({
   selector: 'app-question',
@@ -14,14 +15,16 @@ import { DeckService } from './../../deck.service';
 export class QuestionComponent implements OnInit {
   numberOfDefaultAnswers = 4;
   subjects: any;
-  selectedQuestionType = 'singleChoice';
+  selectedQuestionType = 'single-choice';
+  submitted = false;
+  submittedCard: Card;
 
   questionForm = new FormGroup({
     name: new FormControl('', Validators.required),
     topic: new FormControl(''),
     subject: new FormControl('', Validators.required),
     questionText: new FormControl('', Validators.required),
-    questionType: new FormControl('singleChoice', Validators.required),
+    questionType: new FormControl('single-choice', Validators.required),
     answers: new FormArray([], Validators.required),
     explanationText: new FormControl(''),
     image: new FormControl(''),
@@ -82,6 +85,7 @@ export class QuestionComponent implements OnInit {
   }
 
   resetForm(): void {
+    this.submitted = false;
     this.answers.clear();
     for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
       index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
@@ -101,7 +105,7 @@ export class QuestionComponent implements OnInit {
     // console.log(this.selectedQuestionType);
     // console.log('nbr of answers:', this.answers.length);
 
-    if (this.selectedQuestionType === 'singleChoice') {
+    if (this.selectedQuestionType === 'single-choice') {
       for (let index = 0; index < this.answers.length; index++) {
         // console.log(index);
         this.answers.at(index).get('correctAnswer').patchValue(false);
@@ -118,6 +122,30 @@ export class QuestionComponent implements OnInit {
   }
 
   onSubmit(questionForm: FormGroup): void {
-    // console.log(questionForm);
+    this.submitted = true;
+    // check if single-choice and multiple-choice selection is valid
+    if (this.questionForm.invalid) {
+      console.log('submit denied');
+      return;
+    } else {
+      console.log(questionForm);
+
+      const submittedCard: Card = {
+        name: questionForm.value.name,
+        subject: questionForm.value.subject.name,
+        topic: questionForm.value.topic,
+        questionText: questionForm.value.questionText,
+        questionType: questionForm.value.questionType,
+        answers: questionForm.value.answers,
+        srcCode: questionForm.value.srcCode,
+        image: questionForm.value.image,
+        owner: 'Dummy',
+      };
+
+      this.deckService.createCard(submittedCard).subscribe((data) => {
+        console.log(data);
+        // redirect to get questions
+      });
+    }
   }
 }

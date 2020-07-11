@@ -3,6 +3,7 @@ import { Observable, throwError, of } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
+import { Card } from './card/card';
 import { Deck } from './deck/deck';
 import { Difficulty } from './deck/deck';
 import { DIFFICULTIES } from './deck/difficulties';
@@ -24,6 +25,12 @@ export class DeckService {
   getDeck(id: string): Observable<Deck> {
     return this.httpClient
       .get<Deck>(`decks/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  createCard(card: Card): Observable<Card> {
+    return this.httpClient
+      .post<Card>(`cards`, card)
       .pipe(catchError(this.handleError));
   }
 

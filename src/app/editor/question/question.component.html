@@ -10,6 +10,7 @@
           <mat-label>Name</mat-label>
           <input matInput #input formControlName="name" required />
           <mat-hint align="end">{{ input.value?.length || 0 }}/50</mat-hint>
+          <!-- <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error> -->
         </mat-form-field>
 
         <mat-form-field
@@ -77,14 +78,14 @@
         >
           <mat-radio-button
             class="radio-button"
-            value="singleChoice"
+            value="single-choice"
             (change)="onSelectedQuestionTypeChange($event)"
           >
             Eine richtige Antwort
           </mat-radio-button>
           <mat-radio-button
             class="radio-button"
-            value="multipleChoice"
+            value="multiple-choice"
             (change)="onSelectedQuestionTypeChange($event)"
           >
             Mehrere richtige Antworten

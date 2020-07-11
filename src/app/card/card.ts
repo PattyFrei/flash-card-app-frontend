@@ -1,17 +1,17 @@
 export interface Card {
-  id: string;
+  id?: string;
   name: string;
   topic?: string;
   subject: Subject;
   questionText: string;
-  questionType: string;
+  questionType: string; // singleChoice | multipleChoice
   answers: Answer[];
   explanationText?: string;
   image?: string; // imageUrl
   srcCode?: string; // srcCodeUrl
-  // owner: User;
-  creationDate: Date;
-  lastUpdatedDate: Date;
+  owner: string;
+  creationDate?: Date;
+  lastUpdatedDate?: Date;
   hasSiblings?: Card[]; // siblings
   // [propName: string]: any; // for any other props
 }
