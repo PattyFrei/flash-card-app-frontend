@@ -23,6 +23,7 @@ export class AuthService {
       client_id: 'R5sxx2LYAGCq2Gs6PDAIKvs1IbA2GzGA',
       redirect_uri: `${window.location.origin}`,
       audience: 'flashcard',
+      scope: 'openid app_metadata profile email',
     })
   ) as Observable<Auth0Client>).pipe(
     shareReplay(1), // Every subscription receives the same shared value
