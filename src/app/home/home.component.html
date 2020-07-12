@@ -1,4 +1,31 @@
 <div class="content-container">
-  <button (click)="auth.login()" *ngIf="!auth.loggedIn">Log In</button>
-  <button (click)="auth.logout()" *ngIf="auth.loggedIn">Log Out</button>
+  <div class="sections">
+    <div class="app-info-section">
+      <div class="description">
+        <p>
+          Mit der FlashCard App kannst du einfach Fragenkataloge erstellen und
+          diese teilen, oder du erstellst sie für dich selbst zum lernen.
+        </p>
+      </div>
+    </div>
+    <div class="login-section">
+      <p>Erstelle ein Konto um deine eigenen Fragenkataloge zu erstellen.</p>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="auth.login()"
+        *ngIf="!auth.loggedIn"
+      >
+        Einloggen
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="auth.logout()"
+        *ngIf="auth.loggedIn"
+      >
+        Ausloggen
+      </button>
+    </div>
+  </div>
 </div>

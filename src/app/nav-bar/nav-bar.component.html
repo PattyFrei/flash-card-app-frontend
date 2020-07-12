@@ -21,15 +21,8 @@
       mat-flat-button
       color="primary"
       routerLink="/editor/question"
-      >Editor</a
-    >
-    <a
-      class="toolbar-link"
-      mat-flat-button
-      color="primary"
-      routerLink="/dashboard"
       *ngIf="auth.loggedIn"
-      >Dashboard</a
+      >Editor</a
     >
 
     <span class="spacer"></span>
@@ -46,7 +39,7 @@
       mat-icon-button
       class="icon"
       aria-label="icon-button with person icon"
-      routerLink="/"
+      routerLink="/dashboard"
       *ngIf="auth.loggedIn"
     >
       <mat-icon>person</mat-icon>

@@ -9,7 +9,7 @@ body {
 body {
   background-color: #f7f7f7;
   font-family: 'Roboto', 'Helvetica Neue', sans-serif;
-  margin-top: 6em;
+  margin: 6em 2em 2em 2em;
 }
 
 h1 {
@@ -19,5 +19,7 @@ h1 {
 }
 
 .content-container {
-  margin: 2em;
+  // margin: 2em;
+  margin: 0 auto;
+  max-width: 1000px;
 }

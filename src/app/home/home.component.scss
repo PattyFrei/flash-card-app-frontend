@@ -1,0 +1,10 @@
+.sections {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.app-info-section,
+.login-section {
+  max-width: 400px;
+}
