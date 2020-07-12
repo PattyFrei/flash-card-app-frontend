@@ -10,7 +10,8 @@ import { QuestionComponent } from './editor/question/question.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  // { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', component: HomeComponent },
   { path: 'catalogue', component: CatalogueComponent },
   { path: 'deck/:id', component: DeckComponent },
   { path: 'quiz/:id', component: CardComponent },

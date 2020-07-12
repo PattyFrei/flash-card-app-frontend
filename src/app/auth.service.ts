@@ -20,7 +20,7 @@ export class AuthService {
   auth0Client$ = (from(
     createAuth0Client({
       domain: 'flashcardapp.eu.auth0.com',
-      client_id: '7Lope0qwRzbesf2usQzg4SxAX8NGZKZY',
+      client_id: 'R5sxx2LYAGCq2Gs6PDAIKvs1IbA2GzGA',
       redirect_uri: `${window.location.origin}`,
     })
   ) as Observable<Auth0Client>).pipe(
@@ -56,7 +56,12 @@ export class AuthService {
   // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#getuser
   getUser$(options?): Observable<any> {
     return this.auth0Client$.pipe(
-      concatMap((client: Auth0Client) => from(client.getUser(options))),
+      concatMap(async (client: Auth0Client) => {
+        const token = await client.getIdTokenClaims(options);
+        console.log('TEST3');
+        console.log(token);
+        return from(client.getUser(options));
+      }),
       tap((user) => this.userProfileSubject$.next(user))
     );
   }
