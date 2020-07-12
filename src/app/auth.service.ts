@@ -22,6 +22,7 @@ export class AuthService {
       domain: 'flashcardapp.eu.auth0.com',
       client_id: 'R5sxx2LYAGCq2Gs6PDAIKvs1IbA2GzGA',
       redirect_uri: `${window.location.origin}`,
+      audience: 'flashcard',
     })
   ) as Observable<Auth0Client>).pipe(
     shareReplay(1), // Every subscription receives the same shared value
@@ -56,12 +57,7 @@ export class AuthService {
   // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#getuser
   getUser$(options?): Observable<any> {
     return this.auth0Client$.pipe(
-      concatMap(async (client: Auth0Client) => {
-        const token = await client.getIdTokenClaims(options);
-        console.log('TEST3');
-        console.log(token);
-        return from(client.getUser(options));
-      }),
+      concatMap((client: Auth0Client) => from(client.getUser(options))),
       tap((user) => this.userProfileSubject$.next(user))
     );
   }
@@ -129,9 +125,15 @@ export class AuthService {
     this.auth0Client$.subscribe((client: Auth0Client) => {
       // Call method to log out
       client.logout({
-        client_id: '7Lope0qwRzbesf2usQzg4SxAX8NGZKZY',
+        client_id: 'R5sxx2LYAGCq2Gs6PDAIKvs1IbA2GzGA',
         returnTo: `${window.location.origin}`,
       });
     });
+  }
+
+  getTokenSilently$(options?): Observable<string> {
+    return this.auth0Client$.pipe(
+      concatMap((client: Auth0Client) => from(client.getTokenSilently(options)))
+    );
   }
 }
