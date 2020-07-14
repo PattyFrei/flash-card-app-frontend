@@ -15,7 +15,7 @@ import { Card } from 'src/app/card/card';
 export class QuestionComponent implements OnInit {
   numberOfDefaultAnswers = 4;
   subjects: any;
-  selectedQuestionType = 'single-choice';
+  selectedQuestionType = 'singleChoice';
   submitted = false;
   submittedCard: Card;
 
@@ -24,7 +24,7 @@ export class QuestionComponent implements OnInit {
     topic: new FormControl(''),
     subject: new FormControl('', Validators.required),
     questionText: new FormControl('', Validators.required),
-    questionType: new FormControl('single-choice', Validators.required),
+    questionType: new FormControl('singleChoice', Validators.required),
     answers: new FormArray([], Validators.required),
     explanationText: new FormControl(''),
     image: new FormControl(''),
@@ -105,7 +105,7 @@ export class QuestionComponent implements OnInit {
     // console.log(this.selectedQuestionType);
     // console.log('nbr of answers:', this.answers.length);
 
-    if (this.selectedQuestionType === 'single-choice') {
+    if (this.selectedQuestionType === 'singleChoice') {
       for (let index = 0; index < this.answers.length; index++) {
         // console.log(index);
         this.answers.at(index).get('correctAnswer').patchValue(false);
