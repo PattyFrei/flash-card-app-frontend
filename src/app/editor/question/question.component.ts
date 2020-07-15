@@ -50,9 +50,7 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSubjects();
-    for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
-      index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
-    }
+    this.initFormAnswers();
   }
 
   addAnswer(correctAnswer: boolean): void {
@@ -64,17 +62,31 @@ export class QuestionComponent implements OnInit {
     this.answers.push(answerGroup);
   }
 
-  removeAnswer(index: number): void {
-    this.answers.removeAt(index);
+  getNumberOfCorrectAnswers(): number {
+    let numberOfCorrectAnswers = 0;
+    for (let index = 0; index < this.answers.length; index++) {
+      const isCorrectAnswer = this.answers.at(index).get('correctAnswer').value;
+      if (isCorrectAnswer === true) {
+        numberOfCorrectAnswers++;
+      }
+    }
+    return numberOfCorrectAnswers;
   }
 
-  moveAnswer(
-    toBeRemovedAtIndex: number,
-    toBeInsertedAtIndex: number,
-    answer: FormGroup
-  ): void {
-    this.answers.removeAt(toBeRemovedAtIndex);
-    this.answers.insert(toBeInsertedAtIndex, answer);
+  getMultipleChoiceValidity(): boolean {
+    const numberOfCorrectAnswers = this.getNumberOfCorrectAnswers();
+    if (numberOfCorrectAnswers > 1) {
+      return true;
+    }
+    return false;
+  }
+
+  getSingleChoiceValidity(): boolean {
+    const numberOfCorrectAnswers = this.getNumberOfCorrectAnswers();
+    if (numberOfCorrectAnswers === 1) {
+      return true;
+    }
+    return false;
   }
 
   getSubjects(): void {
@@ -86,69 +98,25 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  sortSubjects(): void {
-    this.subjects.sort((a, b) =>
-      a.name.localeCompare(b.name, 'de', { ignorePunctuation: true })
-    );
-  }
-
-  resetForm(): void {
-    this.submitted = false;
-    this.formError = '';
-    this.form.reset({
-      name: '',
-      topic: '',
-      subject: '',
-      questionText: '',
-      questionType: 'singleChoice',
-      explanationText: '',
-      image: '',
-      srcCode: '',
-    });
-    this.answers.clear();
+  initFormAnswers(): void {
     for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
       index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
     }
+  }
+
+  moveAnswer(
+    toBeRemovedAtIndex: number,
+    toBeInsertedAtIndex: number,
+    answer: FormGroup
+  ): void {
+    this.answers.removeAt(toBeRemovedAtIndex);
+    this.answers.insert(toBeInsertedAtIndex, answer);
   }
 
   onSelectedQuestionTypeChange(event: MatRadioChange): void {
     this.selectedQuestionType = event.value;
     if (this.selectedQuestionType === 'singleChoice') {
       this.setDefaultCorrectAnswerForSingleChoice();
-    }
-  }
-
-  setCorrectAnswerValue(event: MatSlideToggleChange): void {
-    const selectedAnswerIndex = parseInt(event.source.id, 10);
-    const isCorrectAnswer = event.checked;
-
-    if (this.selectedQuestionType === 'singleChoice') {
-      for (let index = 0; index < this.answers.length; index++) {
-        // console.log(index);
-        this.answers.at(index).get('correctAnswer').patchValue(false);
-      }
-      this.answers
-        .at(selectedAnswerIndex)
-        .get('correctAnswer')
-        .patchValue(true);
-    } else if (this.selectedQuestionType === 'multipleChoice') {
-      isCorrectAnswer
-        ? this.answers
-            .at(selectedAnswerIndex)
-            .get('correctAnswer')
-            .patchValue(true)
-        : this.answers
-            .at(selectedAnswerIndex)
-            .get('correctAnswer')
-            .patchValue(false);
-    }
-  }
-
-  setDefaultCorrectAnswerForSingleChoice(): void {
-    for (let index = 0; index < this.answers.length; index++) {
-      index <= 0
-        ? this.answers.at(index).get('correctAnswer').patchValue(true)
-        : this.answers.at(index).get('correctAnswer').patchValue(false);
     }
   }
 
@@ -191,30 +159,64 @@ export class QuestionComponent implements OnInit {
     // });
   }
 
-  getMultipleChoiceValidity(): boolean {
-    const numberOfCorrectAnswers = this.getNumberOfCorrectAnswers();
-    if (numberOfCorrectAnswers > 1) {
-      return true;
-    }
-    return false;
+  removeAnswer(index: number): void {
+    this.answers.removeAt(index);
   }
 
-  getSingleChoiceValidity(): boolean {
-    const numberOfCorrectAnswers = this.getNumberOfCorrectAnswers();
-    if (numberOfCorrectAnswers === 1) {
-      return true;
-    }
-    return false;
+  resetForm(): void {
+    this.submitted = false;
+    this.formError = '';
+    this.form.reset({
+      name: '',
+      topic: '',
+      subject: '',
+      questionText: '',
+      questionType: 'singleChoice',
+      explanationText: '',
+      image: '',
+      srcCode: '',
+    });
+    this.answers.clear();
+    this.initFormAnswers();
   }
 
-  getNumberOfCorrectAnswers(): number {
-    let numberOfCorrectAnswers = 0;
-    for (let index = 0; index < this.answers.length; index++) {
-      const isCorrectAnswer = this.answers.at(index).get('correctAnswer').value;
-      if (isCorrectAnswer === true) {
-        numberOfCorrectAnswers++;
+  setCorrectAnswerValue(event: MatSlideToggleChange): void {
+    const selectedAnswerIndex = parseInt(event.source.id, 10);
+    const isCorrectAnswer = event.checked;
+
+    if (this.selectedQuestionType === 'singleChoice') {
+      for (let index = 0; index < this.answers.length; index++) {
+        // console.log(index);
+        this.answers.at(index).get('correctAnswer').patchValue(false);
       }
+      this.answers
+        .at(selectedAnswerIndex)
+        .get('correctAnswer')
+        .patchValue(true);
+    } else if (this.selectedQuestionType === 'multipleChoice') {
+      isCorrectAnswer
+        ? this.answers
+            .at(selectedAnswerIndex)
+            .get('correctAnswer')
+            .patchValue(true)
+        : this.answers
+            .at(selectedAnswerIndex)
+            .get('correctAnswer')
+            .patchValue(false);
     }
-    return numberOfCorrectAnswers;
+  }
+
+  setDefaultCorrectAnswerForSingleChoice(): void {
+    for (let index = 0; index < this.answers.length; index++) {
+      index <= 0
+        ? this.answers.at(index).get('correctAnswer').patchValue(true)
+        : this.answers.at(index).get('correctAnswer').patchValue(false);
+    }
+  }
+
+  sortSubjects(): void {
+    this.subjects.sort((a, b) =>
+      a.name.localeCompare(b.name, 'de', { ignorePunctuation: true })
+    );
   }
 }
