@@ -2,7 +2,7 @@
   <mat-tab-group mat-align-tabs="start">
     <mat-tab label="Fragen">
       <h3>Neue Frage erstellen</h3>
-      <form [formGroup]="questionForm" (ngSubmit)="onSubmit(questionForm)">
+      <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
         <mat-form-field
           hintLabel="Gebe der Frage einen deskriptiven Namen"
           appearance="fill"
@@ -174,12 +174,16 @@
         </ng-container>
 
         <mat-divider></mat-divider>
-
+        <div>{{ formError }}</div>
         <div class="button-row">
           <button mat-raised-button color="primary">
             Erstellen
           </button>
-          <button mat-raised-button color="basic" (click)="resetForm()">
+          <button
+            mat-raised-button
+            color="basic"
+            (click)="resetForm(); $event.preventDefault()"
+          >
             Zurücksetzen
           </button>
         </div>

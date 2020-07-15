@@ -14,6 +14,7 @@ import { Card } from 'src/app/card/card';
 })
 export class QuestionComponent implements OnInit {
   numberOfDefaultAnswers = 4;
+  formError = 'test';
   subjects: any;
   selectedQuestionType = 'singleChoice';
   submitted = false;
@@ -31,8 +32,16 @@ export class QuestionComponent implements OnInit {
     srcCode: new FormControl(''),
   });
 
+  get form() {
+    return this.questionForm;
+  }
+
+  get questionType() {
+    return this.form.get('questionType');
+  }
+
   get answers() {
-    return this.questionForm.get('answers') as FormArray;
+    return this.form.get('answers') as FormArray;
   }
 
   constructor(private deckService: DeckService) {}
@@ -58,6 +67,8 @@ export class QuestionComponent implements OnInit {
   removeAnswer(index: number): void {
     this.answers.removeAt(index);
     // remove correctAnswer flag if has one, select 1st answer
+    // if this.answers.at(index).get('correctAnswer') === true;
+    // this.answers.at(0).get('correctAnswer').patchValue(true);
   }
 
   moveAnswer(
@@ -86,15 +97,28 @@ export class QuestionComponent implements OnInit {
 
   resetForm(): void {
     this.submitted = false;
-    this.answers.clear();
-    for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
-      index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
-    }
+    this.form.reset();
+    this.answers.reset();
+    this.form.get('questionType').patchValue('singleChoice');
+    this.setDefaultCorrectAnswerForSingleChoice();
+    // for (let index = 0; index < this.answers.length; index++) {
+    //   index <= 0
+    //     ? this.answers.at(index).get('correctAnswer').patchValue(true)
+    //     : this.answers.at(index).get('correctAnswer').patchValue(false);
+    // }
   }
 
   onSelectedQuestionTypeChange(event: MatRadioChange): void {
     this.selectedQuestionType = event.value;
     console.log(this.selectedQuestionType);
+    if (this.selectedQuestionType === 'singleChoice') {
+      this.setDefaultCorrectAnswerForSingleChoice();
+    }
+    // for (let index = 0; index < this.answers.length; index++) {
+    //   index <= 0
+    //     ? this.answers.at(index).get('correctAnswer').patchValue(true)
+    //     : this.answers.at(index).get('correctAnswer').patchValue(false);
+    // }
   }
 
   onCorrectAnswerChange(event: MatSlideToggleChange): void {
@@ -121,14 +145,30 @@ export class QuestionComponent implements OnInit {
     }
   }
 
+  setDefaultCorrectAnswerForSingleChoice(): void {
+    for (let index = 0; index < this.answers.length; index++) {
+      index <= 0
+        ? this.answers.at(index).get('correctAnswer').patchValue(true)
+        : this.answers.at(index).get('correctAnswer').patchValue(false);
+    }
+  }
+
   onSubmit(questionForm: FormGroup): void {
     this.submitted = true;
-    // check if single-choice and multiple-choice selection is valid
-    if (this.questionForm.invalid) {
-      console.log('submit denied');
+    const isMultipleChoiceValid = this.getMultipleChoiceValidity();
+
+    if (this.form.invalid) {
+      this.formError = 'Die Angaben sind nicht vollständig.';
+      return;
+    } else if (!isMultipleChoiceValid) {
+      this.formError = 'Markiere mindestens zwei richtige Antworten.';
+      return;
+    } else if (!isMultipleChoiceValid) {
+      this.formError = 'Markiere eine richtige Antwort.';
       return;
     } else {
-      console.log(questionForm);
+      this.formError = '';
+      // console.log(form);
 
       const submittedCard: Card = {
         name: questionForm.value.name,
@@ -142,10 +182,29 @@ export class QuestionComponent implements OnInit {
         owner: 'Dummy',
       };
 
-      this.deckService.createCard(submittedCard).subscribe((data) => {
-        console.log(data);
-        // redirect to get questions
-      });
+      // this.deckService.createCard(submittedCard).subscribe((data) => {
+      //   console.log(data);
+      //   // redirect to get questions
+      // });
     }
+  }
+
+  getMultipleChoiceValidity(): boolean {
+    let numberOfCorrectAnswers = 0;
+    if (this.selectedQuestionType === 'multipleChoice') {
+      for (let index = 0; index < this.answers.length; index++) {
+        const isCorrectAnswer = this.answers.at(index).get('correctAnswer')
+          .value;
+        if (isCorrectAnswer === true) {
+          numberOfCorrectAnswers++;
+        }
+      }
+      if (numberOfCorrectAnswers <= 1) {
+        console.log(numberOfCorrectAnswers);
+        return false;
+      }
+      return true;
+    }
+    return true;
   }
 }
