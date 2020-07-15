@@ -14,7 +14,7 @@ import { Card } from 'src/app/card/card';
 })
 export class QuestionComponent implements OnInit {
   numberOfDefaultAnswers = 4;
-  formError = 'test';
+  formError = '';
   subjects: any;
   selectedQuestionType = 'singleChoice';
   submitted = false;
@@ -66,9 +66,6 @@ export class QuestionComponent implements OnInit {
 
   removeAnswer(index: number): void {
     this.answers.removeAt(index);
-    // remove correctAnswer flag if has one, select 1st answer
-    // if this.answers.at(index).get('correctAnswer') === true;
-    // this.answers.at(0).get('correctAnswer').patchValue(true);
   }
 
   moveAnswer(
@@ -97,49 +94,51 @@ export class QuestionComponent implements OnInit {
 
   resetForm(): void {
     this.submitted = false;
-    this.form.reset();
-    this.answers.reset();
-    this.form.get('questionType').patchValue('singleChoice');
-    this.setDefaultCorrectAnswerForSingleChoice();
-    // for (let index = 0; index < this.answers.length; index++) {
-    //   index <= 0
-    //     ? this.answers.at(index).get('correctAnswer').patchValue(true)
-    //     : this.answers.at(index).get('correctAnswer').patchValue(false);
-    // }
+    this.formError = '';
+    this.form.reset({
+      name: '',
+      topic: '',
+      subject: '',
+      questionText: '',
+      questionType: 'singleChoice',
+      explanationText: '',
+      image: '',
+      srcCode: '',
+    });
+    this.answers.clear();
+    for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
+      index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
+    }
   }
 
   onSelectedQuestionTypeChange(event: MatRadioChange): void {
     this.selectedQuestionType = event.value;
-    console.log(this.selectedQuestionType);
     if (this.selectedQuestionType === 'singleChoice') {
       this.setDefaultCorrectAnswerForSingleChoice();
     }
-    // for (let index = 0; index < this.answers.length; index++) {
-    //   index <= 0
-    //     ? this.answers.at(index).get('correctAnswer').patchValue(true)
-    //     : this.answers.at(index).get('correctAnswer').patchValue(false);
-    // }
   }
 
-  onCorrectAnswerChange(event: MatSlideToggleChange): void {
-    const selectedAnswer = parseInt(event.source.id, 10);
+  setCorrectAnswerValue(event: MatSlideToggleChange): void {
+    const selectedAnswerIndex = parseInt(event.source.id, 10);
     const isCorrectAnswer = event.checked;
-
-    // console.log(selectedAnswer, isCorrectAnswer);
-    // console.log(this.selectedQuestionType);
-    // console.log('nbr of answers:', this.answers.length);
 
     if (this.selectedQuestionType === 'singleChoice') {
       for (let index = 0; index < this.answers.length; index++) {
         // console.log(index);
         this.answers.at(index).get('correctAnswer').patchValue(false);
       }
-      this.answers.at(selectedAnswer).get('correctAnswer').patchValue(true);
-    } else {
+      this.answers
+        .at(selectedAnswerIndex)
+        .get('correctAnswer')
+        .patchValue(true);
+    } else if (this.selectedQuestionType === 'multipleChoice') {
       isCorrectAnswer
-        ? this.answers.at(selectedAnswer).get('correctAnswer').patchValue(true)
+        ? this.answers
+            .at(selectedAnswerIndex)
+            .get('correctAnswer')
+            .patchValue(true)
         : this.answers
-            .at(selectedAnswer)
+            .at(selectedAnswerIndex)
             .get('correctAnswer')
             .patchValue(false);
     }
@@ -154,57 +153,68 @@ export class QuestionComponent implements OnInit {
   }
 
   onSubmit(questionForm: FormGroup): void {
-    this.submitted = true;
-    const isMultipleChoiceValid = this.getMultipleChoiceValidity();
-
     if (this.form.invalid) {
       this.formError = 'Die Angaben sind nicht vollständig.';
       return;
-    } else if (!isMultipleChoiceValid) {
-      this.formError = 'Markiere mindestens zwei richtige Antworten.';
-      return;
-    } else if (!isMultipleChoiceValid) {
-      this.formError = 'Markiere eine richtige Antwort.';
-      return;
+    } else if (this.questionType.value === 'singleChoice') {
+      const isSingleChoiceValid = this.getSingleChoiceValidity();
+      if (isSingleChoiceValid === false) {
+        this.formError = 'Markiere eine richtige Antwort.';
+        return;
+      }
     } else {
-      this.formError = '';
-      // console.log(form);
-
-      const submittedCard: Card = {
-        name: questionForm.value.name,
-        subject: questionForm.value.subject.name,
-        topic: questionForm.value.topic,
-        questionText: questionForm.value.questionText,
-        questionType: questionForm.value.questionType,
-        answers: questionForm.value.answers,
-        srcCode: questionForm.value.srcCode,
-        image: questionForm.value.image,
-        owner: 'Dummy',
-      };
-
-      // this.deckService.createCard(submittedCard).subscribe((data) => {
-      //   console.log(data);
-      //   // redirect to get questions
-      // });
+      const isMultipleChoiceValid = this.getMultipleChoiceValidity();
+      if (isMultipleChoiceValid === false) {
+        this.formError = 'Markiere mindestens zwei richtige Antworten.';
+        return;
+      }
     }
+
+    this.submitted = true;
+    this.formError = '';
+    const submittedCard: Card = {
+      name: questionForm.value.name,
+      subject: questionForm.value.subject.name,
+      topic: questionForm.value.topic,
+      questionText: questionForm.value.questionText,
+      questionType: questionForm.value.questionType,
+      answers: questionForm.value.answers,
+      srcCode: questionForm.value.srcCode,
+      image: questionForm.value.image,
+      owner: 'Dummy',
+    };
+    console.log(submittedCard);
+
+    // this.deckService.createCard(submittedCard).subscribe((data) => {
+    //   console.log(data);
+    //   // redirect to get questions
+    // });
   }
 
   getMultipleChoiceValidity(): boolean {
-    let numberOfCorrectAnswers = 0;
-    if (this.selectedQuestionType === 'multipleChoice') {
-      for (let index = 0; index < this.answers.length; index++) {
-        const isCorrectAnswer = this.answers.at(index).get('correctAnswer')
-          .value;
-        if (isCorrectAnswer === true) {
-          numberOfCorrectAnswers++;
-        }
-      }
-      if (numberOfCorrectAnswers <= 1) {
-        console.log(numberOfCorrectAnswers);
-        return false;
-      }
+    const numberOfCorrectAnswers = this.getNumberOfCorrectAnswers();
+    if (numberOfCorrectAnswers > 1) {
       return true;
     }
-    return true;
+    return false;
+  }
+
+  getSingleChoiceValidity(): boolean {
+    const numberOfCorrectAnswers = this.getNumberOfCorrectAnswers();
+    if (numberOfCorrectAnswers === 1) {
+      return true;
+    }
+    return false;
+  }
+
+  getNumberOfCorrectAnswers(): number {
+    let numberOfCorrectAnswers = 0;
+    for (let index = 0; index < this.answers.length; index++) {
+      const isCorrectAnswer = this.answers.at(index).get('correctAnswer').value;
+      if (isCorrectAnswer === true) {
+        numberOfCorrectAnswers++;
+      }
+    }
+    return numberOfCorrectAnswers;
   }
 }
