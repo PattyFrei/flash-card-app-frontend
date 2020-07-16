@@ -25,6 +25,15 @@
       >Editor</a
     >
 
+    <a
+      class="toolbar-link"
+      mat-flat-button
+      color="primary"
+      routerLink="/"
+      *ngIf="auth.loggedIn"
+      >Stats</a
+    >
+
     <span class="spacer"></span>
 
     <button
@@ -37,13 +46,23 @@
 
     <button
       mat-icon-button
+      [matMenuTriggerFor]="beforeMenu"
       class="icon"
       aria-label="icon-button with person icon"
-      routerLink="/dashboard"
-      *ngIf="auth.loggedIn"
     >
       <mat-icon>person</mat-icon>
     </button>
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <button (click)="auth.login()" *ngIf="!auth.loggedIn" mat-menu-item>
+        Einloggen
+      </button>
+      <button routerLink="/dashboard" *ngIf="auth.loggedIn" mat-menu-item>
+        Profil
+      </button>
+      <button (click)="auth.logout()" *ngIf="auth.loggedIn" mat-menu-item>
+        Ausloggen
+      </button>
+    </mat-menu>
 
     <button
       mat-icon-button
