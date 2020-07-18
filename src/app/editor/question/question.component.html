@@ -1,195 +1,184 @@
-<div class="content-container">
-  <mat-tab-group mat-align-tabs="start">
-    <mat-tab label="Fragen">
-      <h3>Neue Frage erstellen</h3>
-      <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
-        <mat-form-field
-          hintLabel="Gebe der Frage einen deskriptiven Namen"
-          appearance="fill"
-        >
-          <mat-label>Name</mat-label>
-          <input matInput #input formControlName="name" required />
-          <mat-hint align="end">{{ input.value?.length || 0 }}/50</mat-hint>
-          <!-- <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error> -->
-        </mat-form-field>
+<h3>Neue Frage erstellen</h3>
+<form [formGroup]="questionForm" (ngSubmit)="onSubmit(questionForm)">
+  <mat-form-field
+    hintLabel="Gebe der Frage einen deskriptiven Namen"
+    appearance="fill"
+  >
+    <mat-label>Name</mat-label>
+    <input matInput #input formControlName="name" required />
+    <mat-hint align="end">{{ input.value?.length || 0 }}/50</mat-hint>
+    <!-- <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error> -->
+  </mat-form-field>
 
-        <mat-form-field
-          hintLabel="z.B. Programmieren, Dynamik, Schnittmuster etc."
-          appearance="fill"
-        >
-          <mat-label>Thema</mat-label>
-          <input matInput formControlName="topic" />
-        </mat-form-field>
+  <mat-form-field
+    hintLabel="z.B. Programmieren, Dynamik, Schnittmuster etc."
+    appearance="fill"
+  >
+    <mat-label>Thema</mat-label>
+    <input matInput formControlName="topic" />
+  </mat-form-field>
 
-        <mat-form-field
-          hintLabel="Wähle ein passendes Fachgebiet aus"
-          appearance="fill"
-        >
-          <mat-label>Fachgebiet</mat-label>
-          <mat-select formControlName="subject" required>
-            <mat-option></mat-option>
-            <mat-option [value]="subject" *ngFor="let subject of subjects">{{
-              subject.name
-            }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+  <mat-form-field
+    hintLabel="Wähle ein passendes Fachgebiet aus"
+    appearance="fill"
+  >
+    <mat-label>Fachgebiet</mat-label>
+    <mat-select formControlName="subject" required>
+      <mat-option></mat-option>
+      <mat-option [value]="subject" *ngFor="let subject of subjects">{{
+        subject.name
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
 
-        <mat-divider></mat-divider>
+  <mat-divider></mat-divider>
 
-        <mat-form-field
-          class="big-field"
-          hintLabel="Gebe den Text für die Frage ein"
-          appearance="fill"
-        >
-          <mat-label>Fragetext</mat-label>
-          <textarea matInput formControlName="questionText" required></textarea>
-        </mat-form-field>
+  <mat-form-field
+    class="big-field"
+    hintLabel="Gebe den Text für die Frage ein"
+    appearance="fill"
+  >
+    <mat-label>Fragetext</mat-label>
+    <textarea matInput formControlName="questionText" required></textarea>
+  </mat-form-field>
 
-        <label class="button-row-label"
-          >Lade zusätzliche Medien hoch, die unter dem Fragetext angezeigt
-          werden sollen.</label
-        >
-        <div class="button-row">
-          <button mat-raised-button color="basic" disabled>
-            Bild hochladen
-          </button>
-          <button mat-raised-button color="basic" disabled>
-            Quelltext hochladen
-          </button>
-        </div>
+  <label class="button-row-label"
+    >Lade zusätzliche Medien hoch, die unter dem Fragetext angezeigt werden
+    sollen.</label
+  >
+  <div class="button-row">
+    <button mat-raised-button color="basic" disabled>
+      Bild hochladen
+    </button>
+    <button mat-raised-button color="basic" disabled>
+      Quelltext hochladen
+    </button>
+  </div>
 
-        <mat-form-field
-          class="big-field"
-          hintLabel="Gebe eine Erklärung zur Frage an, 
+  <mat-form-field
+    class="big-field"
+    hintLabel="Gebe eine Erklärung zur Frage an, 
           die nach dem Überprüfen der Antwort als Lösung angezeigt werden soll"
-          appearance="fill"
-        >
-          <mat-label>Erklärungstext</mat-label>
-          <textarea matInput formControlName="explanationText"></textarea>
-        </mat-form-field>
+    appearance="fill"
+  >
+    <mat-label>Erklärungstext</mat-label>
+    <textarea matInput formControlName="explanationText"></textarea>
+  </mat-form-field>
 
-        <mat-divider></mat-divider>
+  <mat-divider></mat-divider>
 
-        <label class="radio-group-label">Wähle einen Antworttyp aus:</label>
-        <mat-radio-group
-          aria-labelledby="radio-group-label"
-          formControlName="questionType"
-          class="radio-group"
-        >
-          <mat-radio-button
-            class="radio-button"
-            value="singleChoice"
-            (change)="onSelectedQuestionTypeChange($event)"
-          >
-            Eine richtige Antwort
-          </mat-radio-button>
-          <mat-radio-button
-            class="radio-button"
-            value="multipleChoice"
-            (change)="onSelectedQuestionTypeChange($event)"
-          >
-            Mehrere richtige Antworten
-          </mat-radio-button>
-        </mat-radio-group>
+  <label class="radio-group-label">Wähle einen Antworttyp aus:</label>
+  <mat-radio-group
+    aria-labelledby="radio-group-label"
+    formControlName="questionType"
+    class="radio-group"
+  >
+    <mat-radio-button
+      class="radio-button"
+      value="singleChoice"
+      (change)="onSelectedQuestionTypeChange($event)"
+    >
+      Eine richtige Antwort
+    </mat-radio-button>
+    <mat-radio-button
+      class="radio-button"
+      value="multipleChoice"
+      (change)="onSelectedQuestionTypeChange($event)"
+    >
+      Mehrere richtige Antworten
+    </mat-radio-button>
+  </mat-radio-group>
 
-        <ng-container formArrayName="answers">
-          <div class="answer-action-buttons">
-            <button
-              mat-raised-button
+  <ng-container formArrayName="answers">
+    <div class="answer-action-buttons">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addAnswer(false); $event.preventDefault()"
+      >
+        Antwort hinzufügen
+      </button>
+      <button
+        mat-raised-button
+        color="basic"
+        (click)="accordion.openAll(); $event.preventDefault()"
+      >
+        Alle aufklappen
+      </button>
+      <button
+        mat-raised-button
+        color="basic"
+        (click)="accordion.closeAll(); $event.preventDefault()"
+      >
+        Alle einklappen
+      </button>
+    </div>
+
+    <mat-accordion class="headers-align" multi>
+      <div *ngFor="let answer of answers.controls; index as i">
+        <ng-container [formGroupName]="i">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> {{ i + 1 }}. Antwort </mat-panel-title>
+              <mat-panel-description>
+                Klicke für eine Eingabe
+                <button
+                  class="expansion-panel-header-del-button"
+                  [disabled]="i < 4"
+                  mat-icon-button
+                  aria-label="del"
+                  (click)="removeAnswer(i)"
+                >
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <mat-slide-toggle
               color="primary"
-              (click)="addAnswer(false); $event.preventDefault()"
+              formControlName="correctAnswer"
+              id="{{ i }}"
+              (change)="setCorrectAnswerValue($event)"
             >
-              Antwort hinzufügen
-            </button>
-            <button
-              mat-raised-button
-              color="basic"
-              (click)="accordion.openAll(); $event.preventDefault()"
+              Als richtige Antwort markieren
+            </mat-slide-toggle>
+
+            <mat-form-field
+              hintLabel="Gebe die {{ i + 1 }}. Antwort ein"
+              appearance="fill"
+              class="big-field"
             >
-              Alle aufklappen
-            </button>
-            <button
-              mat-raised-button
-              color="basic"
-              (click)="accordion.closeAll(); $event.preventDefault()"
+              <mat-label>Antworttext</mat-label>
+              <input matInput formControlName="answerText" required
+            /></mat-form-field>
+            <mat-form-field
+              hintLabel="Gebe eine Erklärung ein, warum die {{
+                i + 1
+              }}. Antwort richtig oder falsch ist"
+              appearance="fill"
+              class="big-field"
             >
-              Alle einklappen
-            </button>
-          </div>
-
-          <mat-accordion class="headers-align" multi>
-            <div *ngFor="let answer of answers.controls; index as i">
-              <ng-container [formGroupName]="i">
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title> {{ i + 1 }}. Antwort </mat-panel-title>
-                    <mat-panel-description>
-                      Klicke für eine Eingabe
-                      <button
-                        class="expansion-panel-header-del-button"
-                        [disabled]="i < 4"
-                        mat-icon-button
-                        aria-label="del"
-                        (click)="removeAnswer(i)"
-                      >
-                        <mat-icon>delete_forever</mat-icon>
-                      </button>
-                    </mat-panel-description>
-                  </mat-expansion-panel-header>
-
-                  <mat-slide-toggle
-                    color="primary"
-                    formControlName="correctAnswer"
-                    id="{{ i }}"
-                    (change)="setCorrectAnswerValue($event)"
-                  >
-                    Als richtige Antwort markieren
-                  </mat-slide-toggle>
-
-                  <mat-form-field
-                    hintLabel="Gebe die {{ i + 1 }}. Antwort ein"
-                    appearance="fill"
-                    class="big-field"
-                  >
-                    <mat-label>Antworttext</mat-label>
-                    <input matInput formControlName="answerText" required
-                  /></mat-form-field>
-                  <mat-form-field
-                    hintLabel="Gebe eine Erklärung ein, warum die {{
-                      i + 1
-                    }}. Antwort richtig oder falsch ist"
-                    appearance="fill"
-                    class="big-field"
-                  >
-                    <mat-label>Erklärungstext</mat-label>
-                    <textarea
-                      matInput
-                      formControlName="explanationText"
-                    ></textarea>
-                  </mat-form-field>
-                </mat-expansion-panel>
-              </ng-container>
-            </div>
-          </mat-accordion>
+              <mat-label>Erklärungstext</mat-label>
+              <textarea matInput formControlName="explanationText"></textarea>
+            </mat-form-field>
+          </mat-expansion-panel>
         </ng-container>
+      </div>
+    </mat-accordion>
+  </ng-container>
 
-        <mat-divider></mat-divider>
-        <div>{{ formError }}</div>
-        <div class="button-row">
-          <button mat-raised-button color="primary">
-            Erstellen
-          </button>
-          <button
-            mat-raised-button
-            color="basic"
-            (click)="resetForm(); $event.preventDefault()"
-          >
-            Zurücksetzen
-          </button>
-        </div>
-      </form>
-    </mat-tab>
-
-    <mat-tab label="Kataloge"></mat-tab>
-  </mat-tab-group>
-</div>
+  <mat-divider></mat-divider>
+  <div>{{ formError }}</div>
+  <div class="button-row">
+    <button mat-raised-button color="primary">
+      Erstellen
+    </button>
+    <button
+      mat-raised-button
+      color="basic"
+      (click)="resetForm(); $event.preventDefault()"
+    >
+      Zurücksetzen
+    </button>
+  </div>
+</form>
