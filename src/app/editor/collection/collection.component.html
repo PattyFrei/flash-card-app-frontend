@@ -1,1 +1,106 @@
-<p>collection works!</p>
+<h3>Neuen Fragenkatalog erstellen</h3>
+<form [formGroup]="collectionForm" (ngSubmit)="onSubmit(collectionForm)">
+  <mat-form-field
+    hintLabel="Gebe dem Fragenkatalog einen deskriptiven Namen"
+    appearance="fill"
+  >
+    <mat-label>Name</mat-label>
+    <input matInput #input formControlName="name" required />
+  </mat-form-field>
+
+  <mat-form-field
+    hintLabel="z.B. Programmieren, Dynamik, Schnittmuster etc."
+    appearance="fill"
+  >
+    <mat-label>Thema</mat-label>
+    <input matInput formControlName="topic" />
+  </mat-form-field>
+
+  <mat-form-field
+    hintLabel="Wähle ein passendes Fachgebiet aus"
+    appearance="fill"
+  >
+    <mat-label>Fachgebiet</mat-label>
+    <mat-select formControlName="subject" required>
+      <mat-option></mat-option>
+      <mat-option [value]="subject" *ngFor="let subject of subjects">{{
+        subject.name
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field
+    hintLabel="Wähle ein passendes Schwierigkeitsstufe aus"
+    appearance="fill"
+  >
+    <mat-label>Schwierigkeitsstufe</mat-label>
+    <mat-select formControlName="difficulty" required>
+      <mat-option></mat-option>
+      <mat-option
+        [value]="difficulty"
+        *ngFor="let difficulty of difficulties"
+        >{{ difficulty.level }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field
+    hintLabel="Falls zutreffend, gebe den Namen des zugehörigen Hochschulkurses an"
+    appearance="fill"
+  >
+    <mat-label>Kurs</mat-label>
+    <input matInput formControlName="course" />
+  </mat-form-field>
+
+  <mat-form-field hintLabel="z.B. SoSe 20 oder WiSe 20/21" appearance="fill">
+    <mat-label>Semester</mat-label>
+    <input matInput formControlName="semester" />
+  </mat-form-field>
+
+  <mat-form-field
+    class="big-field"
+    hintLabel="Gebe eine Beschreibung zum Fragenkatalog an"
+    appearance="fill"
+  >
+    <mat-label>Beschreibung</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-divider></mat-divider>
+  <div>Fragen hinzufügen...</div>
+  <mat-divider></mat-divider>
+
+  <div class="slide-toggle-box">
+    <mat-slide-toggle
+      color="primary"
+      formControlName="shareUrlActive"
+      (change)="setShareUrlActive($event)"
+    >
+      Der Fragenkatalog kann über den Share-Link abgerufen werden
+    </mat-slide-toggle>
+
+    <mat-slide-toggle
+      color="primary"
+      formControlName="publicVisibility"
+      (change)="setPublicVisibility($event)"
+    >
+      Der Fragenkatalog wird öffentlich in der Quizübersicht gelistet
+    </mat-slide-toggle>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div>{{ formError }}</div>
+  <div class="button-row">
+    <button mat-raised-button color="primary">
+      Erstellen
+    </button>
+    <button
+      mat-raised-button
+      color="basic"
+      (click)="resetForm(); $event.preventDefault()"
+    >
+      Zurücksetzen
+    </button>
+  </div>
+</form>

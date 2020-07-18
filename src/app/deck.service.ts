@@ -34,6 +34,12 @@ export class DeckService {
       .pipe(catchError(this.handleError));
   }
 
+  createDeck(deck: Deck): Observable<Deck> {
+    return this.httpClient
+      .post<Deck>(`decks`, deck)
+      .pipe(catchError(this.handleError));
+  }
+
   getSubjects(): Observable<Subject[]> {
     return of(SUBJECTS);
   }
