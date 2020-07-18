@@ -26,6 +26,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +38,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     CardComponent,
     DeckComponent,
     QuestionComponent,
+    DashboardComponent,
+    NavBarComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +63,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     ReactiveFormsModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatMenuModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

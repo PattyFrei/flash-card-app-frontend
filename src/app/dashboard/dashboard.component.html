@@ -1,0 +1,5 @@
+<div class="content-container">
+  <pre *ngIf="auth.userProfile$ | async as profile">
+    <code>{{ profile | json }}</code>
+    </pre>
+</div>
