@@ -30,6 +30,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HomeComponent } from './home/home.component';
+import { EditorComponent } from './editor/editor.component';
+import { CollectionComponent } from './editor/collection/collection.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { HomeComponent } from './home/home.component';
     DashboardComponent,
     NavBarComponent,
     HomeComponent,
+    EditorComponent,
+    CollectionComponent,
   ],
   imports: [
     BrowserModule,
