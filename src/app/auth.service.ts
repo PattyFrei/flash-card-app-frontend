@@ -63,6 +63,12 @@ export class AuthService {
     );
   }
 
+  updateUser(nickname: string): void {
+    // to be done
+    // https://auth0.com/docs/users/concepts/overview-user-profile#data-structure
+    // https://auth0.com/docs/api/management/v2#!/Users/patch_users_by_id
+  }
+
   private localAuthSetup() {
     // This should only be called on app initialization
     // Set up local authentication streams
