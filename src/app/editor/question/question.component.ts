@@ -4,8 +4,9 @@ import { MatAccordion } from '@angular/material/expansion';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
+import { AuthService } from '../../auth.service';
 import { DeckService } from './../../deck.service';
-import { Card } from 'src/app/card/card';
+import { Card } from '../../card/card';
 
 @Component({
   selector: 'app-question',
@@ -16,7 +17,7 @@ export class QuestionComponent implements OnInit {
   numberOfDefaultAnswers = 4;
   formError = '';
   subjects: any;
-  selectedQuestionType = 'singleChoice';
+  selectedQuestionType = 'single-choice';
   submitted = false;
   submittedCard: Card;
 
@@ -25,7 +26,7 @@ export class QuestionComponent implements OnInit {
     topic: new FormControl(''),
     subject: new FormControl('', Validators.required),
     questionText: new FormControl('', Validators.required),
-    questionType: new FormControl('singleChoice', Validators.required),
+    questionType: new FormControl('single-choice', Validators.required),
     answers: new FormArray([], Validators.required),
     explanationText: new FormControl(''),
     image: new FormControl(''),
@@ -44,7 +45,15 @@ export class QuestionComponent implements OnInit {
     return this.form.get('answers') as FormArray;
   }
 
-  constructor(private deckService: DeckService) {}
+  get profile() {
+    return this.auth.userProfile$ as any;
+  }
+
+  get userId() {
+    return this.profile.source.value.sub;
+  }
+
+  constructor(public auth: AuthService, private deckService: DeckService) {}
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
@@ -115,7 +124,7 @@ export class QuestionComponent implements OnInit {
 
   onSelectedQuestionTypeChange(event: MatRadioChange): void {
     this.selectedQuestionType = event.value;
-    if (this.selectedQuestionType === 'singleChoice') {
+    if (this.selectedQuestionType === 'single-choice') {
       this.setDefaultCorrectAnswerForSingleChoice();
     }
   }
@@ -124,7 +133,7 @@ export class QuestionComponent implements OnInit {
     if (this.form.invalid) {
       this.formError = 'Die Angaben sind nicht vollständig.';
       return;
-    } else if (this.questionType.value === 'singleChoice') {
+    } else if (this.questionType.value === 'single-choice') {
       const isSingleChoiceValid = this.getSingleChoiceValidity();
       if (isSingleChoiceValid === false) {
         this.formError = 'Markiere eine richtige Antwort.';
@@ -149,18 +158,18 @@ export class QuestionComponent implements OnInit {
       answers: questionForm.value.answers,
       srcCode: questionForm.value.srcCode,
       image: questionForm.value.image,
-      owner: 'Dummy',
+      owner: this.userId,
     };
-    console.log(submittedCard);
 
-    // this.deckService.createCard(submittedCard).subscribe((data) => {
-    //   console.log(data);
-    //   // redirect to get questions
-    // });
+    this.deckService.createCard(submittedCard).subscribe((data) => {
+      console.log(data);
+      // redirect to get questions
+    });
   }
 
   removeAnswer(index: number): void {
     this.answers.removeAt(index);
+    this.setDefaultCorrectAnswerForSingleChoice();
   }
 
   resetForm(): void {
@@ -171,7 +180,7 @@ export class QuestionComponent implements OnInit {
       topic: '',
       subject: '',
       questionText: '',
-      questionType: 'singleChoice',
+      questionType: 'single-choice',
       explanationText: '',
       image: '',
       srcCode: '',
@@ -184,16 +193,15 @@ export class QuestionComponent implements OnInit {
     const selectedAnswerIndex = parseInt(event.source.id, 10);
     const isCorrectAnswer = event.checked;
 
-    if (this.selectedQuestionType === 'singleChoice') {
+    if (this.selectedQuestionType === 'single-choice') {
       for (let index = 0; index < this.answers.length; index++) {
-        // console.log(index);
         this.answers.at(index).get('correctAnswer').patchValue(false);
       }
       this.answers
         .at(selectedAnswerIndex)
         .get('correctAnswer')
         .patchValue(true);
-    } else if (this.selectedQuestionType === 'multipleChoice') {
+    } else if (this.selectedQuestionType === 'multiple-choice') {
       isCorrectAnswer
         ? this.answers
             .at(selectedAnswerIndex)
