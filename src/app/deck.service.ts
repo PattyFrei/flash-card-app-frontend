@@ -16,18 +16,6 @@ import { SUBJECTS } from './card/subjects';
 export class DeckService {
   constructor(private httpClient: HttpClient) {}
 
-  getDecks(): Observable<Deck[]> {
-    return this.httpClient
-      .get<Deck[]>('decks')
-      .pipe(catchError(this.handleError));
-  }
-
-  getDeck(id: string): Observable<Deck> {
-    return this.httpClient
-      .get<Deck>(`decks/${id}`)
-      .pipe(catchError(this.handleError));
-  }
-
   createCard(card: Card): Observable<Card> {
     return this.httpClient
       .post<Card>(`cards`, card)
@@ -37,6 +25,30 @@ export class DeckService {
   createDeck(deck: Deck): Observable<Deck> {
     return this.httpClient
       .post<Deck>(`decks`, deck)
+      .pipe(catchError(this.handleError));
+  }
+
+  getDeck(id: string): Observable<Deck> {
+    return this.httpClient
+      .get<Deck>(`decks/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getDecks(): Observable<Deck[]> {
+    return this.httpClient
+      .get<Deck[]>('decks')
+      .pipe(catchError(this.handleError));
+  }
+
+  getMyDecks(): Observable<Deck[]> {
+    return this.httpClient
+      .get<Deck[]>('me/decks')
+      .pipe(catchError(this.handleError));
+  }
+
+  getMyCards(): Observable<Card[]> {
+    return this.httpClient
+      .get<Card[]>('me/cards')
       .pipe(catchError(this.handleError));
   }
 
