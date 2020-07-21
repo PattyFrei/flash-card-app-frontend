@@ -4,7 +4,9 @@ import { MatAccordion } from '@angular/material/expansion';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
+import { AuthService } from '../../auth.service';
 import { DeckService } from './../../deck.service';
+import { Card } from '../../card/card';
 
 @Component({
   selector: 'app-question',
@@ -13,34 +15,51 @@ import { DeckService } from './../../deck.service';
 })
 export class QuestionComponent implements OnInit {
   numberOfDefaultAnswers = 4;
+  formError = '';
   subjects: any;
-  selectedQuestionType = 'singleChoice';
+  selectedQuestionType = 'single-choice';
+  submitted = false;
+  submittedCard: Card;
 
   questionForm = new FormGroup({
     name: new FormControl('', Validators.required),
     topic: new FormControl(''),
     subject: new FormControl('', Validators.required),
     questionText: new FormControl('', Validators.required),
-    questionType: new FormControl('singleChoice', Validators.required),
+    questionType: new FormControl('single-choice', Validators.required),
     answers: new FormArray([], Validators.required),
     explanationText: new FormControl(''),
     image: new FormControl(''),
     srcCode: new FormControl(''),
   });
 
-  get answers() {
-    return this.questionForm.get('answers') as FormArray;
+  get form() {
+    return this.questionForm;
   }
 
-  constructor(private deckService: DeckService) {}
+  get questionType() {
+    return this.form.get('questionType');
+  }
+
+  get answers() {
+    return this.form.get('answers') as FormArray;
+  }
+
+  get profile() {
+    return this.auth.userProfile$ as any;
+  }
+
+  get userId() {
+    return this.profile.source.value.sub;
+  }
+
+  constructor(public auth: AuthService, private deckService: DeckService) {}
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   ngOnInit(): void {
     this.getSubjects();
-    for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
-      index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
-    }
+    this.initFormAnswers();
   }
 
   addAnswer(correctAnswer: boolean): void {
@@ -52,18 +71,31 @@ export class QuestionComponent implements OnInit {
     this.answers.push(answerGroup);
   }
 
-  removeAnswer(index: number): void {
-    this.answers.removeAt(index);
-    // remove correctAnswer flag if has one, select 1st answer
+  getNumberOfCorrectAnswers(): number {
+    let numberOfCorrectAnswers = 0;
+    for (let index = 0; index < this.answers.length; index++) {
+      const isCorrectAnswer = this.answers.at(index).get('correctAnswer').value;
+      if (isCorrectAnswer === true) {
+        numberOfCorrectAnswers++;
+      }
+    }
+    return numberOfCorrectAnswers;
   }
 
-  moveAnswer(
-    toBeRemovedAtIndex: number,
-    toBeInsertedAtIndex: number,
-    answer: FormGroup
-  ): void {
-    this.answers.removeAt(toBeRemovedAtIndex);
-    this.answers.insert(toBeInsertedAtIndex, answer);
+  getMultipleChoiceValidity(): boolean {
+    const numberOfCorrectAnswers = this.getNumberOfCorrectAnswers();
+    if (numberOfCorrectAnswers > 1) {
+      return true;
+    }
+    return false;
+  }
+
+  getSingleChoiceValidity(): boolean {
+    const numberOfCorrectAnswers = this.getNumberOfCorrectAnswers();
+    if (numberOfCorrectAnswers === 1) {
+      return true;
+    }
+    return false;
   }
 
   getSubjects(): void {
@@ -75,49 +107,129 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  sortSubjects(): void {
-    this.subjects.sort((a, b) =>
-      a.name.localeCompare(b.name, 'de', { ignorePunctuation: true })
-    );
-  }
-
-  resetForm(): void {
-    this.answers.clear();
+  initFormAnswers(): void {
     for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
       index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
     }
   }
 
-  onSelectedQuestionTypeChange(event: MatRadioChange): void {
-    this.selectedQuestionType = event.value;
-    console.log(this.selectedQuestionType);
+  moveAnswer(
+    toBeRemovedAtIndex: number,
+    toBeInsertedAtIndex: number,
+    answer: FormGroup
+  ): void {
+    this.answers.removeAt(toBeRemovedAtIndex);
+    this.answers.insert(toBeInsertedAtIndex, answer);
   }
 
-  onCorrectAnswerChange(event: MatSlideToggleChange): void {
-    const selectedAnswer = parseInt(event.source.id, 10);
+  onSelectedQuestionTypeChange(event: MatRadioChange): void {
+    this.selectedQuestionType = event.value;
+    if (this.selectedQuestionType === 'single-choice') {
+      this.setDefaultCorrectAnswerForSingleChoice();
+    }
+  }
+
+  onSubmit(questionForm: FormGroup): void {
+    if (this.form.invalid) {
+      this.formError = 'Die Angaben sind nicht vollständig.';
+      return;
+    } else if (this.questionType.value === 'single-choice') {
+      const isSingleChoiceValid = this.getSingleChoiceValidity();
+      if (isSingleChoiceValid === false) {
+        this.formError = 'Markiere eine richtige Antwort.';
+        return;
+      }
+    } else {
+      const isMultipleChoiceValid = this.getMultipleChoiceValidity();
+      if (isMultipleChoiceValid === false) {
+        this.formError = 'Markiere mindestens zwei richtige Antworten.';
+        return;
+      }
+    }
+
+    const owner = {
+      id: this.userId,
+      // displayName: this.userNickname,
+    };
+
+    this.submitted = true;
+    this.formError = '';
+    const submittedCard: Card = {
+      name: questionForm.value.name,
+      subject: questionForm.value.subject.name,
+      topic: questionForm.value.topic,
+      questionText: questionForm.value.questionText,
+      questionType: questionForm.value.questionType,
+      answers: questionForm.value.answers,
+      srcCode: questionForm.value.srcCode,
+      image: questionForm.value.image,
+      owner,
+    };
+
+    this.deckService.createCard(submittedCard).subscribe((data) => {
+      console.log(data);
+      // redirect to get questions
+    });
+  }
+
+  removeAnswer(index: number): void {
+    this.answers.removeAt(index);
+    this.setDefaultCorrectAnswerForSingleChoice();
+  }
+
+  resetForm(): void {
+    this.submitted = false;
+    this.formError = '';
+    this.form.reset({
+      name: '',
+      topic: '',
+      subject: '',
+      questionText: '',
+      questionType: 'single-choice',
+      explanationText: '',
+      image: '',
+      srcCode: '',
+    });
+    this.answers.clear();
+    this.initFormAnswers();
+  }
+
+  setCorrectAnswerValue(event: MatSlideToggleChange): void {
+    const selectedAnswerIndex = parseInt(event.source.id, 10);
     const isCorrectAnswer = event.checked;
 
-    // console.log(selectedAnswer, isCorrectAnswer);
-    // console.log(this.selectedQuestionType);
-    // console.log('nbr of answers:', this.answers.length);
-
-    if (this.selectedQuestionType === 'singleChoice') {
+    if (this.selectedQuestionType === 'single-choice') {
       for (let index = 0; index < this.answers.length; index++) {
-        // console.log(index);
         this.answers.at(index).get('correctAnswer').patchValue(false);
       }
-      this.answers.at(selectedAnswer).get('correctAnswer').patchValue(true);
-    } else {
+      this.answers
+        .at(selectedAnswerIndex)
+        .get('correctAnswer')
+        .patchValue(true);
+    } else if (this.selectedQuestionType === 'multiple-choice') {
       isCorrectAnswer
-        ? this.answers.at(selectedAnswer).get('correctAnswer').patchValue(true)
+        ? this.answers
+            .at(selectedAnswerIndex)
+            .get('correctAnswer')
+            .patchValue(true)
         : this.answers
-            .at(selectedAnswer)
+            .at(selectedAnswerIndex)
             .get('correctAnswer')
             .patchValue(false);
     }
   }
 
-  onSubmit(questionForm: FormGroup): void {
-    // console.log(questionForm);
+  setDefaultCorrectAnswerForSingleChoice(): void {
+    for (let index = 0; index < this.answers.length; index++) {
+      index <= 0
+        ? this.answers.at(index).get('correctAnswer').patchValue(true)
+        : this.answers.at(index).get('correctAnswer').patchValue(false);
+    }
+  }
+
+  sortSubjects(): void {
+    this.subjects.sort((a, b) =>
+      a.name.localeCompare(b.name, 'de', { ignorePunctuation: true })
+    );
   }
 }

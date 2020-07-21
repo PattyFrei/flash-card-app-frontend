@@ -26,6 +26,14 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { HomeComponent } from './home/home.component';
+import { EditorComponent } from './editor/editor.component';
+import { CollectionComponent } from './editor/collection/collection.component';
+import { MyQuestionsComponent } from './editor/my-questions/my-questions.component';
+import { MyCollectionsComponent } from './editor/my-collections/my-collections.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +42,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     CardComponent,
     DeckComponent,
     QuestionComponent,
+    DashboardComponent,
+    NavBarComponent,
+    HomeComponent,
+    EditorComponent,
+    CollectionComponent,
+    MyQuestionsComponent,
+    MyCollectionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +71,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     ReactiveFormsModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatMenuModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

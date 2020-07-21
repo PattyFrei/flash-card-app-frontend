@@ -1,0 +1,76 @@
+<mat-toolbar class="mat-elevation-z4" color="primary">
+  <mat-toolbar-row class="mat-elevation-z2">
+    <button
+      class="toolbar-title"
+      mat-flat-button
+      color="primary"
+      routerLink="/home"
+    >
+      {{ title }}
+    </button>
+
+    <a
+      class="toolbar-link"
+      mat-flat-button
+      color="primary"
+      routerLink="/catalogue"
+      >Quiz</a
+    >
+    <a
+      class="toolbar-link"
+      mat-flat-button
+      color="primary"
+      routerLink="/editor"
+      *ngIf="auth.loggedIn"
+      >Editor</a
+    >
+
+    <!-- <a
+      class="toolbar-link"
+      mat-flat-button
+      color="primary"
+      routerLink="/"
+      *ngIf="auth.loggedIn"
+      >Stats</a
+    > -->
+
+    <span class="spacer"></span>
+
+    <!-- <button
+      mat-icon-button
+      class="icon favorite-icon"
+      aria-label="icon-button with language icon"
+    >
+      <mat-icon>language</mat-icon>
+    </button> -->
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="beforeMenu"
+      class="icon"
+      aria-label="icon-button with person icon"
+    >
+      <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <button (click)="auth.login()" *ngIf="!auth.loggedIn" mat-menu-item>
+        Einloggen
+      </button>
+      <button routerLink="/dashboard" *ngIf="auth.loggedIn" mat-menu-item>
+        Profil
+      </button>
+      <button (click)="auth.logout()" *ngIf="auth.loggedIn" mat-menu-item>
+        Ausloggen
+      </button>
+    </mat-menu>
+
+    <button
+      mat-icon-button
+      class="icon"
+      aria-label="icon-button with settings icon"
+      *ngIf="auth.loggedIn"
+    >
+      <mat-icon>settings</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

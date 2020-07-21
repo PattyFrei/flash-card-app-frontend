@@ -1,17 +1,19 @@
+import { User } from './../deck/deck';
+
 export interface Card {
-  id: string;
+  id?: string;
   name: string;
   topic?: string;
   subject: Subject;
   questionText: string;
-  questionType: string;
+  questionType: string; // single-choice | multiple-choice
   answers: Answer[];
   explanationText?: string;
   image?: string; // imageUrl
   srcCode?: string; // srcCodeUrl
-  // owner: User;
-  creationDate: Date;
-  lastUpdatedDate: Date;
+  owner: User;
+  creationDate?: Date;
+  lastUpdatedDate?: Date;
   hasSiblings?: Card[]; // siblings
   // [propName: string]: any; // for any other props
 }

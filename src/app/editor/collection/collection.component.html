@@ -1,0 +1,145 @@
+<h3>Neuen Fragenkatalog erstellen</h3>
+<form [formGroup]="collectionForm" (ngSubmit)="onSubmit(collectionForm)">
+  <mat-form-field
+    hintLabel="Gebe dem Fragenkatalog einen deskriptiven Namen"
+    appearance="fill"
+  >
+    <mat-label>Name</mat-label>
+    <input matInput #input formControlName="name" required />
+  </mat-form-field>
+
+  <mat-form-field
+    hintLabel="z.B. Programmieren, Dynamik, Schnittmuster etc."
+    appearance="fill"
+  >
+    <mat-label>Thema</mat-label>
+    <input matInput formControlName="topic" />
+  </mat-form-field>
+
+  <mat-form-field
+    hintLabel="Wähle ein passendes Fachgebiet aus"
+    appearance="fill"
+  >
+    <mat-label>Fachgebiet</mat-label>
+    <mat-select formControlName="subject" required>
+      <mat-option></mat-option>
+      <mat-option [value]="subject" *ngFor="let subject of subjects">{{
+        subject.name
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field
+    hintLabel="Wähle eine passende Schwierigkeitsstufe aus"
+    appearance="fill"
+  >
+    <mat-label>Schwierigkeitsstufe</mat-label>
+    <mat-select formControlName="difficulty" required>
+      <mat-option></mat-option>
+      <mat-option
+        [value]="difficulty"
+        *ngFor="let difficulty of difficulties"
+        >{{ difficulty.level }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field
+    hintLabel="Falls zutreffend, gebe den Namen des zugehörigen Hochschulkurses an"
+    appearance="fill"
+  >
+    <mat-label>Kurs</mat-label>
+    <input matInput formControlName="course" />
+  </mat-form-field>
+
+  <mat-form-field hintLabel="z.B. SoSe 20 oder WiSe 20/21" appearance="fill">
+    <mat-label>Semester</mat-label>
+    <input matInput formControlName="semester" />
+  </mat-form-field>
+
+  <mat-form-field
+    class="big-field"
+    hintLabel="Gebe eine Beschreibung zum Fragenkatalog an"
+    appearance="fill"
+  >
+    <mat-label>Beschreibung</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-divider></mat-divider>
+
+  <div class="slide-toggle-box">
+    <mat-slide-toggle
+      color="primary"
+      formControlName="allowSecondGuess"
+      (change)="setAllowSecondGuess($event)"
+      disabled
+    >
+      Erlaube dem Nutzer einen zweiten Versuch, wenn die falsche Antwort
+      ausgewählt wurde
+    </mat-slide-toggle>
+  </div>
+  <div>Fragen hinzufügen...</div>
+  <mat-accordion class="headers-align" multi>
+    <div *ngFor="let question of questions.controls; index as i">
+      <ng-container [formGroupName]="i">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> {{ i + 1 }}. Frage </mat-panel-title>
+            <mat-panel-description>
+              Klicke für eine Eingabe
+              <button
+                class="expansion-panel-header-del-button"
+                [disabled]="i < 5"
+                mat-icon-button
+                aria-label="del"
+                (click)="removeQuestion(i)"
+              >
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          Frage auswählen...
+        </mat-expansion-panel>
+      </ng-container>
+    </div>
+  </mat-accordion>
+
+  <mat-divider></mat-divider>
+
+  <div class="slide-toggle-box">
+    <mat-slide-toggle
+      color="primary"
+      formControlName="shareUrlActive"
+      (change)="setShareUrlActive($event)"
+      disabled
+    >
+      Der Fragenkatalog kann über den Share-Link abgerufen werden
+    </mat-slide-toggle>
+
+    <mat-slide-toggle
+      color="primary"
+      formControlName="publicVisibility"
+      (change)="setPublicVisibility($event)"
+      disabled
+    >
+      Der Fragenkatalog wird öffentlich in der Quizübersicht gelistet
+    </mat-slide-toggle>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div>{{ formError }}</div>
+  <div class="button-row">
+    <button mat-raised-button color="primary">
+      Erstellen
+    </button>
+    <button
+      mat-raised-button
+      color="basic"
+      (click)="resetForm(); $event.preventDefault()"
+    >
+      Zurücksetzen
+    </button>
+  </div>
+</form>

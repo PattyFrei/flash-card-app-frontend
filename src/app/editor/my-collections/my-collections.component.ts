@@ -2,19 +2,19 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
-import { Deck } from '../deck/deck';
-import { DeckService } from '../deck.service';
+import { Deck } from '../../deck/deck';
+import { DeckService } from '../../deck.service';
 
 @Component({
-  selector: 'app-catalogue',
-  templateUrl: './catalogue.component.html',
-  styleUrls: ['./catalogue.component.scss'],
+  selector: 'app-my-collections',
+  templateUrl: './my-collections.component.html',
+  styleUrls: ['./my-collections.component.scss'],
 })
-export class CatalogueComponent implements OnInit, AfterViewInit {
-  columnsToDisplay = ['name', 'topic', 'subject', 'author', 'creationDate'];
+export class MyCollectionsComponent implements OnInit, AfterViewInit {
+  columnsToDisplay = ['name', 'topic', 'subject', 'questions', 'creationDate'];
+  decks = new MatTableDataSource<Deck>();
   isLoading = false;
   selectedId: string;
-  decks = new MatTableDataSource<Deck>();
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -26,17 +26,15 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.getAllDecks();
+    this.getMyDecks();
   }
 
   ngAfterViewInit(): void {
     this.decks.sort = this.sort;
   }
 
-  getAllDecks(): void {
-    // subscribe() passes the emitted array to the callback,
-    // which sets the component's decks property
-    this.deckService.getDecks().subscribe((decks) => this.dataLoaded(decks));
+  getMyDecks(): void {
+    this.deckService.getMyDecks().subscribe((decks) => this.dataLoaded(decks));
   }
 
   doFilter(value: string): void {
@@ -46,6 +44,6 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
   private dataLoaded(decks: Deck[]): void {
     this.isLoading = false;
     this.decks.data = decks;
-    console.log('First deck: ' + this.decks.data[0]);
+    console.log('My decks:' + this.decks.data[0].id);
   }
 }
