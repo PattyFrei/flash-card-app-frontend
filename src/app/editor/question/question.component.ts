@@ -147,6 +147,11 @@ export class QuestionComponent implements OnInit {
       }
     }
 
+    const owner = {
+      id: this.userId,
+      // displayName: this.userNickname,
+    };
+
     this.submitted = true;
     this.formError = '';
     const submittedCard: Card = {
@@ -158,7 +163,7 @@ export class QuestionComponent implements OnInit {
       answers: questionForm.value.answers,
       srcCode: questionForm.value.srcCode,
       image: questionForm.value.image,
-      owner: this.userId,
+      owner,
     };
 
     this.deckService.createCard(submittedCard).subscribe((data) => {

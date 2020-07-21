@@ -58,10 +58,6 @@ export class CollectionComponent implements OnInit {
     return this.profile.source.value.sub;
   }
 
-  get userNickname() {
-    return this.profile.source.value.nickname;
-  }
-
   constructor(public auth: AuthService, private deckService: DeckService) {}
 
   ngOnInit(): void {
@@ -106,7 +102,7 @@ export class CollectionComponent implements OnInit {
 
     const owner = {
       id: this.userId,
-      displayName: this.userNickname,
+      // displayName: this.userNickname,
     };
 
     this.submitted = true;

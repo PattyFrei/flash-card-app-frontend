@@ -1,3 +1,5 @@
+import { User } from './../deck/deck';
+
 export interface Card {
   id?: string;
   name: string;
@@ -9,7 +11,7 @@ export interface Card {
   explanationText?: string;
   image?: string; // imageUrl
   srcCode?: string; // srcCodeUrl
-  owner: string;
+  owner: User;
   creationDate?: Date;
   lastUpdatedDate?: Date;
   hasSiblings?: Card[]; // siblings
