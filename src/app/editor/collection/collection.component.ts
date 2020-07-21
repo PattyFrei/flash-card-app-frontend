@@ -127,7 +127,7 @@ export class CollectionComponent implements OnInit {
 
     this.deckService.createDeck(submittedDeck).subscribe((data) => {
       console.log(data);
-      // redirect to get questions
+      // redirect to get collections
     });
   }
 
