@@ -3,7 +3,7 @@
     <div class="section-row">
       <div class="card">
         <img
-          src="/assets/fca_logo.png"
+          src="../../assets/fca_logo.png"
           height="70px"
           alt="About FlashCardApp"
         />
@@ -21,7 +21,11 @@
     <div class="section-row">
       <a routerLink="/catalogue">
         <div class="card">
-          <img src="/assets/fca_logo.png" height="70px" alt="Gehe zu Quiz" />
+          <img
+            src="../../assets/fca_logo.png"
+            height="70px"
+            alt="Gehe zu Quiz"
+          />
           <div class="text-container">
             <div class="text-headline">Werde ein Quiz-Meister</div>
             <p>
@@ -37,7 +41,11 @@
     <div *ngIf="!auth.loggedIn" class="section-row">
       <a class="register" (click)="auth.login()">
         <div class="card">
-          <img src="/assets/fca_logo.png" height="70px" alt="Konto erstellen" />
+          <img
+            src="../../assets/fca_logo.png"
+            height="70px"
+            alt="Konto erstellen"
+          />
           <div class="text-container">
             <div class="text-headline">
               Erstelle deine eigenes Quiz
@@ -56,7 +64,7 @@
       <a routerLink="/editor">
         <div class="card">
           <img
-            src="/assets/fca_logo.png"
+            src="../../assets/fca_logo.png"
             height="70px"
             alt="Fragenkataloge erstellen"
           />
