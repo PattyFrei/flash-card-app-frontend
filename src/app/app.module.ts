@@ -32,6 +32,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { HomeComponent } from './home/home.component';
 import { EditorComponent } from './editor/editor.component';
 import { CollectionComponent } from './editor/collection/collection.component';
+import { MyQuestionsComponent } from './editor/my-questions/my-questions.component';
+import { MyCollectionsComponent } from './editor/my-collections/my-collections.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { CollectionComponent } from './editor/collection/collection.component';
     HomeComponent,
     EditorComponent,
     CollectionComponent,
+    MyQuestionsComponent,
+    MyCollectionsComponent,
   ],
   imports: [
     BrowserModule,
