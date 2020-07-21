@@ -4,8 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Production and Test pages
 
-Prod: https://master.d2k77ebooa433z.amplifyapp.com/
-Test: https://test.d2k77ebooa433z.amplifyapp.com/
+- Prod: https://master.d2k77ebooa433z.amplifyapp.com/
+- Test: https://test.d2k77ebooa433z.amplifyapp.com/
 
 ## Local dev server
 
