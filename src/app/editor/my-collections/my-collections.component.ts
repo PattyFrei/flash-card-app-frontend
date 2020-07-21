@@ -44,6 +44,6 @@ export class MyCollectionsComponent implements OnInit, AfterViewInit {
   private dataLoaded(decks: Deck[]): void {
     this.isLoading = false;
     this.decks.data = decks;
-    console.log('My decks:' + this.decks.data);
+    console.log('My decks:' + this.decks.data[0].id);
   }
 }
