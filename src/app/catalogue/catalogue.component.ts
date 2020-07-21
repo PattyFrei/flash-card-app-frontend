@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
+import { AuthService } from '../auth.service';
 import { Deck } from '../deck/deck';
 import { DeckService } from '../deck.service';
 
@@ -22,7 +23,7 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
     return this.decks.data !== undefined;
   }
 
-  constructor(private deckService: DeckService) {}
+  constructor(public auth: AuthService, private deckService: DeckService) {}
 
   ngOnInit() {
     this.isLoading = true;

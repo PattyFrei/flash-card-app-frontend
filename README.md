@@ -1,15 +1,16 @@
-# FlashCardAppFrontend
+# FlashCard App Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
 
-## Prod page on github pages
+## Production and Test pages
 
-https://bapaha.github.io/flashcard-app-frontend/index.html
+- Prod: https://master.d2k77ebooa433z.amplifyapp.com/
+- Test: https://test.d2k77ebooa433z.amplifyapp.com/
 
 ## Local dev server
 
-- Make sure Node.js and npm is installed
-- Check version with `node -v` and `npm -v` command in console
+- Make sure Node is installed
+- Check version with `node -v` command in console
 - Clone this repo with `git clone <url>` in console
 - Type `cd flashcard-app-frontend` and then `npm install`
 - Run `git checkout dev` and then `npm start` for a dev server
