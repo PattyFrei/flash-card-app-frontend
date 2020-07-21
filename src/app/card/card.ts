@@ -4,7 +4,7 @@ export interface Card {
   topic?: string;
   subject: Subject;
   questionText: string;
-  questionType: string; // singleChoice | multipleChoice
+  questionType: string; // single-choice | multiple-choice
   answers: Answer[];
   explanationText?: string;
   image?: string; // imageUrl
