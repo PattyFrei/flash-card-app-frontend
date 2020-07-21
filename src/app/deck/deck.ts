@@ -15,7 +15,7 @@ export interface Deck {
   shareUrl?: string;
   shareUrlActive: boolean;
   publicVisibility: boolean;
-  // owner: User;
+  owner: string;
   creationDate: Date;
   lastUpdatedDate: Date;
 }
