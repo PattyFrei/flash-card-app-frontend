@@ -12,7 +12,7 @@ import { mergeMap, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
-export class TokenInterseptorService implements HttpInterceptor {
+export class TokenInterceptorService implements HttpInterceptor {
   constructor(private auth: AuthService) {}
 
   intercept(
