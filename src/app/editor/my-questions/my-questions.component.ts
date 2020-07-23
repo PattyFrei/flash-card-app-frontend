@@ -12,7 +12,8 @@ import { DeckService } from '../../deck.service';
 })
 export class MyQuestionsComponent implements OnInit, AfterViewInit {
   cards = new MatTableDataSource<Card>();
-  columnsToDisplay = ['name', 'topic', 'subject', 'creationDate'];
+  // columnsToDisplay = ['name', 'topic', 'subject', 'creationDate'];
+  columnsToDisplay = ['questionText', 'creationDate'];
   isLoading = false;
   selectedId: string;
 
@@ -44,6 +45,5 @@ export class MyQuestionsComponent implements OnInit, AfterViewInit {
   private dataLoaded(cards: Card[]): void {
     this.isLoading = false;
     this.cards.data = cards;
-    console.log('My cards:' + this.cards.data);
   }
 }
