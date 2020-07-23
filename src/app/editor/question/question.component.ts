@@ -22,9 +22,9 @@ export class QuestionComponent implements OnInit {
   submittedCard: Card;
 
   questionForm = new FormGroup({
-    name: new FormControl('', Validators.required),
+    name: new FormControl(''),
     topic: new FormControl(''),
-    subject: new FormControl('', Validators.required),
+    subject: new FormControl(''),
     questionText: new FormControl('', Validators.required),
     questionType: new FormControl('single-choice', Validators.required),
     answers: new FormArray([], Validators.required),
@@ -155,9 +155,9 @@ export class QuestionComponent implements OnInit {
     this.submitted = true;
     this.formError = '';
     const submittedCard: Card = {
-      name: questionForm.value.name,
-      subject: questionForm.value.subject.name,
-      topic: questionForm.value.topic,
+      name: 'namePlaceholder',
+      subject: this.subjects[0].name,
+      topic: 'topicPlaceholder',
       questionText: questionForm.value.questionText,
       questionType: questionForm.value.questionType,
       answers: questionForm.value.answers,
@@ -178,12 +178,14 @@ export class QuestionComponent implements OnInit {
   }
 
   resetForm(): void {
+    console.log(this.subjects[0].name);
+
     this.submitted = false;
     this.formError = '';
     this.form.reset({
-      name: '',
-      topic: '',
-      subject: '',
+      // name: '',
+      // topic: '',
+      // subject: '',
       questionText: '',
       questionType: 'single-choice',
       explanationText: '',

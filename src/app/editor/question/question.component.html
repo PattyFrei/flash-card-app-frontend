@@ -1,13 +1,12 @@
 <h3>Neue Frage erstellen</h3>
 <form [formGroup]="questionForm" (ngSubmit)="onSubmit(questionForm)">
-  <mat-form-field
+  <!-- <mat-form-field
     hintLabel="Gebe der Frage einen deskriptiven Namen"
     appearance="fill"
   >
     <mat-label>Name</mat-label>
     <input matInput #input formControlName="name" required />
     <mat-hint align="end">{{ input.value?.length || 0 }}/50</mat-hint>
-    <!-- <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error> -->
   </mat-form-field>
 
   <mat-form-field
@@ -31,7 +30,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-divider></mat-divider>
+  <mat-divider></mat-divider> -->
 
   <mat-form-field
     class="big-field"
@@ -182,3 +181,5 @@
     </button>
   </div>
 </form>
+
+<!-- <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error> -->
