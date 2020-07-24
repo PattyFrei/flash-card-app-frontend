@@ -3,6 +3,7 @@ import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { AuthService } from '../../auth.service';
+import { Card } from '../../card/card';
 import { DeckService } from './../../deck.service';
 import { Deck } from '../../deck/deck';
 
@@ -12,11 +13,13 @@ import { Deck } from '../../deck/deck';
   styleUrls: ['./collection.component.scss'],
 })
 export class CollectionComponent implements OnInit {
-  numberOfDefaultQuestions = 5;
-  submitted = false;
-  formError = '';
-  subjects: any;
+  cards: Card[];
   difficulties: any;
+  formError = '';
+  isLoading = false;
+  numberOfDefaultQuestions = 5;
+  subjects: any;
+  submitted = false;
   submittedDeck: Deck;
 
   collectionForm = new FormGroup({
@@ -33,6 +36,10 @@ export class CollectionComponent implements OnInit {
     shareUrlActive: new FormControl(false, Validators.required),
     publicVisibility: new FormControl(false, Validators.required),
   });
+
+  get isDataLoaded(): boolean {
+    return this.cards !== undefined;
+  }
 
   get form() {
     return this.collectionForm;
@@ -61,22 +68,37 @@ export class CollectionComponent implements OnInit {
   constructor(public auth: AuthService, private deckService: DeckService) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.getDifficulties();
+    this.getMyCards();
     this.getSubjects();
     this.initFormQuestions();
   }
 
-  // addQuestion(): void {
-  //   const questionGroup = new FormGroup({
-  //     questionId: new FormControl(''),
-  //   });
-  //   this.questions.push(questionGroup);
-  // }
+  addQuestion(): void {
+    const questionGroup = new FormGroup({
+      id: new FormControl('', Validators.required),
+    });
+    this.questions.push(questionGroup);
+  }
+
+  selectQuestion(
+    formIndex: number,
+    questionId: string,
+    questionText: string
+  ): void {
+    this.questions.at(formIndex).get('id').patchValue(questionId);
+    this.questions.at(formIndex).get('questionText').patchValue(questionText);
+  }
 
   getDifficulties(): void {
     this.deckService
       .getDifficulties()
       .subscribe((difficulties) => (this.difficulties = difficulties));
+  }
+
+  getMyCards(): void {
+    this.deckService.getMyCards().subscribe((cards) => this.dataLoaded(cards));
   }
 
   getSubjects(): void {
@@ -90,7 +112,7 @@ export class CollectionComponent implements OnInit {
 
   initFormQuestions(): void {
     for (let index = 0; index < this.numberOfDefaultQuestions; index++) {
-      // this.addQuestion();
+      this.addQuestion();
     }
   }
 
@@ -175,5 +197,10 @@ export class CollectionComponent implements OnInit {
     this.subjects.sort((a, b) =>
       a.name.localeCompare(b.name, 'de', { ignorePunctuation: true })
     );
+  }
+
+  private dataLoaded(cards: Card[]): void {
+    this.isLoading = false;
+    this.cards = cards;
   }
 }
