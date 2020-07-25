@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Card } from '../../card/card';
-import { DeckService } from './../../deck.service';
+import { DeckService } from './../../services/deck.service';
 import { Deck } from '../../deck/deck';
 
 @Component({
@@ -17,7 +17,7 @@ export class CollectionComponent implements OnInit {
   difficulties: any;
   formError = '';
   isLoading = false;
-  numberOfDefaultQuestions = 5;
+  numberOfDefaultQuestions = 2;
   subjects: any;
   submitted = false;
   submittedDeck: Deck;
@@ -76,10 +76,7 @@ export class CollectionComponent implements OnInit {
   }
 
   addQuestion(): void {
-    const questionGroup = new FormGroup({
-      id: new FormControl('', Validators.required),
-    });
-    this.questions.push(questionGroup);
+    this.questions.push(new FormControl('', Validators.required));
   }
 
   selectQuestion(
@@ -88,7 +85,6 @@ export class CollectionComponent implements OnInit {
     questionText: string
   ): void {
     this.questions.at(formIndex).get('id').patchValue(questionId);
-    this.questions.at(formIndex).get('questionText').patchValue(questionText);
   }
 
   getDifficulties(): void {
@@ -127,13 +123,20 @@ export class CollectionComponent implements OnInit {
       // displayName: this.userNickname,
     };
 
+    const questions = [];
+    for (let i = 0; i < this.questions.length; i++) {
+      questions.push(this.questions.at(i).value);
+      console.log(this.questions.at(i).value);
+    }
+    console.log(questions);
+
     this.submitted = true;
     this.formError = '';
     const submittedDeck: Deck = {
       name: collectionForm.value.name,
       topic: collectionForm.value.topic,
       subject: collectionForm.value.subject.name,
-      questions: collectionForm.value.questions,
+      questions,
       course: collectionForm.value.course,
       semester: collectionForm.value.semester,
       difficulty: collectionForm.value.difficulty.level,
@@ -144,11 +147,10 @@ export class CollectionComponent implements OnInit {
       publicVisibility: collectionForm.value.publicVisibility,
       owner,
     };
-
-    console.log(submittedDeck);
+    console.log(JSON.stringify(submittedDeck));
 
     this.deckService.createDeck(submittedDeck).subscribe((data) => {
-      console.log(data);
+      console.log(JSON.stringify(data));
       // redirect to get collections
     });
   }
