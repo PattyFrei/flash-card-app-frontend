@@ -57,14 +57,6 @@ export class CollectionComponent implements OnInit {
     return this.form.get('questions') as FormArray;
   }
 
-  get profile() {
-    return this.auth.userProfile$ as any;
-  }
-
-  get userId() {
-    return this.profile.source.value.sub;
-  }
-
   constructor(public auth: AuthService, private deckService: DeckService) {}
 
   ngOnInit(): void {
@@ -79,11 +71,7 @@ export class CollectionComponent implements OnInit {
     this.questions.push(new FormControl('', Validators.required));
   }
 
-  selectQuestion(
-    formIndex: number,
-    questionId: string,
-    questionText: string
-  ): void {
+  selectQuestion(formIndex: number, questionId: string): void {
     this.questions.at(formIndex).get('id').patchValue(questionId);
   }
 
@@ -118,17 +106,11 @@ export class CollectionComponent implements OnInit {
       return;
     }
 
-    const owner = {
-      id: this.userId,
-      // displayName: this.userNickname,
-    };
-
     const questions = [];
     for (let i = 0; i < this.questions.length; i++) {
       questions.push(this.questions.at(i).value);
       console.log(this.questions.at(i).value);
     }
-    console.log(questions);
 
     this.submitted = true;
     this.formError = '';
@@ -145,17 +127,13 @@ export class CollectionComponent implements OnInit {
       shareUrl: collectionForm.value.shareUrl,
       shareUrlActive: collectionForm.value.shareUrlActive,
       publicVisibility: collectionForm.value.publicVisibility,
-      owner,
     };
-    console.log(JSON.stringify(submittedDeck));
 
     this.deckService.createDeck(submittedDeck).subscribe((data) => {
-      console.log(JSON.stringify(data));
+      // console.log(JSON.stringify(data));
       // redirect to get collections
     });
   }
-
-  setUserId(): void {}
 
   removeQuestion(index: number): void {
     this.questions.removeAt(index);
