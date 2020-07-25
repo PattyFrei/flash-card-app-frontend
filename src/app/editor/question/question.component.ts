@@ -4,8 +4,8 @@ import { MatAccordion } from '@angular/material/expansion';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
-import { AuthService } from '../../auth.service';
-import { DeckService } from './../../deck.service';
+import { AuthService } from '../../services/auth.service';
+import { DeckService } from './../../services/deck.service';
 import { Card } from '../../card/card';
 
 @Component({
