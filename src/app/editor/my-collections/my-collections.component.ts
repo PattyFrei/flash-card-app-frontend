@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
 import { Deck } from '../../deck/deck';
-import { DeckService } from '../../deck.service';
+import { DeckService } from '../../services/deck.service';
 
 @Component({
   selector: 'app-my-collections',

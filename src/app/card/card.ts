@@ -9,7 +9,7 @@ export interface Card {
   questionType: string; // single-choice | multiple-choice
   answers: Answer[];
   explanationText?: string;
-  image?: string; // imageUrl
+  image?: string; // imageId
   srcCode?: string; // srcCodeUrl
   owner: User;
   creationDate?: Date;

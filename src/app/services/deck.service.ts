@@ -3,12 +3,12 @@ import { Observable, throwError, of } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
-import { Card } from './card/card';
-import { Deck } from './deck/deck';
-import { Difficulty } from './deck/deck';
-import { DIFFICULTIES } from './deck/difficulties';
-import { Subject } from './card/card';
-import { SUBJECTS } from './card/subjects';
+import { Card } from './../card/card';
+import { Deck } from './../deck/deck';
+import { Difficulty } from './../deck/deck';
+import { DIFFICULTIES } from './../deck/difficulties';
+import { Subject } from './../card/card';
+import { SUBJECTS } from './../card/subjects';
 
 @Injectable({
   providedIn: 'root',

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Card, Answer } from './card';
 import { Deck } from './../deck/deck';
-import { DeckService } from '../deck.service';
+import { DeckService } from '../services/deck.service';
 
 @Component({
   selector: 'app-card',
