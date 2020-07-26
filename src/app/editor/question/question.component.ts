@@ -5,7 +5,7 @@ import { MatRadioChange } from '@angular/material/radio';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { AuthService } from '../../services/auth.service';
-import { DeckService } from './../../services/deck.service';
+import { DeckService } from '../../services/deck.service';
 import { Card } from '../../card/card';
 
 @Component({
@@ -20,6 +20,8 @@ export class QuestionComponent implements OnInit {
   selectedQuestionType = 'single-choice';
   submitted = false;
   submittedCard: Card;
+  selectedFileName: string;
+  uploadedFileId: any;
 
   questionForm = new FormGroup({
     name: new FormControl(''),
@@ -122,6 +124,22 @@ export class QuestionComponent implements OnInit {
     this.answers.insert(toBeInsertedAtIndex, answer);
   }
 
+  // TODO: event type :)
+  uploadImage(event: any) {
+    const file = event.target.files[0];
+
+    if (file) {
+      this.selectedFileName = file.name;
+      const formData = new FormData();
+      formData.append('file', file);
+
+      this.deckService.uploadFile(formData).subscribe((data) => {
+        this.uploadedFileId = data;
+        this.form.get('image').patchValue(data);
+      });
+    }
+  }
+
   onSelectedQuestionTypeChange(event: MatRadioChange): void {
     this.selectedQuestionType = event.value;
     if (this.selectedQuestionType === 'single-choice') {
@@ -162,12 +180,12 @@ export class QuestionComponent implements OnInit {
       questionType: questionForm.value.questionType,
       answers: questionForm.value.answers,
       srcCode: questionForm.value.srcCode,
-      image: questionForm.value.image,
+      image: questionForm.value.image.data,
       owner,
     };
 
     this.deckService.createCard(submittedCard).subscribe((data) => {
-      console.log(data);
+      // console.log(data);
       // redirect to get questions
     });
   }
@@ -178,10 +196,9 @@ export class QuestionComponent implements OnInit {
   }
 
   resetForm(): void {
-    console.log(this.subjects[0].name);
-
     this.submitted = false;
     this.formError = '';
+    this.selectedFileName = '';
     this.form.reset({
       // name: '',
       // topic: '',
