@@ -1,7 +1,7 @@
+import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
 
 import { Card } from './../card/card';
 import { Deck } from './../deck/deck';
@@ -15,6 +15,12 @@ import { SUBJECTS } from './../card/subjects';
 })
 export class DeckService {
   constructor(private httpClient: HttpClient) {}
+
+  uploadFile(formData: FormData): Observable<FormData> {
+    return this.httpClient
+      .post<FormData>(`images`, formData)
+      .pipe(catchError(this.handleError));
+  }
 
   createCard(card: Card): Observable<Card> {
     return this.httpClient
@@ -67,10 +73,12 @@ export class DeckService {
     } else {
       // The backend returned an unsuccessful response code.
       console.error(
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
+        `Backend returned code ${error.status}, ` + `body was: ${error.message}`
       );
     }
     // return an observable with a user-facing error message
-    return throwError('An error occured, please try again later.');
+    return throwError(
+      'Ein Fehler ist aufgetreten, versuche es später noch einmal.'
+    );
   }
 }
