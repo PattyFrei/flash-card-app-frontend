@@ -7,6 +7,14 @@
   <h2>Frage {{ currentCardIndex }} von {{ deck.questions.length }}</h2>
   <p>{{ currentCard.questionText }}</p>
 
+  <img
+    *ngIf="this.currentCard.image && !isImageLoading"
+    [src]="currentCardImage"
+    class="question-image"
+    height="400px"
+    alt="Bild zur Frage"
+  />
+
   <label id="radio-group-label">{{ questionTypeText }}</label>
   <mat-radio-group
     aria-labelledby="radio-group-label"
