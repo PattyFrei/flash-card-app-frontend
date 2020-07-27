@@ -16,6 +16,12 @@ import { SUBJECTS } from './../card/subjects';
 export class DeckService {
   constructor(private httpClient: HttpClient) {}
 
+  getImage(id: string): Observable<File> {
+    return this.httpClient
+      .get<File>(`images/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
   uploadFile(formData: FormData): Observable<FormData> {
     return this.httpClient
       .post<FormData>(`images`, formData)
