@@ -13,6 +13,7 @@ import { DeckService } from '../services/deck.service';
 export class CardComponent implements OnInit {
   currentCard: Card;
   currentCardIndex = 0;
+  currentCardImage: any;
   deck: Deck;
   explanationText: string;
   isLoading = false;
@@ -23,6 +24,7 @@ export class CardComponent implements OnInit {
   toggleResults = false;
   toggleNext = false;
   totalCorrectAnswers = 0;
+  isImageLoading: boolean;
 
   get isDataLoaded(): boolean {
     return this.deck !== undefined && this.toggleResults === false;
@@ -41,6 +43,31 @@ export class CardComponent implements OnInit {
     this.isLoading = true;
     const id = this.route.snapshot.paramMap.get('id');
     this.deckService.getDeck(id).subscribe((deck) => this.dataLoaded(deck));
+  }
+
+  createImageFromBlob(image: Blob) {
+    const reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.currentCardImage = reader.result;
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
+  getImage(): void {
+    if (this.currentCard.image) {
+      this.isImageLoading = true;
+      this.deckService.getImage(this.currentCard.image).subscribe((data) => {
+        this.createImageFromBlob(data);
+      });
+      this.isImageLoading = false;
+    }
   }
 
   onChange(answer: Answer): void {
@@ -75,6 +102,7 @@ export class CardComponent implements OnInit {
     this.currentCard = this.deck.questions[this.currentCardIndex];
     this.currentCardIndex++;
     this.setQuestionTypeText();
+    this.getImage();
   }
 
   setExplanationText(result: boolean): void {

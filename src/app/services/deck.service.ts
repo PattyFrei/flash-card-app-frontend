@@ -16,9 +16,9 @@ import { SUBJECTS } from './../card/subjects';
 export class DeckService {
   constructor(private httpClient: HttpClient) {}
 
-  getImage(id: string): Observable<File> {
+  getImage(imageId: string): Observable<Blob> {
     return this.httpClient
-      .get<File>(`images/${id}`)
+      .get<Blob>(`images/${imageId}`)
       .pipe(catchError(this.handleError));
   }
 
