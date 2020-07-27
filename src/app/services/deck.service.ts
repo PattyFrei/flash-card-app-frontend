@@ -18,7 +18,9 @@ export class DeckService {
 
   getImage(imageId: string): Observable<Blob> {
     return this.httpClient
-      .get<Blob>(`images/${imageId}`)
+      .get(`images/${imageId}`, {
+        responseType: 'blob',
+      })
       .pipe(catchError(this.handleError));
   }
 
