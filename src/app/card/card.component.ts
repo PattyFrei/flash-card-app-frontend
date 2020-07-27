@@ -24,7 +24,7 @@ export class CardComponent implements OnInit {
   toggleResults = false;
   toggleNext = false;
   totalCorrectAnswers = 0;
-  isImageLoading: boolean;
+  isImageLoading = false;
 
   get isDataLoaded(): boolean {
     return this.deck !== undefined && this.toggleResults === false;

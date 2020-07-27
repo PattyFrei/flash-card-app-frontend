@@ -11,7 +11,7 @@ export interface Card {
   explanationText?: string;
   image?: string; // imageId
   srcCode?: string; // srcCodeUrl
-  owner: User;
+  owner?: User;
   creationDate?: Date;
   lastUpdatedDate?: Date;
   hasSiblings?: Card[]; // siblings
@@ -26,4 +26,8 @@ export interface Answer {
 
 export interface Subject {
   name: string;
+}
+
+export interface HTMLInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
 }
