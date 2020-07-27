@@ -8,8 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod --base-href=/flashcard-app-frontend/",
-    "test-deploy": "ng build --prod"
+    "gh-deploy": "ng build --prod --base-href=/flashcard-app-frontend/",
+    "aws-deploy": "ng build --prod"
   },
   "private": true,
   "dependencies": {

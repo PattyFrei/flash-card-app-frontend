@@ -1,13 +1,12 @@
 <h3>Neue Frage erstellen</h3>
-<form [formGroup]="questionForm" (ngSubmit)="onSubmit(questionForm)">
-  <mat-form-field
+<form [formGroup]="questionForm">
+  <!-- <mat-form-field
     hintLabel="Gebe der Frage einen deskriptiven Namen"
     appearance="fill"
   >
     <mat-label>Name</mat-label>
     <input matInput #input formControlName="name" required />
     <mat-hint align="end">{{ input.value?.length || 0 }}/50</mat-hint>
-    <!-- <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error> -->
   </mat-form-field>
 
   <mat-form-field
@@ -31,7 +30,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-divider></mat-divider>
+  <mat-divider></mat-divider> -->
 
   <mat-form-field
     class="big-field"
@@ -43,9 +42,9 @@
   </mat-form-field>
 
   <label class="button-row-label"
-    >Lade zusätzliche Medien hoch, die unter dem Fragetext angezeigt werden
-    sollen.</label
+    >Lade ein Bild hoch, das unter dem Fragetext angezeigt werden soll.</label
   >
+  <!-- 
   <div class="button-row">
     <button mat-raised-button color="basic" disabled>
       Bild hochladen
@@ -53,8 +52,30 @@
     <button mat-raised-button color="basic" disabled>
       Quelltext hochladen
     </button>
+  </div> -->
+
+  <div class="button-row">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="$event.preventDefault(); imgFileInput.click()"
+    >
+      <mat-icon>cloud_upload</mat-icon>
+      <span class="upload-image-text">Bild hochladen</span>
+    </button>
+    <input
+      hidden
+      type="file"
+      #imgFileInput
+      (change)="uploadImage($event)"
+      accept=".jpg, .jpeg, .png, .gif"
+    />
+    <div class="upload-file-text" *ngIf="selectedFileName">
+      {{ selectedFileName }} ausgewählt
+    </div>
   </div>
 
+  <!-- 
   <mat-form-field
     class="big-field"
     hintLabel="Gebe eine Erklärung zur Frage an, 
@@ -63,7 +84,7 @@
   >
     <mat-label>Erklärungstext</mat-label>
     <textarea matInput formControlName="explanationText"></textarea>
-  </mat-form-field>
+  </mat-form-field> -->
 
   <mat-divider></mat-divider>
 
@@ -124,7 +145,7 @@
                 Klicke für eine Eingabe
                 <button
                   class="expansion-panel-header-del-button"
-                  [disabled]="i < 4"
+                  [disabled]="i < 2"
                   mat-icon-button
                   aria-label="del"
                   (click)="removeAnswer(i)"
@@ -152,9 +173,8 @@
               <input matInput formControlName="answerText" required
             /></mat-form-field>
             <mat-form-field
-              hintLabel="Gebe eine Erklärung ein, warum die {{
-                i + 1
-              }}. Antwort richtig oder falsch ist"
+              hintLabel="Gebe eine Erklärung an, die nach dem Überprüfen der Antwort erklärt warum die 
+              {{ i + 1 }}. Antwort richtig oder falsch ist"
               appearance="fill"
               class="big-field"
             >
@@ -168,9 +188,12 @@
   </ng-container>
 
   <mat-divider></mat-divider>
-  <div>{{ formError }}</div>
   <div class="button-row">
-    <button mat-raised-button color="primary">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit(questionForm); $event.preventDefault()"
+    >
       Erstellen
     </button>
     <button
