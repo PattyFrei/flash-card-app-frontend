@@ -35,6 +35,7 @@ import { CollectionComponent } from './editor/collection/collection.component';
 import { MyQuestionsComponent } from './editor/my-questions/my-questions.component';
 import { MyCollectionsComponent } from './editor/my-collections/my-collections.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { MatCardModule } from '@angular/material/card';
     MatSlideToggleModule,
     MatMenuModule,
     MatCardModule,
+    MatSnackBarModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
