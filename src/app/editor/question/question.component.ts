@@ -4,9 +4,9 @@ import { MatAccordion } from '@angular/material/expansion';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
-import { AuthService } from '../../services/auth.service';
 import { DeckService } from '../../services/deck.service';
-import { Card } from '../../card/card';
+import { Card, HTMLInputEvent } from '../../card/card';
+import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
   selector: 'app-question',
@@ -15,7 +15,6 @@ import { Card } from '../../card/card';
 })
 export class QuestionComponent implements OnInit {
   numberOfDefaultAnswers = 4;
-  formError = '';
   subjects: any;
   selectedQuestionType = 'single-choice';
   submitted = false;
@@ -47,15 +46,10 @@ export class QuestionComponent implements OnInit {
     return this.form.get('answers') as FormArray;
   }
 
-  get profile() {
-    return this.auth.userProfile$ as any;
-  }
-
-  get userId() {
-    return this.profile.source.value.sub;
-  }
-
-  constructor(public auth: AuthService, private deckService: DeckService) {}
+  constructor(
+    private deckService: DeckService,
+    private snackBarService: SnackBarService
+  ) {}
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
@@ -124,8 +118,7 @@ export class QuestionComponent implements OnInit {
     this.answers.insert(toBeInsertedAtIndex, answer);
   }
 
-  // TODO: event type :)
-  uploadImage(event: any) {
+  uploadImage(event: HTMLInputEvent) {
     const file = event.target.files[0];
 
     if (file) {
@@ -149,29 +142,26 @@ export class QuestionComponent implements OnInit {
 
   onSubmit(questionForm: FormGroup): void {
     if (this.form.invalid) {
-      this.formError = 'Die Angaben sind nicht vollständig.';
+      const errorMessage = 'Die Angaben sind nicht vollständig.';
+      this.snackBarService.open(errorMessage);
       return;
     } else if (this.questionType.value === 'single-choice') {
       const isSingleChoiceValid = this.getSingleChoiceValidity();
       if (isSingleChoiceValid === false) {
-        this.formError = 'Markiere eine richtige Antwort.';
+        const errorMessage = 'Markiere eine richtige Antwort.';
+        this.snackBarService.open(errorMessage);
         return;
       }
     } else {
       const isMultipleChoiceValid = this.getMultipleChoiceValidity();
       if (isMultipleChoiceValid === false) {
-        this.formError = 'Markiere mindestens zwei richtige Antworten.';
+        const errorMessage = 'Markiere mindestens zwei richtige Antworten.';
+        this.snackBarService.open(errorMessage);
         return;
       }
     }
 
-    const owner = {
-      id: this.userId,
-      // displayName: this.userNickname,
-    };
-
     this.submitted = true;
-    this.formError = '';
     const submittedCard: Card = {
       name: 'namePlaceholder',
       subject: this.subjects[0].name,
@@ -180,13 +170,13 @@ export class QuestionComponent implements OnInit {
       questionType: questionForm.value.questionType,
       answers: questionForm.value.answers,
       srcCode: questionForm.value.srcCode,
-      image: questionForm.value.image.data,
-      owner,
+      image: questionForm.value.image.imageId,
     };
 
     this.deckService.createCard(submittedCard).subscribe((data) => {
-      // console.log(data);
-      // redirect to get questions
+      const successMessage = 'Die Frage wurde erfolgreich erstellt!';
+      this.snackBarService.open(successMessage);
+      this.resetForm();
     });
   }
 
@@ -197,7 +187,6 @@ export class QuestionComponent implements OnInit {
 
   resetForm(): void {
     this.submitted = false;
-    this.formError = '';
     this.selectedFileName = '';
     this.form.reset({
       // name: '',

@@ -1,5 +1,5 @@
 <h3>Neue Frage erstellen</h3>
-<form [formGroup]="questionForm" (ngSubmit)="onSubmit(questionForm)">
+<form [formGroup]="questionForm">
   <!-- <mat-form-field
     hintLabel="Gebe der Frage einen deskriptiven Namen"
     appearance="fill"
@@ -188,9 +188,12 @@
   </ng-container>
 
   <mat-divider></mat-divider>
-  <div>{{ formError }}</div>
   <div class="button-row">
-    <button mat-raised-button color="primary">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit(questionForm); $event.preventDefault()"
+    >
       Erstellen
     </button>
     <button
@@ -202,5 +205,3 @@
     </button>
   </div>
 </form>
-
-<!-- <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error> -->

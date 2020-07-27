@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
-import { AuthService } from '../../services/auth.service';
 import { Card } from '../../card/card';
 import { DeckService } from './../../services/deck.service';
 import { Deck } from '../../deck/deck';
+import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
   selector: 'app-collection',
@@ -15,7 +15,6 @@ import { Deck } from '../../deck/deck';
 export class CollectionComponent implements OnInit {
   cards: Card[];
   difficulties: any;
-  formError = '';
   isLoading = false;
   numberOfDefaultQuestions = 2;
   subjects: any;
@@ -57,7 +56,10 @@ export class CollectionComponent implements OnInit {
     return this.form.get('questions') as FormArray;
   }
 
-  constructor(public auth: AuthService, private deckService: DeckService) {}
+  constructor(
+    private deckService: DeckService,
+    private snackBarService: SnackBarService
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -102,7 +104,8 @@ export class CollectionComponent implements OnInit {
 
   onSubmit(collectionForm: FormGroup): void {
     if (this.form.invalid) {
-      this.formError = 'Die Angaben sind nicht vollständig.';
+      const errorMessage = 'Die Angaben sind nicht vollständig.';
+      this.snackBarService.open(errorMessage);
       return;
     }
 
@@ -113,7 +116,6 @@ export class CollectionComponent implements OnInit {
     }
 
     this.submitted = true;
-    this.formError = '';
     const submittedDeck: Deck = {
       name: collectionForm.value.name,
       topic: collectionForm.value.topic,
@@ -130,8 +132,9 @@ export class CollectionComponent implements OnInit {
     };
 
     this.deckService.createDeck(submittedDeck).subscribe((data) => {
-      // console.log(JSON.stringify(data));
-      // redirect to get collections
+      const successMessage = 'Das Quiz wurde erfolgreich erstellt.';
+      this.snackBarService.open(successMessage);
+      this.resetForm();
     });
   }
 
@@ -141,7 +144,6 @@ export class CollectionComponent implements OnInit {
 
   resetForm(): void {
     this.submitted = false;
-    this.formError = '';
     this.form.reset({
       name: '',
       topic: '',
