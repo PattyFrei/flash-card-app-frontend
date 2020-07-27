@@ -40,6 +40,18 @@ export class DeckService {
       .pipe(catchError(this.handleError));
   }
 
+  deleteCard(id: string): Observable<Card> {
+    return this.httpClient
+      .delete<Card>(`cards/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteDeck(id: string): Observable<Deck> {
+    return this.httpClient
+      .delete<Deck>(`decks/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
   getDeck(id: string): Observable<Deck> {
     return this.httpClient
       .get<Deck>(`decks/${id}`)
