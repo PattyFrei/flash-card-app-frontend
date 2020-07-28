@@ -51,7 +51,12 @@
   </table>
 
   <p class="button-row">
-    <button mat-flat-button color="primary" routerLink="/card/{{ deck.id }}">
+    <button
+      mat-flat-button
+      [disabled]="!deck.questions.length"
+      color="primary"
+      routerLink="/card/{{ deck.id }}"
+    >
       Start Quiz
     </button>
     <button mat-flat-button (click)="onGoBack()">
