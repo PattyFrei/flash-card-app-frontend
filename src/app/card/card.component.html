@@ -1,7 +1,7 @@
 <div class="content-container" *ngIf="isDataLoaded">
   <mat-progress-bar
     mode="determinate"
-    value="{{ currentCardIndex * 10 }}"
+    value="{{ progressBarValue }}"
   ></mat-progress-bar>
 
   <h2>Frage {{ currentCardIndex }} von {{ deck.questions.length }}</h2>
@@ -26,6 +26,7 @@
       *ngFor="let answer of currentCard.answers"
       (change)="onChange(answer)"
       [value]="answer.answerText"
+      [checked]="false"
     >
       {{ answer.answerText }}
     </mat-radio-button>
@@ -61,14 +62,15 @@
 
 <div class="content-container" *ngIf="isQuizCompleted">
   <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
-  <p>Du hast den Fragenkatalog abgeschlossen.</p>
+  <p>Der Fragenkatalog ist abgeschlossen.</p>
   <p>
     Du hast {{ totalCorrectAnswers }} von {{ deck.questions.length }} richtig
-    beantwortet!
+    beantwortet.
   </p>
   <p>
-    Das wäre eine ... Bewertung. <br />
-    Klasse!
+    Damit hast du {{ correctAnswersInPercent }} % der Fragen richtig
+    beantwortet.
+    <br />
   </p>
   <button mat-flat-button color="primary" routerLink="/deck/{{ deck.id }}">
     Quiz erneut starten

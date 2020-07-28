@@ -16,15 +16,17 @@ export class CardComponent implements OnInit {
   currentCardImage: any;
   deck: Deck;
   explanationText: string;
+  isImageLoading = false;
   isLoading = false;
   isDisabled = false;
+  progressBarValue: number;
   questionTypeText: string;
   selectedAnswer: Answer;
   toggleCheck = false;
   toggleResults = false;
   toggleNext = false;
   totalCorrectAnswers = 0;
-  isImageLoading = false;
+  correctAnswersInPercent: number;
 
   get isDataLoaded(): boolean {
     return this.deck !== undefined && this.toggleResults === false;
@@ -43,6 +45,16 @@ export class CardComponent implements OnInit {
     this.isLoading = true;
     const id = this.route.snapshot.paramMap.get('id');
     this.deckService.getDeck(id).subscribe((deck) => this.dataLoaded(deck));
+  }
+
+  calculateProgressBarValue(): void {
+    if (this.deck.questions.length >= 10) {
+      this.progressBarValue = this.currentCardIndex * 10;
+    } else if (this.deck.questions.length >= 2) {
+      const progressBarRangeInDecimal = this.deck.questions.length / 10;
+      this.progressBarValue =
+        (this.currentCardIndex / progressBarRangeInDecimal) * 10;
+    }
   }
 
   createImageFromBlob(image: Blob) {
@@ -93,8 +105,15 @@ export class CardComponent implements OnInit {
       this.explanationText = '';
       this.isDisabled = false;
     } else {
+      this.setCorrectAnswersInPercent();
       this.toggleResults = true;
     }
+  }
+
+  setCorrectAnswersInPercent(): void {
+    const rawPercent =
+      (this.totalCorrectAnswers * 100) / this.deck.questions.length;
+    this.correctAnswersInPercent = Math.round(rawPercent);
   }
 
   setCurrentCard(): void {
@@ -102,6 +121,7 @@ export class CardComponent implements OnInit {
     this.currentCard = this.deck.questions[this.currentCardIndex];
     this.currentCardIndex++;
     this.setQuestionTypeText();
+    this.calculateProgressBarValue();
     this.getImage();
   }
 
