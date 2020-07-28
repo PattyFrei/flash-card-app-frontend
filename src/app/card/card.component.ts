@@ -26,6 +26,7 @@ export class CardComponent implements OnInit {
   toggleResults = false;
   toggleNext = false;
   totalCorrectAnswers = 0;
+  correctAnswersInPercent: number;
 
   get isDataLoaded(): boolean {
     return this.deck !== undefined && this.toggleResults === false;
@@ -104,8 +105,15 @@ export class CardComponent implements OnInit {
       this.explanationText = '';
       this.isDisabled = false;
     } else {
+      this.setCorrectAnswersInPercent();
       this.toggleResults = true;
     }
+  }
+
+  setCorrectAnswersInPercent(): void {
+    const rawPercent =
+      (this.totalCorrectAnswers * 100) / this.deck.questions.length;
+    this.correctAnswersInPercent = Math.round(rawPercent);
   }
 
   setCurrentCard(): void {
