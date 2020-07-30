@@ -10,14 +10,6 @@
   </mat-form-field>
 
   <mat-form-field
-    hintLabel="z.B. Programmieren, Dynamik, Schnittmuster etc."
-    appearance="fill"
-  >
-    <mat-label>Thema</mat-label>
-    <input matInput formControlName="topic" />
-  </mat-form-field>
-
-  <mat-form-field
     hintLabel="Wähle ein passendes Fachgebiet aus"
     appearance="fill"
   >
@@ -41,18 +33,17 @@
     <textarea matInput formControlName="questionText" required></textarea>
   </mat-form-field>
 
+  <mat-form-field
+    hintLabel="z.B. Datenbanken oder Elektrotechnik"
+    appearance="fill"
+  >
+    <mat-label>Thema oder Tag</mat-label>
+    <input matInput formControlName="topic" />
+  </mat-form-field>
+
   <label class="button-row-label"
     >Lade ein Bild hoch, das unter dem Fragetext angezeigt werden soll.</label
   >
-  <!-- 
-  <div class="button-row">
-    <button mat-raised-button color="basic" disabled>
-      Bild hochladen
-    </button>
-    <button mat-raised-button color="basic" disabled>
-      Quelltext hochladen
-    </button>
-  </div> -->
 
   <div class="button-row">
     <button

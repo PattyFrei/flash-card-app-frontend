@@ -4,7 +4,7 @@ export interface Card {
   id?: string;
   name: string;
   topic?: string;
-  subject: Subject;
+  subject: Subject | string;
   questionText: string;
   questionType: string; // single-choice | multiple-choice
   answers: Answer[];
