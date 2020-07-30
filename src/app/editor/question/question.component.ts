@@ -164,8 +164,8 @@ export class QuestionComponent implements OnInit {
     this.submitted = true;
     const submittedCard: Card = {
       name: 'namePlaceholder',
-      subject: this.subjects[0].name,
-      topic: 'topicPlaceholder',
+      subject: 'Verschiedenens',
+      topic: questionForm.value.topic,
       questionText: questionForm.value.questionText,
       questionType: questionForm.value.questionType,
       answers: questionForm.value.answers,
