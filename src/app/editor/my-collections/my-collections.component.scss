@@ -1,51 +1,21 @@
 table {
-  border: 0px solid #c8e1ff;
   background-color: #ffffff;
   width: 100%;
   text-align: left;
   border-collapse: collapse;
+  display: table;
 }
 table td,
 table th {
   border: 1px solid #d3d3d3;
-  padding: 6px 6px;
+  padding: 0 6px;
 }
-table tbody td {
-  font-size: 13px;
-  color: #24292e;
-}
-table thead {
-  background: #f1f8ff;
-}
-table thead th {
-  font-size: 15px;
-  font-weight: normal;
-  color: #24292e;
-  text-align: center;
-}
-table {
-  display: table;
-}
-tr,
-.clickable-tr {
-  display: table-row;
-}
-.clickable-tr:hover {
-  background-color: #cdf1ff;
-}
-thead {
-  display: table-header-group;
-}
+
 td,
 th {
   display: table-cell;
 }
-thead {
-  display: table-header-group;
-}
-tbody {
-  display: table-row-group;
-}
+
 a {
   text-decoration: none;
 }
@@ -55,17 +25,16 @@ mat-divider {
 
 table.mat-table {
   width: 100%;
-  // max-width: 640px;
   border-spacing: 0;
   margin: 10px 0;
 }
 
 tr.mat-header-row {
-  height: 48px;
+  height: 44px;
 }
 
 tr.mat-row {
-  height: 48px;
+  height: 44px;
 }
 
 tr.mat-row:hover {
@@ -76,24 +45,19 @@ td.mat-cell:hover {
   cursor: pointer;
 }
 
-td.mat-cell.delete-cell:hover {
-  cursor: auto;
-}
-
-th.mat-header-cell {
+td.mat-cell.delete-cell {
   text-align: center;
 }
 
-th.mat-header-cell,
-td.mat-cell {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
+td.mat-cell.delete-cell:hover {
+  cursor: auto;
 }
 
 th.mat-header-cell {
   background-color: #3f51b5;
   color: #ffffff;
   font-size: 14px;
+  text-align: center;
 }
 
 td.mat-cell {
@@ -110,6 +74,6 @@ h3 {
   width: 100%;
 }
 
-.input-full-width {
+.input-search {
   width: 100%;
 }
