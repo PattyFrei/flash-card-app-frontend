@@ -141,6 +141,7 @@ export class CardComponent implements OnInit {
   onNext(): void {
     if (this.currentCardIndex < this.deck.questions.length) {
       this.setCurrentCard();
+      this.selectedAnswers = [];
       this.explanationText = '';
       this.isDisabled = false;
     } else {
