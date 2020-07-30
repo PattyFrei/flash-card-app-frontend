@@ -70,7 +70,15 @@ tr.mat-row {
 
 tr.mat-row:hover {
   background-color: #f5f5f5;
-  cursor: pointer;
+}
+
+// change to pointer for card preview
+td.mat-cell:hover {
+  cursor: auto;
+}
+
+td.mat-cell.delete-cell:hover {
+  cursor: auto;
 }
 
 th.mat-header-cell {

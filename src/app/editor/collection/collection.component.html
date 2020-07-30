@@ -1,5 +1,6 @@
 <h3>Neuen Fragenkatalog erstellen</h3>
-<form [formGroup]="collectionForm" (ngSubmit)="onSubmit(collectionForm)">
+<!-- (ngSubmit)="onSubmit(collectionForm)" -->
+<form [formGroup]="collectionForm">
   <mat-form-field
     hintLabel="Gebe dem Fragenkatalog einen deskriptiven Namen"
     appearance="fill"
@@ -79,31 +80,47 @@
       ausgewählt wurde
     </mat-slide-toggle>
   </div>
-  <div>Fragen hinzufügen...</div>
-  <mat-accordion class="headers-align" multi>
-    <div *ngFor="let question of questions.controls; index as i">
-      <ng-container [formGroupName]="i">
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title> {{ i + 1 }}. Frage </mat-panel-title>
-            <mat-panel-description>
-              Klicke für eine Eingabe
-              <button
-                class="expansion-panel-header-del-button"
-                [disabled]="i < 5"
-                mat-icon-button
-                aria-label="del"
-                (click)="removeQuestion(i)"
-              >
-                <mat-icon>delete_forever</mat-icon>
-              </button>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          Frage auswählen...
-        </mat-expansion-panel>
-      </ng-container>
+
+  <ng-container formArrayName="questions">
+    <div class="question-action-buttons">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addQuestion(); $event.preventDefault()"
+      >
+        Frage hinzufügen
+      </button>
     </div>
-  </mat-accordion>
+
+    <div class="question-box">
+      <mat-card *ngFor="let question of questions.controls; index as i">
+        <mat-card-title-group>
+          <mat-form-field
+            class="question-field"
+            hintLabel="{{ i + 1 }}. Frage auswählen"
+            appearance="fill"
+          >
+            <mat-label>{{ i + 1 }}. Frage</mat-label>
+            <mat-select formControlName="{{ i }}">
+              <mat-option></mat-option>
+              <mat-option [value]="card.id" *ngFor="let card of cards">{{
+                card.questionText
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <button
+            class="del-button"
+            mat-icon-button
+            aria-label="del"
+            (click)="removeQuestion(i)"
+          >
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </mat-card-title-group>
+      </mat-card>
+    </div>
+  </ng-container>
 
   <mat-divider></mat-divider>
 
@@ -129,9 +146,12 @@
 
   <mat-divider></mat-divider>
 
-  <div>{{ formError }}</div>
   <div class="button-row">
-    <button mat-raised-button color="primary">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit(collectionForm); $event.preventDefault()"
+    >
       Erstellen
     </button>
     <button

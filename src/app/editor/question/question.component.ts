@@ -4,9 +4,9 @@ import { MatAccordion } from '@angular/material/expansion';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
-import { AuthService } from '../../auth.service';
-import { DeckService } from './../../deck.service';
-import { Card } from '../../card/card';
+import { DeckService } from '../../services/deck.service';
+import { Card, HTMLInputEvent } from '../../card/card';
+import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
   selector: 'app-question',
@@ -15,16 +15,17 @@ import { Card } from '../../card/card';
 })
 export class QuestionComponent implements OnInit {
   numberOfDefaultAnswers = 4;
-  formError = '';
   subjects: any;
   selectedQuestionType = 'single-choice';
   submitted = false;
   submittedCard: Card;
+  selectedFileName: string;
+  uploadedFileId: any;
 
   questionForm = new FormGroup({
-    name: new FormControl('', Validators.required),
+    name: new FormControl(''),
     topic: new FormControl(''),
-    subject: new FormControl('', Validators.required),
+    subject: new FormControl(''),
     questionText: new FormControl('', Validators.required),
     questionType: new FormControl('single-choice', Validators.required),
     answers: new FormArray([], Validators.required),
@@ -45,15 +46,10 @@ export class QuestionComponent implements OnInit {
     return this.form.get('answers') as FormArray;
   }
 
-  get profile() {
-    return this.auth.userProfile$ as any;
-  }
-
-  get userId() {
-    return this.profile.source.value.sub;
-  }
-
-  constructor(public auth: AuthService, private deckService: DeckService) {}
+  constructor(
+    private deckService: DeckService,
+    private snackBarService: SnackBarService
+  ) {}
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
@@ -122,6 +118,21 @@ export class QuestionComponent implements OnInit {
     this.answers.insert(toBeInsertedAtIndex, answer);
   }
 
+  uploadImage(event: HTMLInputEvent) {
+    const file = event.target.files[0];
+
+    if (file) {
+      this.selectedFileName = file.name;
+      const formData = new FormData();
+      formData.append('file', file);
+
+      this.deckService.uploadFile(formData).subscribe((data) => {
+        this.uploadedFileId = data;
+        this.form.get('image').patchValue(data);
+      });
+    }
+  }
+
   onSelectedQuestionTypeChange(event: MatRadioChange): void {
     this.selectedQuestionType = event.value;
     if (this.selectedQuestionType === 'single-choice') {
@@ -131,44 +142,41 @@ export class QuestionComponent implements OnInit {
 
   onSubmit(questionForm: FormGroup): void {
     if (this.form.invalid) {
-      this.formError = 'Die Angaben sind nicht vollständig.';
+      const errorMessage = 'Die Angaben sind nicht vollständig.';
+      this.snackBarService.open(errorMessage);
       return;
     } else if (this.questionType.value === 'single-choice') {
       const isSingleChoiceValid = this.getSingleChoiceValidity();
       if (isSingleChoiceValid === false) {
-        this.formError = 'Markiere eine richtige Antwort.';
+        const errorMessage = 'Markiere eine richtige Antwort.';
+        this.snackBarService.open(errorMessage);
         return;
       }
     } else {
       const isMultipleChoiceValid = this.getMultipleChoiceValidity();
       if (isMultipleChoiceValid === false) {
-        this.formError = 'Markiere mindestens zwei richtige Antworten.';
+        const errorMessage = 'Markiere mindestens zwei richtige Antworten.';
+        this.snackBarService.open(errorMessage);
         return;
       }
     }
 
-    const owner = {
-      id: this.userId,
-      // displayName: this.userNickname,
-    };
-
     this.submitted = true;
-    this.formError = '';
     const submittedCard: Card = {
-      name: questionForm.value.name,
-      subject: questionForm.value.subject.name,
-      topic: questionForm.value.topic,
+      name: 'namePlaceholder',
+      subject: this.subjects[0].name,
+      topic: 'topicPlaceholder',
       questionText: questionForm.value.questionText,
       questionType: questionForm.value.questionType,
       answers: questionForm.value.answers,
       srcCode: questionForm.value.srcCode,
-      image: questionForm.value.image,
-      owner,
+      image: questionForm.value.image.imageId,
     };
 
     this.deckService.createCard(submittedCard).subscribe((data) => {
-      console.log(data);
-      // redirect to get questions
+      const successMessage = 'Die Frage wurde erfolgreich erstellt!';
+      this.snackBarService.open(successMessage);
+      this.resetForm();
     });
   }
 
@@ -179,11 +187,11 @@ export class QuestionComponent implements OnInit {
 
   resetForm(): void {
     this.submitted = false;
-    this.formError = '';
+    this.selectedFileName = '';
     this.form.reset({
-      name: '',
-      topic: '',
-      subject: '',
+      // name: '',
+      // topic: '',
+      // subject: '',
       questionText: '',
       questionType: 'single-choice',
       explanationText: '',

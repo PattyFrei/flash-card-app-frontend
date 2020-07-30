@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
-import { AuthService } from '../../auth.service';
-import { DeckService } from './../../deck.service';
+import { Card } from '../../card/card';
+import { DeckService } from './../../services/deck.service';
 import { Deck } from '../../deck/deck';
+import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
   selector: 'app-collection',
@@ -12,11 +13,12 @@ import { Deck } from '../../deck/deck';
   styleUrls: ['./collection.component.scss'],
 })
 export class CollectionComponent implements OnInit {
-  numberOfDefaultQuestions = 5;
-  submitted = false;
-  formError = '';
-  subjects: any;
+  cards: Card[];
   difficulties: any;
+  isLoading = false;
+  numberOfDefaultQuestions = 2;
+  subjects: any;
+  submitted = false;
   submittedDeck: Deck;
 
   collectionForm = new FormGroup({
@@ -34,6 +36,10 @@ export class CollectionComponent implements OnInit {
     publicVisibility: new FormControl(false, Validators.required),
   });
 
+  get isDataLoaded(): boolean {
+    return this.cards !== undefined;
+  }
+
   get form() {
     return this.collectionForm;
   }
@@ -50,33 +56,35 @@ export class CollectionComponent implements OnInit {
     return this.form.get('questions') as FormArray;
   }
 
-  get profile() {
-    return this.auth.userProfile$ as any;
-  }
-
-  get userId() {
-    return this.profile.source.value.sub;
-  }
-
-  constructor(public auth: AuthService, private deckService: DeckService) {}
+  constructor(
+    private deckService: DeckService,
+    private snackBarService: SnackBarService
+  ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.getDifficulties();
+    this.getMyCards();
     this.getSubjects();
     this.initFormQuestions();
   }
 
-  // addQuestion(): void {
-  //   const questionGroup = new FormGroup({
-  //     questionId: new FormControl(''),
-  //   });
-  //   this.questions.push(questionGroup);
-  // }
+  addQuestion(): void {
+    this.questions.push(new FormControl('', Validators.required));
+  }
+
+  selectQuestion(formIndex: number, questionId: string): void {
+    this.questions.at(formIndex).get('id').patchValue(questionId);
+  }
 
   getDifficulties(): void {
     this.deckService
       .getDifficulties()
       .subscribe((difficulties) => (this.difficulties = difficulties));
+  }
+
+  getMyCards(): void {
+    this.deckService.getMyCards().subscribe((cards) => this.dataLoaded(cards));
   }
 
   getSubjects(): void {
@@ -90,28 +98,29 @@ export class CollectionComponent implements OnInit {
 
   initFormQuestions(): void {
     for (let index = 0; index < this.numberOfDefaultQuestions; index++) {
-      // this.addQuestion();
+      this.addQuestion();
     }
   }
 
   onSubmit(collectionForm: FormGroup): void {
     if (this.form.invalid) {
-      this.formError = 'Die Angaben sind nicht vollständig.';
+      const errorMessage = 'Die Angaben sind nicht vollständig.';
+      this.snackBarService.open(errorMessage);
       return;
     }
 
-    const owner = {
-      id: this.userId,
-      // displayName: this.userNickname,
-    };
+    const questions = [];
+    for (let i = 0; i < this.questions.length; i++) {
+      questions.push(this.questions.at(i).value);
+      console.log(this.questions.at(i).value);
+    }
 
     this.submitted = true;
-    this.formError = '';
     const submittedDeck: Deck = {
       name: collectionForm.value.name,
       topic: collectionForm.value.topic,
       subject: collectionForm.value.subject.name,
-      questions: collectionForm.value.questions,
+      questions,
       course: collectionForm.value.course,
       semester: collectionForm.value.semester,
       difficulty: collectionForm.value.difficulty.level,
@@ -120,18 +129,14 @@ export class CollectionComponent implements OnInit {
       shareUrl: collectionForm.value.shareUrl,
       shareUrlActive: collectionForm.value.shareUrlActive,
       publicVisibility: collectionForm.value.publicVisibility,
-      owner,
     };
 
-    console.log(submittedDeck);
-
     this.deckService.createDeck(submittedDeck).subscribe((data) => {
-      console.log(data);
-      // redirect to get collections
+      const successMessage = 'Das Quiz wurde erfolgreich erstellt.';
+      this.snackBarService.open(successMessage);
+      this.resetForm();
     });
   }
-
-  setUserId(): void {}
 
   removeQuestion(index: number): void {
     this.questions.removeAt(index);
@@ -139,7 +144,6 @@ export class CollectionComponent implements OnInit {
 
   resetForm(): void {
     this.submitted = false;
-    this.formError = '';
     this.form.reset({
       name: '',
       topic: '',
@@ -175,5 +179,10 @@ export class CollectionComponent implements OnInit {
     this.subjects.sort((a, b) =>
       a.name.localeCompare(b.name, 'de', { ignorePunctuation: true })
     );
+  }
+
+  private dataLoaded(cards: Card[]): void {
+    this.isLoading = false;
+    this.cards = cards;
   }
 }

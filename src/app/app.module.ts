@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
 import { CardComponent } from './card/card.component';
 import { DeckComponent } from './deck/deck.component';
-import { httpInterceptorProviders } from './http-interseptors/index';
+import { httpInterceptorProviders } from './http-interceptors/index';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -34,6 +34,8 @@ import { EditorComponent } from './editor/editor.component';
 import { CollectionComponent } from './editor/collection/collection.component';
 import { MyQuestionsComponent } from './editor/my-questions/my-questions.component';
 import { MyCollectionsComponent } from './editor/my-collections/my-collections.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,8 @@ import { MyCollectionsComponent } from './editor/my-collections/my-collections.c
     MatSelectModule,
     MatSlideToggleModule,
     MatMenuModule,
+    MatCardModule,
+    MatSnackBarModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

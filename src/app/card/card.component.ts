@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Card, Answer } from './card';
 import { Deck } from './../deck/deck';
-import { DeckService } from '../deck.service';
+import { DeckService } from '../services/deck.service';
 
 @Component({
   selector: 'app-card',
@@ -13,16 +13,20 @@ import { DeckService } from '../deck.service';
 export class CardComponent implements OnInit {
   currentCard: Card;
   currentCardIndex = 0;
+  currentCardImage: any;
   deck: Deck;
   explanationText: string;
+  isImageLoading = false;
   isLoading = false;
   isDisabled = false;
+  progressBarValue: number;
   questionTypeText: string;
   selectedAnswer: Answer;
   toggleCheck = false;
   toggleResults = false;
   toggleNext = false;
   totalCorrectAnswers = 0;
+  correctAnswersInPercent: number;
 
   get isDataLoaded(): boolean {
     return this.deck !== undefined && this.toggleResults === false;
@@ -41,6 +45,41 @@ export class CardComponent implements OnInit {
     this.isLoading = true;
     const id = this.route.snapshot.paramMap.get('id');
     this.deckService.getDeck(id).subscribe((deck) => this.dataLoaded(deck));
+  }
+
+  calculateProgressBarValue(): void {
+    if (this.deck.questions.length >= 10) {
+      this.progressBarValue = this.currentCardIndex * 10;
+    } else if (this.deck.questions.length >= 2) {
+      const progressBarRangeInDecimal = this.deck.questions.length / 10;
+      this.progressBarValue =
+        (this.currentCardIndex / progressBarRangeInDecimal) * 10;
+    }
+  }
+
+  createImageFromBlob(image: Blob) {
+    const reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.currentCardImage = reader.result;
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
+  getImage(): void {
+    if (this.currentCard.image) {
+      this.isImageLoading = true;
+      this.deckService.getImage(this.currentCard.image).subscribe((data) => {
+        this.createImageFromBlob(data);
+      });
+      this.isImageLoading = false;
+    }
   }
 
   onChange(answer: Answer): void {
@@ -66,8 +105,15 @@ export class CardComponent implements OnInit {
       this.explanationText = '';
       this.isDisabled = false;
     } else {
+      this.setCorrectAnswersInPercent();
       this.toggleResults = true;
     }
+  }
+
+  setCorrectAnswersInPercent(): void {
+    const rawPercent =
+      (this.totalCorrectAnswers * 100) / this.deck.questions.length;
+    this.correctAnswersInPercent = Math.round(rawPercent);
   }
 
   setCurrentCard(): void {
@@ -75,6 +121,8 @@ export class CardComponent implements OnInit {
     this.currentCard = this.deck.questions[this.currentCardIndex];
     this.currentCardIndex++;
     this.setQuestionTypeText();
+    this.calculateProgressBarValue();
+    this.getImage();
   }
 
   setExplanationText(result: boolean): void {

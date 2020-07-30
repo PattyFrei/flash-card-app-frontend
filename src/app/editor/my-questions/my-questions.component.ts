@@ -3,7 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
 import { Card } from '../../card/card';
-import { DeckService } from '../../deck.service';
+import { DeckService } from '../../services/deck.service';
+import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
   selector: 'app-my-questions',
@@ -12,7 +13,8 @@ import { DeckService } from '../../deck.service';
 })
 export class MyQuestionsComponent implements OnInit, AfterViewInit {
   cards = new MatTableDataSource<Card>();
-  columnsToDisplay = ['name', 'topic', 'subject', 'creationDate'];
+  // columnsToDisplay = ['name', 'topic', 'subject', 'creationDate'];
+  columnsToDisplay = ['questionText', 'creationDate', 'delete'];
   isLoading = false;
   selectedId: string;
 
@@ -22,7 +24,10 @@ export class MyQuestionsComponent implements OnInit, AfterViewInit {
     return this.cards.data !== undefined;
   }
 
-  constructor(private deckService: DeckService) {}
+  constructor(
+    private deckService: DeckService,
+    private snackBarService: SnackBarService
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -41,9 +46,24 @@ export class MyQuestionsComponent implements OnInit, AfterViewInit {
     this.cards.filter = value.trim().toLocaleLowerCase();
   }
 
+  // TODO: confirm user selection with modal
+  // TODO: error case
+  deleteQuestion(id: string, index: number): void {
+    this.deckService.deleteCard(id).subscribe((data) => {
+      const successMessage = 'Die Frage wurde erfolgreich gelöscht!';
+      this.removeQuestionFromTable(index);
+      this.snackBarService.open(successMessage);
+    });
+  }
+
+  removeQuestionFromTable(index: number): void {
+    // const index = this.cards.data.indexOf(item.id);
+    this.cards.data.splice(index, 1);
+    this.cards._updateChangeSubscription();
+  }
+
   private dataLoaded(cards: Card[]): void {
     this.isLoading = false;
     this.cards.data = cards;
-    console.log('My cards:' + this.cards.data);
   }
 }

@@ -1,9 +1,10 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 import { Card } from './../card/card';
 import { Deck } from './deck';
-import { DeckService } from './../deck.service';
+import { DeckService } from './../services/deck.service';
 
 @Component({
   selector: 'app-deck',
@@ -21,7 +22,8 @@ export class DeckComponent implements OnInit {
 
   constructor(
     private deckService: DeckService,
-    private route: ActivatedRoute // extracts param from URL
+    private route: ActivatedRoute, // extracts param from URL
+    private location: Location
   ) {
     // init local variables with values
     // wire parameters to props
@@ -32,6 +34,10 @@ export class DeckComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.deckService.getDeck(id).subscribe((deck) => this.dataLoaded(deck));
   } // hock method, fetch data here
+
+  onGoBack(): void {
+    this.location.back();
+  }
 
   private dataLoaded(deck: Deck): void {
     this.isLoading = false;

@@ -5,14 +5,14 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { Observable, throwError } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TokenInterseptorService implements HttpInterceptor {
+export class TokenInterceptorService implements HttpInterceptor {
   constructor(private auth: AuthService) {}
 
   intercept(
