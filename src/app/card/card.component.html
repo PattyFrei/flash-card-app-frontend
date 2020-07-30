@@ -1,4 +1,5 @@
 <div class="content-container" *ngIf="isDataLoaded">
+  <h2 class="deck-name">{{ deck.name }}</h2>
   <mat-progress-bar
     mode="determinate"
     value="{{ progressBarValue }}"
@@ -15,30 +16,67 @@
     alt="Bild zur Frage"
   />
 
-  <label id="radio-group-label">{{ questionTypeText }}</label>
-  <mat-radio-group
-    aria-labelledby="radio-group-label"
-    class="radio-group"
-    [disabled]="isDisabled"
+  <label class="group-label">{{ questionTypeText }}</label>
+
+  <div *ngIf="currentCard.questionType === 'single-choice'">
+    <mat-radio-group
+      aria-labelledby="radio-group-label"
+      class="radio-group"
+      [disabled]="isDisabled"
+    >
+      <mat-radio-button
+        class="radio-button"
+        *ngFor="let answer of currentCard.answers"
+        (change)="onRadioChange(answer)"
+        [value]="answer.answerText"
+        [checked]="false"
+      >
+        {{ answer.answerText }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div
+    class="checkbox-group"
+    *ngIf="currentCard.questionType === 'multiple-choice'"
   >
-    <mat-radio-button
-      class="radio-button"
+    <mat-checkbox
+      class="checkbox-button"
       *ngFor="let answer of currentCard.answers"
-      (change)="onChange(answer)"
+      (change)="onCheckBoxChange($event, answer)"
       [value]="answer.answerText"
       [checked]="false"
+      [disabled]="isDisabled"
     >
-      {{ answer.answerText }}
-    </mat-radio-button>
-  </mat-radio-group>
+      {{ answer.answerText }}</mat-checkbox
+    >
+  </div>
 
-  <p class="explanation-box">
+  <p
+    class="explanation-box"
+    *ngIf="currentCard.questionType === 'multiple-choice'"
+  >
     <span
       *ngIf="explanationText"
-      [class.answer-correct]="selectedAnswer.correctAnswer"
+      class="answer-correct"
+      [class.answer-wrong]="!isMultipleChoiceCorrect"
+    >
+      {{ explanationText }}
+    </span>
+  </p>
+
+  <p
+    class="explanation-box"
+    *ngIf="currentCard.questionType === 'single-choice'"
+  >
+    <span
+      *ngIf="explanationText"
+      class="answer-correct"
       [class.answer-wrong]="!selectedAnswer.correctAnswer"
     >
       {{ explanationText }}
+      <br />
+      {{ selectedAnswer.explanationText }}
     </span>
   </p>
 
@@ -61,8 +99,9 @@
 </div>
 
 <div class="content-container" *ngIf="isQuizCompleted">
+  <h2 class="deck-name">{{ deck.name }}</h2>
   <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
-  <p>Der Fragenkatalog ist abgeschlossen.</p>
+  <h2>Der Fragenkatalog ist abgeschlossen.</h2>
   <p>
     Du hast {{ totalCorrectAnswers }} von {{ deck.questions.length }} richtig
     beantwortet.
@@ -79,10 +118,3 @@
     Zurück zur Übersicht
   </button>
 </div>
-
-<!-- [class.some-css-class]="some-condition" -->
-<!-- (change)="onChange($event)" -->
-<!-- 
-[class.correct]="isDisabled && answer.correctAnswer"
-[class.wrong]="isDisabled && !answer.correctAnswer && answer === selectedAnswer
-" -->
