@@ -77,6 +77,21 @@ export class CardComponent implements OnInit {
     }
   }
 
+  knuthShuffleAnswers(answers: Array<Answer>): void {
+    let currentIndex = answers.length;
+    let temporaryAnswer: Answer;
+    let randomIndex: number;
+
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      temporaryAnswer = answers[currentIndex];
+      answers[currentIndex] = answers[randomIndex];
+      answers[randomIndex] = temporaryAnswer;
+    }
+  }
+
   getImage(): void {
     if (this.currentCard.image) {
       this.isImageLoading = true;
@@ -143,6 +158,7 @@ export class CardComponent implements OnInit {
   setCurrentCard(): void {
     this.toggleNext = false;
     this.currentCard = this.deck.questions[this.currentCardIndex];
+    this.knuthShuffleAnswers(this.currentCard.answers);
     this.currentCardIndex++;
     this.setQuestionTypeText();
     this.calculateProgressBarValue();
