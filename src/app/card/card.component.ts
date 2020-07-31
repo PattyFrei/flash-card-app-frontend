@@ -208,9 +208,9 @@ export class CardComponent implements OnInit {
       return (this.explanationText =
         'Leider ist/sind nur ' +
         selectedCorrectAnswers +
-        ' Antwort/en von ' +
-        this.selectedAnswers.length +
-        ' ausgewählte Antworten richtig.');
+        ' der ausgewählte Antwort/en richtig. Es gibt insgesamt ' +
+        this.totalCorrectAnswers +
+        ' richtige Antworten.');
     }
   }
 
