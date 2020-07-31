@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
@@ -5,7 +6,7 @@ import { MatRadioChange } from '@angular/material/radio';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { DeckService } from '../../services/deck.service';
-import { Card, HTMLInputEvent } from '../../card/card';
+import { Answer, Card, HTMLInputEvent } from '../../card/card';
 import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
@@ -14,6 +15,9 @@ import { SnackBarService } from '../../services/snack-bar.service';
   styleUrls: ['./question.component.scss'],
 })
 export class QuestionComponent implements OnInit {
+  card: Card;
+  cardIsUpdating = false;
+  isLoading = false;
   numberOfDefaultAnswers = 4;
   subjects: any;
   selectedQuestionType = 'single-choice';
@@ -27,7 +31,7 @@ export class QuestionComponent implements OnInit {
     topic: new FormControl(''),
     subject: new FormControl(''),
     questionText: new FormControl('', Validators.required),
-    questionType: new FormControl('single-choice', Validators.required),
+    questionType: new FormControl('', Validators.required),
     answers: new FormArray([], Validators.required),
     explanationText: new FormControl(''),
     image: new FormControl(''),
@@ -46,16 +50,29 @@ export class QuestionComponent implements OnInit {
     return this.form.get('answers') as FormArray;
   }
 
+  get isDataLoaded(): boolean {
+    return this.card !== undefined;
+  }
+
   constructor(
     private deckService: DeckService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private route: ActivatedRoute
   ) {}
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   ngOnInit(): void {
     this.getSubjects();
-    this.initFormAnswers();
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isLoading = true;
+      this.cardIsUpdating = true;
+      this.getCard(id);
+    } else {
+      this.initFormAnswers();
+      this.questionType.patchValue('single-choice');
+    }
   }
 
   addAnswer(correctAnswer: boolean): void {
@@ -65,6 +82,19 @@ export class QuestionComponent implements OnInit {
       explanationText: new FormControl(''),
     });
     this.answers.push(answerGroup);
+  }
+
+  addExistingAnswer(answer: Answer): void {
+    const answerGroup = new FormGroup({
+      correctAnswer: new FormControl(answer.correctAnswer),
+      answerText: new FormControl(answer.answerText, Validators.required),
+      explanationText: new FormControl(answer.explanationText),
+    });
+    this.answers.push(answerGroup);
+  }
+
+  getCard(id: string): void {
+    this.deckService.getCard(id).subscribe((card) => this.dataLoaded(card));
   }
 
   getNumberOfCorrectAnswers(): number {
@@ -107,6 +137,20 @@ export class QuestionComponent implements OnInit {
     for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
       index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
     }
+  }
+
+  initUpdateForm(): void {
+    this.form.get('name').patchValue(this.card.name);
+    this.form.get('topic').patchValue(this.card.topic);
+    this.form.get('subject').patchValue(this.card.subject);
+    this.form.get('questionText').patchValue(this.card.questionText);
+    this.form.get('explanationText').patchValue(this.card.explanationText);
+    this.form.get('image').patchValue(this.card.image);
+    this.form.get('srcCode').patchValue(this.card.srcCode);
+    this.questionType.patchValue(this.card.questionType);
+    this.card.answers.forEach((answer) => {
+      this.addExistingAnswer(answer);
+    });
   }
 
   moveAnswer(
@@ -190,7 +234,7 @@ export class QuestionComponent implements OnInit {
     this.selectedFileName = '';
     this.form.reset({
       // name: '',
-      // topic: '',
+      topic: '',
       // subject: '',
       questionText: '',
       questionType: 'single-choice',
@@ -239,5 +283,11 @@ export class QuestionComponent implements OnInit {
     this.subjects.sort((a, b) =>
       a.name.localeCompare(b.name, 'de', { ignorePunctuation: true })
     );
+  }
+
+  private dataLoaded(card: Card): void {
+    this.isLoading = false;
+    this.card = card;
+    this.initUpdateForm();
   }
 }
