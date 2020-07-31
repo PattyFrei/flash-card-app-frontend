@@ -151,6 +151,10 @@ export class QuestionComponent implements OnInit {
     this.card.answers.forEach((answer) => {
       this.addExistingAnswer(answer);
     });
+    this.selectedQuestionType = this.card.questionType;
+    this.card.image
+      ? (this.selectedFileName = 'Ein Bild ist')
+      : (this.selectedFileName = '');
   }
 
   moveAnswer(
@@ -207,21 +211,36 @@ export class QuestionComponent implements OnInit {
 
     this.submitted = true;
     const submittedCard: Card = {
-      name: 'namePlaceholder',
-      subject: 'Verschiedenens',
+      name: 'Verschiedenes',
+      subject: 'Verschiedenes',
       topic: questionForm.value.topic,
       questionText: questionForm.value.questionText,
       questionType: questionForm.value.questionType,
       answers: questionForm.value.answers,
       srcCode: questionForm.value.srcCode,
-      image: questionForm.value.image.imageId,
+      image: questionForm.value.image.imageId
+        ? questionForm.value.image.imageId
+        : questionForm.value.image,
     };
 
-    this.deckService.createCard(submittedCard).subscribe((data) => {
-      const successMessage = 'Die Frage wurde erfolgreich erstellt!';
-      this.snackBarService.open(successMessage);
-      this.resetForm();
-    });
+    console.log('submittedCard: ' + JSON.stringify(submittedCard));
+
+    if (this.cardIsUpdating) {
+      this.deckService
+        .updateCard(this.card.id, submittedCard)
+        .subscribe((data) => {
+          const successMessage = 'Die Frage wurde erfolgreich aktualisiert!';
+          this.snackBarService.open(successMessage);
+          this.resetForm();
+          console.log('updated question: ' + JSON.stringify(data));
+        });
+    } else {
+      this.deckService.createCard(submittedCard).subscribe((data) => {
+        const successMessage = 'Die Frage wurde erfolgreich erstellt!';
+        this.snackBarService.open(successMessage);
+        this.resetForm();
+      });
+    }
   }
 
   removeAnswer(index: number): void {
@@ -287,6 +306,7 @@ export class QuestionComponent implements OnInit {
 
   private dataLoaded(card: Card): void {
     this.isLoading = false;
+    console.log(card);
     this.card = card;
     this.initUpdateForm();
   }
