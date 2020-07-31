@@ -86,6 +86,18 @@ export class DeckService {
     return of(DIFFICULTIES);
   }
 
+  updateCard(id: string, card: Card): Observable<Card> {
+    return this.httpClient
+      .patch<Card>(`cards/${id}`, card)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateDeck(id: string, deck: Deck): Observable<Deck> {
+    return this.httpClient
+      .patch<Deck>(`decks/${id}`, deck)
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
