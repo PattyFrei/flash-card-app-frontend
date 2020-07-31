@@ -13,6 +13,7 @@ import { DeckService } from '../services/deck.service';
 })
 export class CardComponent implements OnInit {
   correctAnswersInPercent: number;
+  correctAnswerScore = 0;
   currentCard: Card;
   currentCardIndex = 0;
   currentCardImage: any;
@@ -29,7 +30,6 @@ export class CardComponent implements OnInit {
   toggleCheck = false;
   toggleResults = false;
   toggleNext = false;
-  totalCorrectAnswers = 0;
 
   get isDataLoaded(): boolean {
     return this.deck !== undefined && this.toggleResults === false;
@@ -128,7 +128,7 @@ export class CardComponent implements OnInit {
     } else {
       if (this.selectedAnswer.correctAnswer) {
         this.setExplanationText(true);
-        this.totalCorrectAnswers++;
+        this.correctAnswerScore++;
       } else {
         this.setExplanationText(false);
       }
@@ -152,7 +152,7 @@ export class CardComponent implements OnInit {
 
   setCorrectAnswersInPercent(): void {
     const rawPercent =
-      (this.totalCorrectAnswers * 100) / this.deck.questions.length;
+      (this.correctAnswerScore * 100) / this.deck.questions.length;
     this.correctAnswersInPercent = Math.round(rawPercent);
   }
 
@@ -200,7 +200,7 @@ export class CardComponent implements OnInit {
     });
 
     if (totalCorrectAnswers === selectedCorrectAnswers) {
-      this.totalCorrectAnswers++;
+      this.correctAnswerScore++;
       this.isMultipleChoiceCorrect = true;
       return (this.explanationText = 'Die ausgewählten Antworten ist richtig!');
     } else {
@@ -208,9 +208,9 @@ export class CardComponent implements OnInit {
       return (this.explanationText =
         'Leider ist/sind nur ' +
         selectedCorrectAnswers +
-        ' Antwort/en von ' +
-        this.selectedAnswers.length +
-        ' ausgewählte Antworten richtig.');
+        ' der ausgewählte Antwort/en richtig. Es gibt insgesamt ' +
+        totalCorrectAnswers +
+        ' richtige Antworten.');
     }
   }
 

@@ -13,7 +13,13 @@ import { SnackBarService } from '../../services/snack-bar.service';
 })
 export class MyQuestionsComponent implements OnInit, AfterViewInit {
   cards = new MatTableDataSource<Card>();
-  columnsToDisplay = ['questionText', 'topic', 'creationDate', 'delete'];
+  columnsToDisplay = [
+    'questionText',
+    'topic',
+    'creationDate',
+    'edit',
+    'delete',
+  ];
   isLoading = false;
   selectedId: string;
 

@@ -8,6 +8,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DeckComponent } from './deck/deck.component';
 import { EditorComponent } from './editor/editor.component';
 import { HomeComponent } from './home/home.component';
+import { CollectionComponent } from './editor/collection/collection.component';
+import { QuestionComponent } from './editor/question/question.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -19,9 +21,19 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'deck/:id', component: DeckComponent },
+  {
+    path: 'collection/:id',
+    component: CollectionComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'editor', component: EditorComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'card/:id', component: CardComponent },
+  {
+    path: 'question/:id',
+    component: QuestionComponent,
+    canActivate: [AuthGuard],
+  },
   { path: '**', component: HomeComponent },
 ];
 

@@ -40,6 +40,21 @@
     </td>
   </ng-container>
 
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-icon>edit</mat-icon>
+    </th>
+    <td mat-cell class="delete-cell" *matCellDef="let card; let i = index">
+      <button
+        mat-icon-button
+        aria-label="edit"
+        routerLink="/question/{{ card.id }}"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
   <ng-container matColumnDef="delete">
     <th mat-header-cell *matHeaderCellDef>
       <mat-icon>delete_forever</mat-icon>
@@ -58,4 +73,3 @@
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
 </table>
-<!-- routerLink="/cards/{{ row.id }}" -->
