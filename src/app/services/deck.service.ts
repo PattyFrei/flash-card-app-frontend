@@ -54,6 +54,12 @@ export class DeckService {
       .pipe(catchError(this.handleError));
   }
 
+  getCard(id: string): Observable<Card> {
+    return this.httpClient
+      .get<Card>(`cards/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
   getDeck(id: string): Observable<Deck> {
     return this.httpClient
       .get<Deck>(`decks/${id}`)
