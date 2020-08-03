@@ -1,6 +1,5 @@
 <app-editor></app-editor>
-
-<div [class.content-container]="cardIsUpdating">
+<div class="content-container">
   <h3 *ngIf="!cardIsUpdating">Neue Frage erstellen</h3>
   <h3 *ngIf="cardIsUpdating">Frage aktualisieren</h3>
   <form [formGroup]="questionForm">
