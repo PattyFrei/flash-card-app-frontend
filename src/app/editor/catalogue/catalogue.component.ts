@@ -49,7 +49,7 @@ export class CatalogueComponent implements OnInit {
   }
 
   get publicVisibility() {
-    return this.form.get('publicVisibility');
+    return this.form.get('publicVisibility').value;
   }
 
   get questions() {
@@ -107,6 +107,11 @@ export class CatalogueComponent implements OnInit {
       const errorMessage = 'Die Angaben sind nicht vollständig.';
       this.snackBarService.open(errorMessage);
       return;
+    } else if (this.publicVisibility === true && this.questions.length < 5) {
+      const errorMessage =
+        'Öffentliche Kataloge benötigen mindestens 5 Fragen.';
+      this.snackBarService.open(errorMessage);
+      return;
     }
 
     const questions = [];
@@ -131,9 +136,12 @@ export class CatalogueComponent implements OnInit {
       publicVisibility: collectionForm.value.publicVisibility,
     };
 
+    console.log(submittedDeck);
+
     this.deckService.createDeck(submittedDeck).subscribe((data) => {
       const successMessage = 'Das Quiz wurde erfolgreich erstellt.';
       this.snackBarService.open(successMessage);
+      console.log(data);
       this.resetForm();
     });
   }

@@ -71,7 +71,7 @@
 
     <mat-divider></mat-divider>
 
-    <div class="slide-toggle-box">
+    <!-- <div class="slide-toggle-box">
       <mat-slide-toggle
         color="primary"
         formControlName="allowSecondGuess"
@@ -81,7 +81,7 @@
         Erlaube dem Nutzer einen zweiten Versuch, wenn die falsche Antwort
         ausgewählt wurde
       </mat-slide-toggle>
-    </div>
+    </div> -->
 
     <ng-container formArrayName="questions">
       <div class="question-action-buttons">
@@ -140,7 +140,7 @@
         color="primary"
         formControlName="publicVisibility"
         (change)="setPublicVisibility($event)"
-        disabled
+        [checked]="false"
       >
         Der Fragenkatalog wird öffentlich in der Quizübersicht gelistet
       </mat-slide-toggle>
