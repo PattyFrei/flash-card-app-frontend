@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CatalogueComponent } from './catalogue/catalogue.component';
+import { PublicComponent } from './quiz/public/public.component';
 import { CardComponent } from './card/card.component';
 import { DeckComponent } from './deck/deck.component';
 import { httpInterceptorProviders } from './http-interceptors/index';
@@ -41,7 +41,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
   declarations: [
     AppComponent,
-    CatalogueComponent,
+    PublicComponent,
     CardComponent,
     DeckComponent,
     QuestionComponent,

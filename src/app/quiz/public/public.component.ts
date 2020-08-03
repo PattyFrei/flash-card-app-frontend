@@ -2,16 +2,16 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
-import { AuthService } from '../services/auth.service';
-import { Deck } from '../deck/deck';
-import { DeckService } from '../services/deck.service';
+import { AuthService } from '../../services/auth.service';
+import { Deck } from '../../deck/deck';
+import { DeckService } from '../../services/deck.service';
 
 @Component({
-  selector: 'app-catalogue',
-  templateUrl: './catalogue.component.html',
-  styleUrls: ['./catalogue.component.scss'],
+  selector: 'app-public',
+  templateUrl: './public.component.html',
+  styleUrls: ['./public.component.scss'],
 })
-export class CatalogueComponent implements OnInit, AfterViewInit {
+export class PublicComponent implements OnInit, AfterViewInit {
   columnsToDisplay = ['name', 'topic', 'subject', 'author', 'creationDate'];
   isLoading = false;
   selectedId: string;

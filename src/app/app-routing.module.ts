@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from './auth.guard';
 import { CardComponent } from './card/card.component';
-import { CatalogueComponent } from './catalogue/catalogue.component';
+import { PublicComponent } from './quiz/public/public.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DeckComponent } from './deck/deck.component';
 import { EditorComponent } from './editor/editor.component';
@@ -14,7 +14,7 @@ import { QuestionComponent } from './editor/question/question.component';
 const routes: Routes = [
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '', component: HomeComponent },
-  { path: 'catalogue', component: CatalogueComponent },
+  { path: 'public', component: PublicComponent },
   {
     path: 'profile',
     component: ProfileComponent,
