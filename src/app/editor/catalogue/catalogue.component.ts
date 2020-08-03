@@ -107,11 +107,18 @@ export class CatalogueComponent implements OnInit {
       const errorMessage = 'Die Angaben sind nicht vollständig.';
       this.snackBarService.open(errorMessage);
       return;
-    } else if (this.publicVisibility === true && this.questions.length < 5) {
-      const errorMessage =
-        'Öffentliche Kataloge benötigen mindestens 5 Fragen.';
-      this.snackBarService.open(errorMessage);
-      return;
+    } else if (this.publicVisibility === true) {
+      if (this.questions.length < 5) {
+        const errorMessage =
+          'Öffentliche Kataloge benötigen mindestens 5 Fragen.';
+        this.snackBarService.open(errorMessage);
+        return;
+      }
+      if (!this.form.get('topic').value) {
+        const errorMessage = 'Öffentliche Kataloge benötigen ein Thema.';
+        this.snackBarService.open(errorMessage);
+        return;
+      }
     }
 
     const questions = [];
