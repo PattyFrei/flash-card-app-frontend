@@ -26,7 +26,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HomeComponent } from './home/home.component';
@@ -45,7 +45,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     CardComponent,
     DeckComponent,
     QuestionComponent,
-    DashboardComponent,
+    ProfileComponent,
     NavBarComponent,
     HomeComponent,
     EditorComponent,

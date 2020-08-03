@@ -56,7 +56,7 @@
       <button (click)="auth.login()" *ngIf="!auth.loggedIn" mat-menu-item>
         Einloggen
       </button>
-      <button routerLink="/dashboard" *ngIf="auth.loggedIn" mat-menu-item>
+      <button routerLink="/profile" *ngIf="auth.loggedIn" mat-menu-item>
         Profil
       </button>
       <button (click)="auth.logout()" *ngIf="auth.loggedIn" mat-menu-item>

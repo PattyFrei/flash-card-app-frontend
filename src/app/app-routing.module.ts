@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { CardComponent } from './card/card.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
 import { DeckComponent } from './deck/deck.component';
 import { EditorComponent } from './editor/editor.component';
 import { HomeComponent } from './home/home.component';
@@ -16,8 +16,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'catalogue', component: CatalogueComponent },
   {
-    path: 'dashboard',
-    component: DashboardComponent,
+    path: 'profile',
+    component: ProfileComponent,
     canActivate: [AuthGuard],
   },
   { path: 'deck/:id', component: DeckComponent },
