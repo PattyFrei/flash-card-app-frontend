@@ -7,11 +7,11 @@ import { DeckService } from '../../services/deck.service';
 import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
-  selector: 'app-my-collections',
-  templateUrl: './my-collections.component.html',
-  styleUrls: ['./my-collections.component.scss'],
+  selector: 'app-my-catalogues',
+  templateUrl: './my-catalogues.component.html',
+  styleUrls: ['./my-catalogues.component.scss'],
 })
-export class MyCollectionsComponent implements OnInit, AfterViewInit {
+export class MyCataloguesComponent implements OnInit, AfterViewInit {
   columnsToDisplay = [
     'name',
     'topic',

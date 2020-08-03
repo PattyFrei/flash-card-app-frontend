@@ -33,7 +33,7 @@ import { HomeComponent } from './home/home.component';
 import { EditorComponent } from './editor/editor.component';
 import { CatalogueComponent } from './editor/catalogue/catalogue.component';
 import { MyQuestionsComponent } from './editor/my-questions/my-questions.component';
-import { MyCollectionsComponent } from './editor/my-collections/my-collections.component';
+import { MyCataloguesComponent } from './editor/my-catalogues/my-catalogues.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -51,7 +51,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     EditorComponent,
     CatalogueComponent,
     MyQuestionsComponent,
-    MyCollectionsComponent,
+    MyCataloguesComponent,
   ],
   imports: [
     BrowserModule,
