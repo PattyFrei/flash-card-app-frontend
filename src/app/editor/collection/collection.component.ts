@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
-import { Card } from '../../card/card';
+import { Card } from '../../quiz/card/card';
 import { DeckService } from './../../services/deck.service';
-import { Deck } from '../../deck/deck';
+import { Deck } from '../../quiz/deck/deck';
 import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({

@@ -6,7 +6,7 @@ import { MatRadioChange } from '@angular/material/radio';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { DeckService } from '../../services/deck.service';
-import { Answer, Card, HTMLInputEvent } from '../../card/card';
+import { Answer, Card, HTMLInputEvent } from '../../quiz/card/card';
 import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({

@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
-import { Deck } from '../../deck/deck';
+import { Deck } from '../../quiz/deck/deck';
 import { DeckService } from '../../services/deck.service';
 import { SnackBarService } from '../../services/snack-bar.service';
 
