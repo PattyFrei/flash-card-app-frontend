@@ -9,11 +9,18 @@ import { EditorComponent } from './editor/editor.component';
 import { HomeComponent } from './home/home.component';
 import { PublicComponent } from './quiz/public/public.component';
 import { ProfileComponent } from './profile/profile.component';
+import { MyCataloguesComponent } from './editor/my-catalogues/my-catalogues.component';
+import { MyQuestionsComponent } from './editor/my-questions/my-questions.component';
 import { QuestionComponent } from './editor/question/question.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'card/:id', component: CardComponent },
+  {
+    path: 'catalogue',
+    component: CatalogueComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'catalogue/:id',
     component: CatalogueComponent,
@@ -28,6 +35,21 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'public', component: PublicComponent },
+  {
+    path: 'my-catalogues',
+    component: MyCataloguesComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'my-questions',
+    component: MyQuestionsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'question',
+    component: QuestionComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'question/:id',
     component: QuestionComponent,
