@@ -27,7 +27,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'deck/:id', component: DeckComponent },
-  { path: 'editor', component: EditorComponent, canActivate: [AuthGuard] },
+  // { path: 'editor', component: EditorComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
   {
     path: 'profile',

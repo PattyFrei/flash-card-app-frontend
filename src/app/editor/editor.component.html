@@ -1,29 +1,16 @@
 <div class="content-container">
-  <mat-tab-group>
-    <mat-tab label="Frage erstellen">
-      <ng-template matTabContent>
-        <!-- Geladen um: {{ getTimeLoaded(1) | date: 'medium' }} -->
-        <app-question></app-question>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="Erstellte Fragen">
-      <ng-template matTabContent>
-        <!-- Geladen um: {{ getTimeLoaded(2) | date: 'medium' }} -->
-        <app-my-questions></app-my-questions>
-      </ng-template>
-      <app-my-questions></app-my-questions>
-    </mat-tab>
-    <mat-tab label="Katalog erstellen">
-      <ng-template matTabContent>
-        <!-- Geladen um: {{ getTimeLoaded(3) | date: 'medium' }} -->
-        <app-catalogue></app-catalogue>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="Erstellte Kataloge">
-      <ng-template matTabContent>
-        <!-- Geladen um: {{ getTimeLoaded(4) | date: 'medium' }} -->
-        <app-my-catalogues></app-my-catalogues>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+  <div class="button-row">
+    <button mat-raised-button color="basic" routerLink="/question">
+      Frage erstellen
+    </button>
+    <button mat-raised-button color="basic" routerLink="/my-questions">
+      Meine Fragen
+    </button>
+    <button mat-raised-button color="basic" routerLink="/catalogue">
+      Katalog erstellen
+    </button>
+    <button mat-raised-button color="basic" routerLink="/my-catalogues">
+      Meine Kataloge
+    </button>
+  </div>
 </div>
