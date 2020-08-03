@@ -3,16 +3,16 @@ import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { Card } from '../../quiz/card/card';
-import { DeckService } from './../../services/deck.service';
+import { DeckService } from '../../services/deck.service';
 import { Deck } from '../../quiz/deck/deck';
 import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
-  selector: 'app-collection',
-  templateUrl: './collection.component.html',
-  styleUrls: ['./collection.component.scss'],
+  selector: 'app-catalogue',
+  templateUrl: './catalogue.component.html',
+  styleUrls: ['./catalogue.component.scss'],
 })
-export class CollectionComponent implements OnInit {
+export class CatalogueComponent implements OnInit {
   cards: Card[];
   difficulties: any;
   isLoading = false;

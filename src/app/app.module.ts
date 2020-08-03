@@ -31,7 +31,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HomeComponent } from './home/home.component';
 import { EditorComponent } from './editor/editor.component';
-import { CollectionComponent } from './editor/collection/collection.component';
+import { CatalogueComponent } from './editor/catalogue/catalogue.component';
 import { MyQuestionsComponent } from './editor/my-questions/my-questions.component';
 import { MyCollectionsComponent } from './editor/my-collections/my-collections.component';
 import { MatCardModule } from '@angular/material/card';
@@ -49,7 +49,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     NavBarComponent,
     HomeComponent,
     EditorComponent,
-    CollectionComponent,
+    CatalogueComponent,
     MyQuestionsComponent,
     MyCollectionsComponent,
   ],
