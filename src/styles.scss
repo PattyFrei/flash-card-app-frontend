@@ -9,7 +9,6 @@ body {
 body {
   background-color: #f7f7f7;
   font-family: 'Roboto', 'Helvetica Neue', sans-serif;
-  margin: 6em 2em 2em 2em;
 }
 
 h1 {
@@ -18,8 +17,27 @@ h1 {
   font-size: 250%;
 }
 
+.top-spacer {
+  position: absolute;
+  top: 64px;
+  width: 100%;
+}
+
 .content-container {
-  // margin: 2em;
   margin: 0 auto;
   max-width: 1000px;
+  padding: 2em;
+  padding-top: 1em;
+}
+
+@media (max-width: 599px) {
+  .top-spacer {
+    position: absolute;
+    top: 56px;
+    width: 100%;
+  }
+  .content-container {
+    margin: 0 auto;
+    padding: 1em;
+  }
 }
