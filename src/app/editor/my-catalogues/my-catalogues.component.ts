@@ -18,6 +18,7 @@ export class MyCataloguesComponent implements OnInit, AfterViewInit {
     'subject',
     'questions',
     'creationDate',
+    'edit',
     'delete',
   ];
   decks = new MatTableDataSource<Deck>();
