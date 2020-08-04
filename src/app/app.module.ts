@@ -4,9 +4,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CatalogueComponent } from './catalogue/catalogue.component';
-import { CardComponent } from './card/card.component';
-import { DeckComponent } from './deck/deck.component';
+import { PublicComponent } from './quiz/public/public.component';
+import { CardComponent } from './quiz/card/card.component';
+import { DeckComponent } from './quiz/deck/deck.component';
 import { httpInterceptorProviders } from './http-interceptors/index';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,14 +26,14 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HomeComponent } from './home/home.component';
 import { EditorComponent } from './editor/editor.component';
-import { CollectionComponent } from './editor/collection/collection.component';
+import { CatalogueComponent } from './editor/catalogue/catalogue.component';
 import { MyQuestionsComponent } from './editor/my-questions/my-questions.component';
-import { MyCollectionsComponent } from './editor/my-collections/my-collections.component';
+import { MyCataloguesComponent } from './editor/my-catalogues/my-catalogues.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -41,17 +41,17 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
   declarations: [
     AppComponent,
-    CatalogueComponent,
+    PublicComponent,
     CardComponent,
     DeckComponent,
     QuestionComponent,
-    DashboardComponent,
+    ProfileComponent,
     NavBarComponent,
     HomeComponent,
     EditorComponent,
-    CollectionComponent,
+    CatalogueComponent,
     MyQuestionsComponent,
-    MyCollectionsComponent,
+    MyCataloguesComponent,
   ],
   imports: [
     BrowserModule,

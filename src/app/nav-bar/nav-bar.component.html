@@ -9,18 +9,14 @@
       {{ title }}
     </button>
 
-    <a
-      class="toolbar-link"
-      mat-flat-button
-      color="primary"
-      routerLink="/catalogue"
+    <a class="toolbar-link" mat-flat-button color="primary" routerLink="/public"
       >Quiz</a
     >
     <a
       class="toolbar-link"
       mat-flat-button
       color="primary"
-      routerLink="/editor"
+      routerLink="/question"
       *ngIf="auth.loggedIn"
       >Editor</a
     >
@@ -56,7 +52,7 @@
       <button (click)="auth.login()" *ngIf="!auth.loggedIn" mat-menu-item>
         Einloggen
       </button>
-      <button routerLink="/dashboard" *ngIf="auth.loggedIn" mat-menu-item>
+      <button routerLink="/profile" *ngIf="auth.loggedIn" mat-menu-item>
         Profil
       </button>
       <button (click)="auth.logout()" *ngIf="auth.loggedIn" mat-menu-item>

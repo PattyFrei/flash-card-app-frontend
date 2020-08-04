@@ -1,4 +1,5 @@
-<div [class.content-container]="cardIsUpdating">
+<app-editor></app-editor>
+<div class="content-container">
   <h3 *ngIf="!cardIsUpdating">Neue Frage erstellen</h3>
   <h3 *ngIf="cardIsUpdating">Frage aktualisieren</h3>
   <form [formGroup]="questionForm">
@@ -208,8 +209,8 @@
       >
         Aktualisieren
       </button>
-      <button mat-raised-button color="basic" routerLink="/editor">
-        Zurück
+      <button mat-raised-button color="basic" routerLink="/my-questions">
+        Abbrechen
       </button>
     </div>
   </form>
