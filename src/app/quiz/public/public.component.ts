@@ -47,6 +47,5 @@ export class PublicComponent implements OnInit, AfterViewInit {
   private dataLoaded(decks: Deck[]): void {
     this.isLoading = false;
     this.decks.data = decks;
-    console.log('First deck: ' + this.decks.data[0]);
   }
 }

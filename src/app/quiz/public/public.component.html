@@ -44,7 +44,7 @@
         <ng-container matColumnDef="creationDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Erstellt</th>
           <td mat-cell *matCellDef="let deck">
-            {{ deck.creationDate | date: 'dd.MM.yyyy' }}
+            {{ deck.creationDate | date: 'dd.MM.yy' }}
           </td>
         </ng-container>
 
