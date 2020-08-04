@@ -17,7 +17,6 @@ import { SnackBarService } from '../../services/snack-bar.service';
 export class QuestionComponent implements OnInit {
   card: Card;
   cardIsUpdating = false;
-  isLoading = false;
   numberOfDefaultAnswers = 4;
   selectedQuestionType = 'single-choice';
   submitted = false;
@@ -49,10 +48,6 @@ export class QuestionComponent implements OnInit {
     return this.form.get('answers') as FormArray;
   }
 
-  get isDataLoaded(): boolean {
-    return this.card !== undefined;
-  }
-
   constructor(
     private deckService: DeckService,
     private snackBarService: SnackBarService,
@@ -64,7 +59,6 @@ export class QuestionComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.isLoading = true;
       this.cardIsUpdating = true;
       this.getCard(id);
     } else {
@@ -92,7 +86,10 @@ export class QuestionComponent implements OnInit {
   }
 
   getCard(id: string): void {
-    this.deckService.getCard(id).subscribe((card) => this.dataLoaded(card));
+    this.deckService.getCard(id).subscribe((card) => {
+      this.card = card;
+      this.initUpdateForm();
+    });
   }
 
   getNumberOfCorrectAnswers(): number {
@@ -140,9 +137,7 @@ export class QuestionComponent implements OnInit {
       srcCode: this.card.srcCode,
     });
 
-    this.card.answers.forEach((answer) => {
-      this.addExistingAnswer(answer);
-    });
+    this.card.answers.forEach((answer) => this.addExistingAnswer(answer));
     this.selectedQuestionType = this.card.questionType;
     this.card.image
       ? (this.selectedFileName = 'Ein Bild ist')
@@ -269,11 +264,5 @@ export class QuestionComponent implements OnInit {
         this.form.get('image').patchValue(data);
       });
     }
-  }
-
-  private dataLoaded(card: Card): void {
-    this.isLoading = false;
-    this.card = card;
-    this.initUpdateForm();
   }
 }
