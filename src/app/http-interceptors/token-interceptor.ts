@@ -19,12 +19,17 @@ export class TokenInterceptorService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    // skip token check for GET /images and GET /decks for guest user
+    const firstPath = req.url.split('/')[3];
+    if (req.method === 'GET' && ['images', 'decks'].includes(firstPath)) {
+      return next.handle(req);
+    }
+
     return this.auth.getTokenSilently$().pipe(
       mergeMap((token) => {
         const tokenReq = req.clone({
           setHeaders: { Authorization: `Bearer ${token}` },
         });
-        // console.log(tokenReq);
 
         return next.handle(tokenReq);
       }),
