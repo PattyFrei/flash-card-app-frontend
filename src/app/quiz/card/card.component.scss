@@ -97,16 +97,16 @@ mat-progress-bar {
 }
 
 ::ng-deep.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-  background-color: #3f51b5 !important; /*click effect color change*/
+  background-color: #3f51b5 !important; // click effect color change
 }
 
 ::ng-deep.mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: #3f51b5 !important; /*inner circle color change*/
+  background-color: #3f51b5 !important; // inner circle color change
 }
 
 ::ng-deep.mat-radio-button.mat-accent.mat-radio-checked
   .mat-radio-outer-circle {
-  border-color: #3f51b5 !important; /*outer ring color change*/
+  border-color: #3f51b5 !important; // outer ring color
 }
 
 // ::ng-deep.mat-radio-button.mat-accent.mat-radio-checked.mat-radio-disabled
@@ -124,10 +124,20 @@ mat-progress-bar {
 
 .question-image {
   display: block;
-  max-height: 300px;
+  max-height: 400px;
   margin-bottom: 10px;
 }
 
 .deck-name {
   margin-bottom: 0;
+}
+
+@media (max-width: 599px) {
+  .question-image {
+    max-width: 100%;
+    max-height: 250px;
+  }
+  // .choice-group {
+  //   max-width: 300px;
+  // }
 }

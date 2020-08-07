@@ -178,7 +178,7 @@ export class CardComponent implements OnInit {
     if (this.currentCard.questionType === 'single-choice') {
       this.questionTypeText = 'Wähle eine Antwort aus:';
     } else if (this.currentCard.questionType === 'multiple-choice') {
-      this.questionTypeText = 'Wähle eine oder mehrere richtige Antworten aus:';
+      this.questionTypeText = 'Wähle mehrere richtige Antworten aus:';
     } else {
       this.questionTypeText = 'Gebe eine Antwort ein:';
     }
@@ -206,9 +206,9 @@ export class CardComponent implements OnInit {
     } else {
       this.isMultipleChoiceCorrect = false;
       return (this.explanationText =
-        'Leider ist/sind nur ' +
+        'Nur ' +
         selectedCorrectAnswers +
-        ' der ausgewählte Antwort/en richtig. Es gibt insgesamt ' +
+        ' der ausgewählte Antwort(en) ist/sind richtig. Es gibt insgesamt ' +
         totalCorrectAnswers +
         ' richtige Antworten.');
     }
