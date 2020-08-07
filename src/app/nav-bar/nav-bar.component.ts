@@ -9,7 +9,19 @@ import { AuthService } from '../services/auth.service';
 export class NavBarComponent implements OnInit {
   title = 'FlashCard App';
 
-  constructor(public auth: AuthService) {}
+  get loggedIn() {
+    return this.auth.loggedIn;
+  }
+
+  constructor(private auth: AuthService) {}
 
   ngOnInit(): void {}
+
+  login(): void {
+    this.auth.login();
+  }
+
+  logout(): void {
+    this.auth.logout();
+  }
 }
