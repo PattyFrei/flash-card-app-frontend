@@ -1,20 +1,15 @@
-<h3>Neue Frage erstellen</h3>
-<form [formGroup]="questionForm">
-  <!-- <mat-form-field
+<app-editor></app-editor>
+<div class="content-container">
+  <h3 *ngIf="!cardIsUpdating">Neue Frage erstellen</h3>
+  <h3 *ngIf="cardIsUpdating">Frage aktualisieren</h3>
+  <form [formGroup]="questionForm">
+    <!-- <mat-form-field
     hintLabel="Gebe der Frage einen deskriptiven Namen"
     appearance="fill"
   >
     <mat-label>Name</mat-label>
     <input matInput #input formControlName="name" required />
     <mat-hint align="end">{{ input.value?.length || 0 }}/50</mat-hint>
-  </mat-form-field>
-
-  <mat-form-field
-    hintLabel="z.B. Programmieren, Dynamik, Schnittmuster etc."
-    appearance="fill"
-  >
-    <mat-label>Thema</mat-label>
-    <input matInput formControlName="topic" />
   </mat-form-field>
 
   <mat-form-field
@@ -32,50 +27,49 @@
 
   <mat-divider></mat-divider> -->
 
-  <mat-form-field
-    class="big-field"
-    hintLabel="Gebe den Text für die Frage ein"
-    appearance="fill"
-  >
-    <mat-label>Fragetext</mat-label>
-    <textarea matInput formControlName="questionText" required></textarea>
-  </mat-form-field>
-
-  <label class="button-row-label"
-    >Lade ein Bild hoch, das unter dem Fragetext angezeigt werden soll.</label
-  >
-  <!-- 
-  <div class="button-row">
-    <button mat-raised-button color="basic" disabled>
-      Bild hochladen
-    </button>
-    <button mat-raised-button color="basic" disabled>
-      Quelltext hochladen
-    </button>
-  </div> -->
-
-  <div class="button-row">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="$event.preventDefault(); imgFileInput.click()"
+    <mat-form-field
+      class="big-field"
+      hintLabel="Gebe den Text für die Frage ein"
+      appearance="fill"
     >
-      <mat-icon>cloud_upload</mat-icon>
-      <span class="upload-image-text">Bild hochladen</span>
-    </button>
-    <input
-      hidden
-      type="file"
-      #imgFileInput
-      (change)="uploadImage($event)"
-      accept=".jpg, .jpeg, .png, .gif"
-    />
-    <div class="upload-file-text" *ngIf="selectedFileName">
-      {{ selectedFileName }} ausgewählt
-    </div>
-  </div>
+      <mat-label>Fragetext</mat-label>
+      <textarea matInput formControlName="questionText" required></textarea>
+    </mat-form-field>
 
-  <!-- 
+    <mat-form-field
+      hintLabel="z.B. Datenbanken oder Elektrotechnik"
+      appearance="fill"
+    >
+      <mat-label>Thema oder Tag</mat-label>
+      <input matInput formControlName="topic" />
+    </mat-form-field>
+
+    <label class="button-row-label"
+      >Lade ein Bild hoch, das unter dem Fragetext angezeigt werden soll.</label
+    >
+
+    <div class="button-row">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="$event.preventDefault(); imgFileInput.click()"
+      >
+        <mat-icon>cloud_upload</mat-icon>
+        <span class="upload-image-text">Bild hochladen</span>
+      </button>
+      <input
+        hidden
+        type="file"
+        #imgFileInput
+        (change)="uploadImage($event)"
+        accept=".jpg, .jpeg, .png, .gif, .bmp"
+      />
+      <div class="upload-file-text" *ngIf="selectedFileName">
+        {{ selectedFileName }} ausgewählt.
+      </div>
+    </div>
+
+    <!-- 
   <mat-form-field
     class="big-field"
     hintLabel="Gebe eine Erklärung zur Frage an, 
@@ -86,122 +80,138 @@
     <textarea matInput formControlName="explanationText"></textarea>
   </mat-form-field> -->
 
-  <mat-divider></mat-divider>
+    <mat-divider></mat-divider>
 
-  <label class="radio-group-label">Wähle einen Antworttyp aus:</label>
-  <mat-radio-group
-    aria-labelledby="radio-group-label"
-    formControlName="questionType"
-    class="radio-group"
-  >
-    <mat-radio-button
-      class="radio-button"
-      value="single-choice"
-      (change)="onSelectedQuestionTypeChange($event)"
+    <label class="radio-group-label">Wähle einen Antworttyp aus:</label>
+    <mat-radio-group
+      aria-labelledby="radio-group-label"
+      formControlName="questionType"
+      class="radio-group"
     >
-      Eine richtige Antwort
-    </mat-radio-button>
-    <mat-radio-button
-      class="radio-button"
-      value="multiple-choice"
-      (change)="onSelectedQuestionTypeChange($event)"
-    >
-      Mehrere richtige Antworten
-    </mat-radio-button>
-  </mat-radio-group>
+      <mat-radio-button
+        class="radio-button"
+        value="single-choice"
+        [checked]="selectedQuestionType === 'single-choice'"
+        (change)="onSelectedQuestionTypeChange($event)"
+      >
+        Eine richtige Antwort
+      </mat-radio-button>
+      <mat-radio-button
+        class="radio-button"
+        value="multiple-choice"
+        [checked]="selectedQuestionType === 'multiple-choice'"
+        (change)="onSelectedQuestionTypeChange($event)"
+      >
+        Mehrere richtige Antworten
+      </mat-radio-button>
+    </mat-radio-group>
 
-  <ng-container formArrayName="answers">
-    <div class="answer-action-buttons">
+    <ng-container formArrayName="answers">
+      <div class="answer-action-buttons">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addAnswer(false); $event.preventDefault()"
+        >
+          Antwort hinzufügen
+        </button>
+        <button
+          mat-raised-button
+          color="basic"
+          (click)="accordion.openAll(); $event.preventDefault()"
+        >
+          Alle aufklappen
+        </button>
+        <button
+          mat-raised-button
+          color="basic"
+          (click)="accordion.closeAll(); $event.preventDefault()"
+        >
+          Alle einklappen
+        </button>
+      </div>
+
+      <mat-accordion class="headers-align" multi>
+        <div *ngFor="let answer of answers.controls; index as i">
+          <ng-container [formGroupName]="i">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title> {{ i + 1 }}. Antwort </mat-panel-title>
+                <mat-panel-description>
+                  Klicke für eine Eingabe
+                  <button
+                    class="expansion-panel-header-del-button"
+                    [disabled]="i < 2"
+                    mat-icon-button
+                    aria-label="del"
+                    (click)="removeAnswer(i)"
+                  >
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <mat-slide-toggle
+                color="primary"
+                formControlName="correctAnswer"
+                id="{{ i }}"
+                (change)="setCorrectAnswerValue($event)"
+              >
+                Als richtige Antwort markieren
+              </mat-slide-toggle>
+
+              <mat-form-field
+                hintLabel="Gebe die {{ i + 1 }}. Antwort ein"
+                appearance="fill"
+                class="big-field"
+              >
+                <mat-label>Antworttext</mat-label>
+                <input matInput formControlName="answerText" required
+              /></mat-form-field>
+              <mat-form-field
+                hintLabel="Gebe eine Erklärung an, die nach dem Überprüfen der Antwort erklärt warum die 
+              {{ i + 1 }}. Antwort richtig oder falsch ist"
+                appearance="fill"
+                class="big-field"
+              >
+                <mat-label>Erklärungstext</mat-label>
+                <textarea matInput formControlName="explanationText"></textarea>
+              </mat-form-field>
+            </mat-expansion-panel>
+          </ng-container>
+        </div>
+      </mat-accordion>
+    </ng-container>
+
+    <mat-divider></mat-divider>
+
+    <div *ngIf="!cardIsUpdating" class="button-row">
       <button
         mat-raised-button
         color="primary"
-        (click)="addAnswer(false); $event.preventDefault()"
+        (click)="onSubmit(questionForm); $event.preventDefault()"
       >
-        Antwort hinzufügen
+        Erstellen
       </button>
       <button
         mat-raised-button
         color="basic"
-        (click)="accordion.openAll(); $event.preventDefault()"
+        (click)="resetForm(); $event.preventDefault()"
       >
-        Alle aufklappen
-      </button>
-      <button
-        mat-raised-button
-        color="basic"
-        (click)="accordion.closeAll(); $event.preventDefault()"
-      >
-        Alle einklappen
+        Zurücksetzen
       </button>
     </div>
-
-    <mat-accordion class="headers-align" multi>
-      <div *ngFor="let answer of answers.controls; index as i">
-        <ng-container [formGroupName]="i">
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title> {{ i + 1 }}. Antwort </mat-panel-title>
-              <mat-panel-description>
-                Klicke für eine Eingabe
-                <button
-                  class="expansion-panel-header-del-button"
-                  [disabled]="i < 2"
-                  mat-icon-button
-                  aria-label="del"
-                  (click)="removeAnswer(i)"
-                >
-                  <mat-icon>delete_forever</mat-icon>
-                </button>
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <mat-slide-toggle
-              color="primary"
-              formControlName="correctAnswer"
-              id="{{ i }}"
-              (change)="setCorrectAnswerValue($event)"
-            >
-              Als richtige Antwort markieren
-            </mat-slide-toggle>
-
-            <mat-form-field
-              hintLabel="Gebe die {{ i + 1 }}. Antwort ein"
-              appearance="fill"
-              class="big-field"
-            >
-              <mat-label>Antworttext</mat-label>
-              <input matInput formControlName="answerText" required
-            /></mat-form-field>
-            <mat-form-field
-              hintLabel="Gebe eine Erklärung an, die nach dem Überprüfen der Antwort erklärt warum die 
-              {{ i + 1 }}. Antwort richtig oder falsch ist"
-              appearance="fill"
-              class="big-field"
-            >
-              <mat-label>Erklärungstext</mat-label>
-              <textarea matInput formControlName="explanationText"></textarea>
-            </mat-form-field>
-          </mat-expansion-panel>
-        </ng-container>
-      </div>
-    </mat-accordion>
-  </ng-container>
-
-  <mat-divider></mat-divider>
-  <div class="button-row">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="onSubmit(questionForm); $event.preventDefault()"
-    >
-      Erstellen
-    </button>
-    <button
-      mat-raised-button
-      color="basic"
-      (click)="resetForm(); $event.preventDefault()"
-    >
-      Zurücksetzen
-    </button>
-  </div>
-</form>
+    <div *ngIf="cardIsUpdating" class="button-row">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onSubmit(questionForm); $event.preventDefault()"
+      >
+        Aktualisieren
+      </button>
+      <button mat-raised-button color="basic" routerLink="/my-questions">
+        Abbrechen
+      </button>
+    </div>
+  </form>
+</div>

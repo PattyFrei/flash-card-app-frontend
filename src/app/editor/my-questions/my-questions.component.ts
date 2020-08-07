@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
-import { Card } from '../../card/card';
+import { Card } from '../../quiz/card/card';
 import { DeckService } from '../../services/deck.service';
 import { SnackBarService } from '../../services/snack-bar.service';
 
@@ -13,8 +13,13 @@ import { SnackBarService } from '../../services/snack-bar.service';
 })
 export class MyQuestionsComponent implements OnInit, AfterViewInit {
   cards = new MatTableDataSource<Card>();
-  // columnsToDisplay = ['name', 'topic', 'subject', 'creationDate'];
-  columnsToDisplay = ['questionText', 'creationDate', 'delete'];
+  columnsToDisplay = [
+    'questionText',
+    'topic',
+    'creationDate',
+    'edit',
+    'delete',
+  ];
   isLoading = false;
   selectedId: string;
 

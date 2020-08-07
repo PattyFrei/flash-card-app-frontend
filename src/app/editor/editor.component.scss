@@ -1,0 +1,18 @@
+.button-row {
+  width: 100%;
+}
+
+button {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.content-container {
+  padding-bottom: 0;
+}
+
+@media (max-width: 599px) {
+  .content-container {
+    padding-bottom: 0;
+  }
+}

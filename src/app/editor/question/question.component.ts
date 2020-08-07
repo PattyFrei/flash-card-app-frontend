@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
@@ -5,7 +6,7 @@ import { MatRadioChange } from '@angular/material/radio';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { DeckService } from '../../services/deck.service';
-import { Card, HTMLInputEvent } from '../../card/card';
+import { Answer, Card, HTMLInputEvent } from '../../quiz/card/card';
 import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
@@ -14,8 +15,9 @@ import { SnackBarService } from '../../services/snack-bar.service';
   styleUrls: ['./question.component.scss'],
 })
 export class QuestionComponent implements OnInit {
+  card: Card;
+  cardIsUpdating = false;
   numberOfDefaultAnswers = 4;
-  subjects: any;
   selectedQuestionType = 'single-choice';
   submitted = false;
   submittedCard: Card;
@@ -27,7 +29,7 @@ export class QuestionComponent implements OnInit {
     topic: new FormControl(''),
     subject: new FormControl(''),
     questionText: new FormControl('', Validators.required),
-    questionType: new FormControl('single-choice', Validators.required),
+    questionType: new FormControl('', Validators.required),
     answers: new FormArray([], Validators.required),
     explanationText: new FormControl(''),
     image: new FormControl(''),
@@ -48,14 +50,21 @@ export class QuestionComponent implements OnInit {
 
   constructor(
     private deckService: DeckService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private route: ActivatedRoute
   ) {}
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   ngOnInit(): void {
-    this.getSubjects();
-    this.initFormAnswers();
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.cardIsUpdating = true;
+      this.getCard(id);
+    } else {
+      this.initFormAnswers();
+      this.questionType.patchValue('single-choice');
+    }
   }
 
   addAnswer(correctAnswer: boolean): void {
@@ -65,6 +74,22 @@ export class QuestionComponent implements OnInit {
       explanationText: new FormControl(''),
     });
     this.answers.push(answerGroup);
+  }
+
+  addExistingAnswer(answer: Answer): void {
+    const answerGroup = new FormGroup({
+      correctAnswer: new FormControl(answer.correctAnswer),
+      answerText: new FormControl(answer.answerText, Validators.required),
+      explanationText: new FormControl(answer.explanationText),
+    });
+    this.answers.push(answerGroup);
+  }
+
+  getCard(id: string): void {
+    this.deckService.getCard(id).subscribe((card) => {
+      this.card = card;
+      this.initUpdateForm();
+    });
   }
 
   getNumberOfCorrectAnswers(): number {
@@ -94,43 +119,29 @@ export class QuestionComponent implements OnInit {
     return false;
   }
 
-  getSubjects(): void {
-    this.deckService
-      .getSubjects()
-      .subscribe((subjects) => (this.subjects = subjects));
-    if (this.subjects) {
-      this.sortSubjects();
-    }
-  }
-
   initFormAnswers(): void {
     for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
       index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
     }
   }
 
-  moveAnswer(
-    toBeRemovedAtIndex: number,
-    toBeInsertedAtIndex: number,
-    answer: FormGroup
-  ): void {
-    this.answers.removeAt(toBeRemovedAtIndex);
-    this.answers.insert(toBeInsertedAtIndex, answer);
-  }
+  initUpdateForm(): void {
+    this.form.patchValue({
+      name: this.card.name,
+      topic: this.card.topic,
+      subject: this.card.subject,
+      questionText: this.card.questionText,
+      questionType: this.card.questionType,
+      explanationText: this.card.explanationText,
+      image: this.card.image,
+      srcCode: this.card.srcCode,
+    });
 
-  uploadImage(event: HTMLInputEvent) {
-    const file = event.target.files[0];
-
-    if (file) {
-      this.selectedFileName = file.name;
-      const formData = new FormData();
-      formData.append('file', file);
-
-      this.deckService.uploadFile(formData).subscribe((data) => {
-        this.uploadedFileId = data;
-        this.form.get('image').patchValue(data);
-      });
-    }
+    this.card.answers.forEach((answer) => this.addExistingAnswer(answer));
+    this.selectedQuestionType = this.card.questionType;
+    this.card.image
+      ? (this.selectedFileName = 'Ein Bild ist')
+      : (this.selectedFileName = '');
   }
 
   onSelectedQuestionTypeChange(event: MatRadioChange): void {
@@ -163,21 +174,37 @@ export class QuestionComponent implements OnInit {
 
     this.submitted = true;
     const submittedCard: Card = {
-      name: 'namePlaceholder',
-      subject: this.subjects[0].name,
-      topic: 'topicPlaceholder',
+      name: 'Verschiedenes',
+      subject: 'Verschiedenes',
+      topic: questionForm.value.topic,
       questionText: questionForm.value.questionText,
       questionType: questionForm.value.questionType,
       answers: questionForm.value.answers,
       srcCode: questionForm.value.srcCode,
-      image: questionForm.value.image.imageId,
+      image: questionForm.value.image.imageId
+        ? questionForm.value.image.imageId
+        : questionForm.value.image,
     };
 
-    this.deckService.createCard(submittedCard).subscribe((data) => {
-      const successMessage = 'Die Frage wurde erfolgreich erstellt!';
-      this.snackBarService.open(successMessage);
-      this.resetForm();
-    });
+    if (this.cardIsUpdating) {
+      this.deckService
+        .updateCard(this.card.id, submittedCard)
+        .subscribe((data) => {
+          const successMessage = 'Die Frage wurde erfolgreich aktualisiert!';
+          this.snackBarService.open(successMessage);
+          this.resetForm();
+        });
+    } else {
+      this.deckService.createCard(submittedCard).subscribe((data) => {
+        const successMessage = 'Die Frage wurde erfolgreich erstellt!';
+        this.snackBarService.open(successMessage);
+        this.resetForm();
+      });
+    }
+  }
+
+  patchAnswer(index: number, field: string, value: boolean): void {
+    this.answers.at(index).get(field).patchValue(value);
   }
 
   removeAnswer(index: number): void {
@@ -189,9 +216,7 @@ export class QuestionComponent implements OnInit {
     this.submitted = false;
     this.selectedFileName = '';
     this.form.reset({
-      // name: '',
-      // topic: '',
-      // subject: '',
+      topic: '',
       questionText: '',
       questionType: 'single-choice',
       explanationText: '',
@@ -208,36 +233,36 @@ export class QuestionComponent implements OnInit {
 
     if (this.selectedQuestionType === 'single-choice') {
       for (let index = 0; index < this.answers.length; index++) {
-        this.answers.at(index).get('correctAnswer').patchValue(false);
+        this.patchAnswer(index, 'correctAnswer', false);
       }
-      this.answers
-        .at(selectedAnswerIndex)
-        .get('correctAnswer')
-        .patchValue(true);
+      this.patchAnswer(selectedAnswerIndex, 'correctAnswer', true);
     } else if (this.selectedQuestionType === 'multiple-choice') {
       isCorrectAnswer
-        ? this.answers
-            .at(selectedAnswerIndex)
-            .get('correctAnswer')
-            .patchValue(true)
-        : this.answers
-            .at(selectedAnswerIndex)
-            .get('correctAnswer')
-            .patchValue(false);
+        ? this.patchAnswer(selectedAnswerIndex, 'correctAnswer', true)
+        : this.patchAnswer(selectedAnswerIndex, 'correctAnswer', false);
     }
   }
 
   setDefaultCorrectAnswerForSingleChoice(): void {
     for (let index = 0; index < this.answers.length; index++) {
       index <= 0
-        ? this.answers.at(index).get('correctAnswer').patchValue(true)
-        : this.answers.at(index).get('correctAnswer').patchValue(false);
+        ? this.patchAnswer(index, 'correctAnswer', true)
+        : this.patchAnswer(index, 'correctAnswer', false);
     }
   }
 
-  sortSubjects(): void {
-    this.subjects.sort((a, b) =>
-      a.name.localeCompare(b.name, 'de', { ignorePunctuation: true })
-    );
+  uploadImage(event: HTMLInputEvent) {
+    const file = event.target.files[0];
+
+    if (file) {
+      this.selectedFileName = file.name;
+      const formData = new FormData();
+      formData.append('file', file);
+
+      this.deckService.uploadFile(formData).subscribe((data) => {
+        this.uploadedFileId = data;
+        this.form.get('image').patchValue(data);
+      });
+    }
   }
 }

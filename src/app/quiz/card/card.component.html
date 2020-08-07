@@ -1,0 +1,120 @@
+<div class="content-container" *ngIf="isDataLoaded">
+  <h2 class="deck-name">{{ deck.name }}</h2>
+  <mat-progress-bar
+    mode="determinate"
+    value="{{ progressBarValue }}"
+  ></mat-progress-bar>
+
+  <h2>Frage {{ currentCardIndex }} von {{ deck.questions.length }}</h2>
+  <p>{{ currentCard.questionText }}</p>
+
+  <img
+    *ngIf="this.currentCard.image && !isImageLoading"
+    [src]="currentCardImage"
+    class="question-image"
+    height="500px"
+    alt="Bild zur Frage"
+  />
+
+  <label class="group-label">{{ questionTypeText }}</label>
+
+  <div *ngIf="currentCard.questionType === 'single-choice'">
+    <mat-radio-group
+      aria-labelledby="radio-group-label"
+      class="radio-group"
+      [disabled]="isDisabled"
+    >
+      <mat-radio-button
+        class="radio-button"
+        *ngFor="let answer of currentCard.answers"
+        (change)="onRadioChange(answer)"
+        [value]="answer.answerText"
+        [checked]="false"
+      >
+        {{ answer.answerText }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div
+    class="checkbox-group"
+    *ngIf="currentCard.questionType === 'multiple-choice'"
+  >
+    <mat-checkbox
+      class="checkbox-button"
+      *ngFor="let answer of currentCard.answers"
+      (change)="onCheckBoxChange($event, answer)"
+      [value]="answer.answerText"
+      [checked]="false"
+      [disabled]="isDisabled"
+    >
+      {{ answer.answerText }}</mat-checkbox
+    >
+  </div>
+
+  <p
+    class="explanation-box"
+    *ngIf="currentCard.questionType === 'multiple-choice'"
+  >
+    <span
+      *ngIf="explanationText"
+      class="answer-correct"
+      [class.answer-wrong]="!isMultipleChoiceCorrect"
+    >
+      {{ explanationText }}
+    </span>
+  </p>
+
+  <p
+    class="explanation-box"
+    *ngIf="currentCard.questionType === 'single-choice'"
+  >
+    <span
+      *ngIf="explanationText"
+      class="answer-correct"
+      [class.answer-wrong]="!selectedAnswer.correctAnswer"
+    >
+      {{ explanationText }}
+      <br />
+      {{ selectedAnswer.explanationText }}
+    </span>
+  </p>
+
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="onCheck()"
+    [disabled]="!toggleCheck"
+  >
+    Überprüfen
+  </button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="onNext()"
+    [disabled]="!toggleNext"
+  >
+    Nächste Frage
+  </button>
+</div>
+
+<div class="content-container" *ngIf="isQuizCompleted">
+  <h2 class="deck-name">{{ deck.name }}</h2>
+  <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
+  <h2>Der Fragenkatalog ist abgeschlossen.</h2>
+  <p>
+    Du hast {{ correctAnswerScore }} von {{ deck.questions.length }} richtig
+    beantwortet.
+  </p>
+  <p>
+    Damit hast du {{ correctAnswersInPercent }} % der Fragen richtig
+    beantwortet.
+    <br />
+  </p>
+  <button mat-flat-button color="primary" routerLink="/deck/{{ deck.id }}">
+    Quiz erneut starten
+  </button>
+  <button mat-flat-button routerLink="/public">
+    Zurück zur Übersicht
+  </button>
+</div>
