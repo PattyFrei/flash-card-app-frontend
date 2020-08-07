@@ -79,17 +79,6 @@
 
     <mat-divider></mat-divider>
 
-    <!-- <div class="slide-toggle-box">
-      <mat-slide-toggle
-        color="primary"
-        formControlName="allowSecondGuess"
-        disabled
-      >
-        Erlaube dem Nutzer einen zweiten Versuch, wenn die falsche Antwort
-        ausgewählt wurde
-      </mat-slide-toggle>
-    </div> -->
-
     <ng-container formArrayName="questions">
       <div class="question-action-buttons">
         <button
@@ -112,10 +101,9 @@
               >
                 <mat-label>{{ i + 1 }}. Frage</mat-label>
                 <mat-select formControlName="id">
-                  <mat-option></mat-option>
-                  <mat-option [value]="card.id" *ngFor="let card of cards">{{
-                    card.questionText
-                  }}</mat-option>
+                  <mat-option [value]="card.id" *ngFor="let card of cards">
+                    {{ card.topic }}: {{ card.questionText }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
 
@@ -143,10 +131,9 @@
               >
                 <mat-label>{{ i + 1 }}. Frage</mat-label>
                 <mat-select formControlName="id">
-                  <mat-option></mat-option>
-                  <mat-option [value]="card.id" *ngFor="let card of cards">{{
-                    card.questionText
-                  }}</mat-option>
+                  <mat-option [value]="card.id" *ngFor="let card of cards">
+                    {{ card.topic }}: {{ card.questionText }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
 

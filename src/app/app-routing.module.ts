@@ -5,7 +5,6 @@ import { AuthGuard } from './guards/auth.guard';
 import { CardComponent } from './quiz/card/card.component';
 import { CatalogueComponent } from './editor/catalogue/catalogue.component';
 import { DeckComponent } from './quiz/deck/deck.component';
-import { EditorComponent } from './editor/editor.component';
 import { HomeComponent } from './home/home.component';
 import { PublicComponent } from './quiz/public/public.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -27,7 +26,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'deck/:id', component: DeckComponent },
-  // { path: 'editor', component: EditorComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
   {
     path: 'profile',
