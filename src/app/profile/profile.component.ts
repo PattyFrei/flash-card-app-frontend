@@ -7,7 +7,19 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  constructor(public auth: AuthService) {}
+  profile: any;
 
-  ngOnInit(): void {}
+  get isProfileLoaded() {
+    return this.profile !== undefined;
+  }
+
+  constructor(private auth: AuthService) {}
+
+  ngOnInit(): void {
+    this.auth.userProfile$.subscribe((profile) => this.dataLoaded(profile));
+  }
+
+  private dataLoaded(profile: any): void {
+    this.profile = profile;
+  }
 }

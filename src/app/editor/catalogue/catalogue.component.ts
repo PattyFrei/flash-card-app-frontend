@@ -87,7 +87,6 @@ export class CatalogueComponent implements OnInit {
   addQuestion(): void {
     const questionsGroup = new FormGroup({
       id: new FormControl('', Validators.required),
-      questionText: new FormControl(''),
     });
     this.questions.push(questionsGroup);
   }
@@ -95,10 +94,8 @@ export class CatalogueComponent implements OnInit {
   addExistingQuestion(card: Card): void {
     const questionsGroup = new FormGroup({
       id: new FormControl(card.id, Validators.required),
-      questionText: new FormControl(card.questionText),
     });
     this.questions.push(questionsGroup);
-    console.log(questionsGroup);
   }
 
   getDeck(id: string): void {
@@ -115,16 +112,17 @@ export class CatalogueComponent implements OnInit {
   }
 
   getMyCards(): void {
-    this.deckService.getMyCards().subscribe((cards) => (this.cards = cards));
+    this.deckService.getMyCards().subscribe((cards) => {
+      this.cards = cards;
+      this.sortCards();
+    });
   }
 
   getSubjects(): void {
-    this.deckService
-      .getSubjects()
-      .subscribe((subjects) => (this.subjects = subjects));
-    if (this.subjects) {
+    this.deckService.getSubjects().subscribe((subjects) => {
+      this.subjects = subjects;
       this.sortSubjects();
-    }
+    });
   }
 
   initFormQuestions(): void {
@@ -177,7 +175,6 @@ export class CatalogueComponent implements OnInit {
     const questions = [];
     for (let i = 0; i < this.questions.length; i++) {
       questions.push(this.questions.at(i).get('id').value);
-      console.log(this.questions.at(i).get('id').value);
     }
 
     this.submitted = true;
@@ -195,8 +192,6 @@ export class CatalogueComponent implements OnInit {
       shareUrlActive: catalogueForm.value.shareUrlActive,
       publicVisibility: catalogueForm.value.publicVisibility,
     };
-
-    console.log(submittedDeck);
 
     if (this.deckIsUpdating) {
       this.deckService
@@ -245,6 +240,12 @@ export class CatalogueComponent implements OnInit {
   sortSubjects(): void {
     this.subjects.sort((a, b) =>
       a.name.localeCompare(b.name, 'de', { ignorePunctuation: true })
+    );
+  }
+
+  sortCards(): void {
+    this.cards.sort((a, b) =>
+      a.topic.localeCompare(b.topic, 'de', { ignorePunctuation: true })
     );
   }
 }

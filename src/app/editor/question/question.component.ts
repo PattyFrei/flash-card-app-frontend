@@ -17,6 +17,7 @@ import { SnackBarService } from '../../services/snack-bar.service';
 export class QuestionComponent implements OnInit {
   card: Card;
   cardIsUpdating = false;
+  existingImage: any;
   numberOfDefaultAnswers = 4;
   selectedQuestionType = 'single-choice';
   submitted = false;
@@ -85,10 +86,31 @@ export class QuestionComponent implements OnInit {
     this.answers.push(answerGroup);
   }
 
+  createImageFromBlob(image: Blob) {
+    const reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.existingImage = reader.result;
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
   getCard(id: string): void {
     this.deckService.getCard(id).subscribe((card) => {
       this.card = card;
       this.initUpdateForm();
+    });
+  }
+
+  getImage(): void {
+    this.deckService.getImage(this.form.value.image).subscribe((data) => {
+      this.createImageFromBlob(data);
     });
   }
 
@@ -139,9 +161,10 @@ export class QuestionComponent implements OnInit {
 
     this.card.answers.forEach((answer) => this.addExistingAnswer(answer));
     this.selectedQuestionType = this.card.questionType;
-    this.card.image
-      ? (this.selectedFileName = 'Ein Bild ist')
-      : (this.selectedFileName = '');
+    if (this.card.image) {
+      this.selectedFileName = 'Ein Bild ist';
+      this.getImage();
+    }
   }
 
   onSelectedQuestionTypeChange(event: MatRadioChange): void {
@@ -261,7 +284,8 @@ export class QuestionComponent implements OnInit {
 
       this.deckService.uploadFile(formData).subscribe((data) => {
         this.uploadedFileId = data;
-        this.form.get('image').patchValue(data);
+        this.form.get('image').patchValue(this.uploadedFileId.imageId);
+        this.getImage();
       });
     }
   }
