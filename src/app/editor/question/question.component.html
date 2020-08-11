@@ -1,7 +1,6 @@
 <app-editor></app-editor>
 <div class="content-container">
-  <h3 *ngIf="!cardIsUpdating">Neue Frage erstellen</h3>
-  <h3 *ngIf="cardIsUpdating">Frage aktualisieren</h3>
+  <h3>{{ cardIsUpdating ? 'Frage aktualisieren' : 'Neue Frage erstellen' }}</h3>
   <form [formGroup]="questionForm">
     <mat-form-field
       class="big-field"
@@ -157,31 +156,28 @@
 
     <mat-divider></mat-divider>
 
-    <div *ngIf="!cardIsUpdating" class="button-row">
+    <div class="button-row">
       <button
         mat-raised-button
         color="primary"
         (click)="onSubmit(questionForm); $event.preventDefault()"
       >
-        Erstellen
+        {{ cardIsUpdating ? 'Aktualisieren' : 'Erstellen' }}
       </button>
       <button
+        *ngIf="!cardIsUpdating"
         mat-raised-button
         color="basic"
         (click)="resetForm(); $event.preventDefault()"
       >
         Zurücksetzen
       </button>
-    </div>
-    <div *ngIf="cardIsUpdating" class="button-row">
       <button
+        *ngIf="cardIsUpdating"
         mat-raised-button
-        color="primary"
-        (click)="onSubmit(questionForm); $event.preventDefault()"
+        color="basic"
+        routerLink="/my-questions"
       >
-        Aktualisieren
-      </button>
-      <button mat-raised-button color="basic" routerLink="/my-questions">
         Abbrechen
       </button>
     </div>
