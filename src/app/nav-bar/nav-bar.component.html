@@ -17,7 +17,7 @@
       mat-flat-button
       color="primary"
       routerLink="/question"
-      *ngIf="auth.loggedIn"
+      *ngIf="loggedIn"
       >Editor</a
     >
 
@@ -49,13 +49,13 @@
       <mat-icon>person</mat-icon>
     </button>
     <mat-menu #beforeMenu="matMenu" xPosition="before">
-      <button (click)="auth.login()" *ngIf="!auth.loggedIn" mat-menu-item>
+      <button (click)="login()" *ngIf="!loggedIn" mat-menu-item>
         Einloggen
       </button>
-      <button routerLink="/profile" *ngIf="auth.loggedIn" mat-menu-item>
+      <button routerLink="/profile" *ngIf="loggedIn" mat-menu-item>
         Profil
       </button>
-      <button (click)="auth.logout()" *ngIf="auth.loggedIn" mat-menu-item>
+      <button (click)="logout()" *ngIf="loggedIn" mat-menu-item>
         Ausloggen
       </button>
     </mat-menu>
@@ -64,7 +64,7 @@
       mat-icon-button
       class="icon"
       aria-label="icon-button with settings icon"
-      *ngIf="auth.loggedIn"
+      *ngIf="loggedIn"
     >
       <mat-icon>settings</mat-icon>
     </button>

@@ -1,5 +1,12 @@
 <div class="content-container">
-  <pre *ngIf="auth.userProfile$ | async as profile">
-    <code>{{ profile | json }}</code>
-    </pre>
+  <h3>Dein Benutzerkonto</h3>
+  <div *ngIf="isProfileLoaded">
+    <!-- <pre> <code>{{ profile | json }}</code> </pre> -->
+    <p>Benutzername: {{ profile.nickname }}</p>
+    <p>E-Mailadresse: {{ profile.email }}</p>
+    <p *ngIf="profile.email_verified">E-Mailadresse wurde bestätigt.</p>
+    <p *ngIf="!profile.email_verified">
+      E-Mailadresse wurde noch nicht bestätigt.
+    </p>
+  </div>
 </div>

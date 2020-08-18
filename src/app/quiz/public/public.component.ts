@@ -23,7 +23,11 @@ export class PublicComponent implements OnInit, AfterViewInit {
     return this.decks.data !== undefined;
   }
 
-  constructor(public auth: AuthService, private deckService: DeckService) {}
+  get loggedIn() {
+    return this.auth.loggedIn;
+  }
+
+  constructor(private auth: AuthService, private deckService: DeckService) {}
 
   ngOnInit() {
     this.isLoading = true;

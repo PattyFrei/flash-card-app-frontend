@@ -1,7 +1,12 @@
 <app-editor></app-editor>
 <div class="content-container">
-  <h3 *ngIf="!deckIsUpdating">Neuen Fragenkatalog erstellen</h3>
-  <h3 *ngIf="deckIsUpdating">Fragenkatalog aktualisieren</h3>
+  <h3>
+    {{
+      deckIsUpdating
+        ? 'Fragenkatalog aktualisieren'
+        : 'Neuen Fragenkatalog erstellen'
+    }}
+  </h3>
   <form [formGroup]="catalogueForm">
     <mat-form-field
       hintLabel="Gebe dem Fragenkatalog einen deskriptiven Namen"
@@ -30,9 +35,9 @@
         required
       >
         <mat-option></mat-option>
-        <mat-option [value]="subject.name" *ngFor="let subject of subjects">{{
-          subject.name
-        }}</mat-option>
+        <mat-option [value]="subject.name" *ngFor="let subject of subjects">
+          {{ subject.name }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -50,8 +55,9 @@
         <mat-option
           [value]="difficulty.level"
           *ngFor="let difficulty of difficulties"
-          >{{ difficulty.level }}</mat-option
         >
+          {{ difficulty.level }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -79,17 +85,6 @@
 
     <mat-divider></mat-divider>
 
-    <!-- <div class="slide-toggle-box">
-      <mat-slide-toggle
-        color="primary"
-        formControlName="allowSecondGuess"
-        disabled
-      >
-        Erlaube dem Nutzer einen zweiten Versuch, wenn die falsche Antwort
-        ausgewählt wurde
-      </mat-slide-toggle>
-    </div> -->
-
     <ng-container formArrayName="questions">
       <div class="question-action-buttons">
         <button
@@ -101,7 +96,7 @@
         </button>
       </div>
 
-      <div class="question-box" *ngIf="!deckIsUpdating">
+      <div class="question-box">
         <div *ngFor="let question of questions.controls; index as i">
           <mat-card [formGroupName]="i">
             <mat-card-title-group>
@@ -112,41 +107,9 @@
               >
                 <mat-label>{{ i + 1 }}. Frage</mat-label>
                 <mat-select formControlName="id">
-                  <mat-option></mat-option>
-                  <mat-option [value]="card.id" *ngFor="let card of cards">{{
-                    card.questionText
-                  }}</mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <button
-                class="del-button"
-                mat-icon-button
-                aria-label="del"
-                (click)="removeQuestion(i)"
-              >
-                <mat-icon>delete_forever</mat-icon>
-              </button>
-            </mat-card-title-group>
-          </mat-card>
-        </div>
-      </div>
-
-      <div class="question-box" *ngIf="deckIsUpdating">
-        <div *ngFor="let question of questions.controls; index as i">
-          <mat-card [formGroupName]="i">
-            <mat-card-title-group>
-              <mat-form-field
-                class="question-field"
-                hintLabel="{{ i + 1 }}. Frage auswählen"
-                appearance="fill"
-              >
-                <mat-label>{{ i + 1 }}. Frage</mat-label>
-                <mat-select formControlName="id">
-                  <mat-option></mat-option>
-                  <mat-option [value]="card.id" *ngFor="let card of cards">{{
-                    card.questionText
-                  }}</mat-option>
+                  <mat-option [value]="card.id" *ngFor="let card of cards">
+                    {{ card.topic }}: {{ card.questionText }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
 
@@ -187,31 +150,28 @@
 
     <mat-divider></mat-divider>
 
-    <div *ngIf="!deckIsUpdating" class="button-row">
+    <div class="button-row">
       <button
         mat-raised-button
         color="primary"
         (click)="onSubmit(catalogueForm); $event.preventDefault()"
       >
-        Erstellen
+        {{ deckIsUpdating ? 'Aktualisieren' : 'Erstellen' }}
       </button>
       <button
+        *ngIf="!deckIsUpdating"
         mat-raised-button
         color="basic"
         (click)="resetForm(); $event.preventDefault()"
       >
         Zurücksetzen
       </button>
-    </div>
-    <div *ngIf="deckIsUpdating" class="button-row">
       <button
+        *ngIf="deckIsUpdating"
         mat-raised-button
-        color="primary"
-        (click)="onSubmit(catalogueForm); $event.preventDefault()"
+        color="basic"
+        routerLink="/my-catalogues"
       >
-        Aktualisieren
-      </button>
-      <button mat-raised-button color="basic" routerLink="/my-catalogues">
         Abbrechen
       </button>
     </div>
