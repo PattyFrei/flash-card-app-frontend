@@ -5,8 +5,8 @@ import { MatAccordion } from '@angular/material/expansion';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
-import { DeckService } from '../../services/deck.service';
 import { Answer, Card, HTMLInputEvent } from '../../quiz/card/card';
+import { DeckService } from '../../services/deck.service';
 import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { SnackBarService } from '../../services/snack-bar.service';
 })
 export class QuestionComponent implements OnInit {
   card: Card;
-  cardIsUpdating = false;
+  cardIsUpdating: boolean;
   existingImage: any;
   numberOfDefaultAnswers = 4;
   selectedQuestionType = 'single-choice';
@@ -63,6 +63,7 @@ export class QuestionComponent implements OnInit {
       this.cardIsUpdating = true;
       this.getCard(id);
     } else {
+      this.cardIsUpdating = false;
       this.initFormAnswers();
       this.questionType.patchValue('single-choice');
     }

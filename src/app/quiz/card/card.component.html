@@ -6,7 +6,7 @@
   ></mat-progress-bar>
 
   <h2>Frage {{ currentCardIndex }} von {{ deck.questions.length }}</h2>
-  <p>{{ currentCard.questionText }}</p>
+  <p class="question-text">{{ currentCard.questionText }}</p>
 
   <img
     *ngIf="this.currentCard.image && !isImageLoading"
@@ -103,13 +103,12 @@
   <h2 class="deck-name">{{ deck.name }}</h2>
   <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
   <h2>Der Fragenkatalog ist abgeschlossen.</h2>
-  <p>
+  <p class="result-text">
     Du hast {{ correctAnswerScore }} von {{ deck.questions.length }} richtig
     beantwortet.
   </p>
-  <p>
-    Damit hast du {{ correctAnswersInPercent }} % der Fragen richtig
-    beantwortet.
+  <p class="result-text">
+    Damit hast du {{ correctAnswersInPercent }}% der Fragen richtig beantwortet.
     <br />
   </p>
   <button mat-flat-button color="primary" routerLink="/deck/{{ deck.id }}">
