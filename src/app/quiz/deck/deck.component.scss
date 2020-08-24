@@ -1,15 +1,14 @@
-// Deck overview
 table {
-  border: 0px solid #c8e1ff;
   background-color: #ffffff;
   width: 100%;
   text-align: left;
   border-collapse: collapse;
+  display: table;
 }
 table td,
 table th {
   border: 1px solid #d3d3d3;
-  padding: 6px 6px;
+  padding: 6px;
 }
 table tbody td {
   font-size: 13px;
@@ -27,9 +26,6 @@ table thead th {
   color: #24292e;
   text-align: center;
 }
-table {
-  display: table;
-}
 tr {
   display: table-row;
 }
@@ -40,9 +36,6 @@ td,
 th {
   display: table-cell;
 }
-thead {
-  display: table-header-group;
-}
 tbody {
   display: table-row-group;
 }
@@ -50,9 +43,8 @@ a {
   text-decoration: none;
 }
 
-// Cards
 .cards {
-  margin: 0 0 2em 0;
+  margin: 0 0 2em;
   list-style-type: none;
   width: 550px;
   padding: 0;
@@ -87,7 +79,7 @@ a {
   display: inline-block;
   font-size: small;
   color: white;
-  padding: 0.8em 0.7em 0 0.7em;
+  padding: 0.8em 0.7em 0;
   background-color: #405061;
   line-height: 1em;
   position: relative;
@@ -99,11 +91,11 @@ a {
 }
 
 button {
-  margin: 15px 10px 15px 0;
+  margin: 15px 10px;
 }
 
 .icon {
-  margin: 10px 10x;
+  margin: 10px;
 }
 
 .spacer {

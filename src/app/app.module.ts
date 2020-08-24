@@ -37,6 +37,8 @@ import { MyCataloguesComponent } from './editor/my-catalogues/my-catalogues.comp
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -78,6 +80,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatCardModule,
     MatSnackBarModule,
     MatCheckboxModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
