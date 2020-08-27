@@ -18,7 +18,7 @@
 }
 
 .button-row-label {
-  margin: 30px 0 15px 0;
+  margin: 30px 0 15px;
   display: block;
 }
 
@@ -37,7 +37,7 @@ mat-expansion-panel {
 }
 
 mat-radio-button {
-  margin: 12px 10px 12px 10px;
+  margin: 12px 10px;
 }
 
 mat-radio-group {
@@ -70,10 +70,6 @@ button {
 .headers-align .mat-expansion-panel-header-title,
 .headers-align .mat-expansion-panel-header-description {
   flex-basis: 0;
-}
-
-.headers-align .mat-expansion-panel-header-title,
-.headers-align .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
 }

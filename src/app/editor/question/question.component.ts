@@ -61,7 +61,7 @@ export class QuestionComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.cardIsUpdating = true;
-      this.getCard(id);
+      this.initFormWithExistingCard(id);
     } else {
       this.cardIsUpdating = false;
       this.initFormAnswers();
@@ -102,13 +102,6 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  getCard(id: string): void {
-    this.deckService.getCard(id).subscribe((card) => {
-      this.card = card;
-      this.initUpdateForm();
-    });
-  }
-
   getImage(): void {
     this.deckService.getImage(this.form.value.image).subscribe((data) => {
       this.createImageFromBlob(data);
@@ -146,6 +139,13 @@ export class QuestionComponent implements OnInit {
     for (let index = 0; index < this.numberOfDefaultAnswers; index++) {
       index <= 0 ? this.addAnswer(true) : this.addAnswer(false);
     }
+  }
+
+  initFormWithExistingCard(id: string): void {
+    this.deckService.getCard(id).subscribe((card) => {
+      this.card = card;
+      this.initUpdateForm();
+    });
   }
 
   initUpdateForm(): void {
