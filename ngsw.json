@@ -1,0 +1,105 @@
+{
+  "configVersion": 1,
+  "timestamp": 1598543865302,
+  "index": "/flashcard-app-frontend/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/flashcard-app-frontend/favicon.ico",
+        "/flashcard-app-frontend/index.html",
+        "/flashcard-app-frontend/main-es2015.428de32eeabadda46d7f.js",
+        "/flashcard-app-frontend/main-es5.428de32eeabadda46d7f.js",
+        "/flashcard-app-frontend/manifest.webmanifest",
+        "/flashcard-app-frontend/polyfills-es2015.95bb65e853d2781ac3bd.js",
+        "/flashcard-app-frontend/polyfills-es5.341d48ffc88eaeae911d.js",
+        "/flashcard-app-frontend/runtime-es2015.409e6590615fb48d139f.js",
+        "/flashcard-app-frontend/runtime-es5.409e6590615fb48d139f.js",
+        "/flashcard-app-frontend/styles.b60b7eea116438dcd5e6.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/flashcard-app-frontend/assets/fca_logo.png",
+        "/flashcard-app-frontend/assets/icons/icon-128x128.png",
+        "/flashcard-app-frontend/assets/icons/icon-144x144.png",
+        "/flashcard-app-frontend/assets/icons/icon-152x152.png",
+        "/flashcard-app-frontend/assets/icons/icon-192x192.png",
+        "/flashcard-app-frontend/assets/icons/icon-384x384.png",
+        "/flashcard-app-frontend/assets/icons/icon-512x512.png",
+        "/flashcard-app-frontend/assets/icons/icon-72x72.png",
+        "/flashcard-app-frontend/assets/icons/icon-96x96.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api",
+      "patterns": [
+        "\\/decks",
+        "\\/decks\\/.*",
+        "\\/images\\/.*"
+      ],
+      "strategy": "freshness",
+      "maxSize": 100,
+      "maxAge": 604800000,
+      "timeoutMs": 10000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "/flashcard-app-frontend/assets/fca_logo.png": "ed0e9b8509444f9886272c6a87ff808a59f7d351",
+    "/flashcard-app-frontend/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "/flashcard-app-frontend/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/flashcard-app-frontend/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/flashcard-app-frontend/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/flashcard-app-frontend/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "/flashcard-app-frontend/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "/flashcard-app-frontend/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/flashcard-app-frontend/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/flashcard-app-frontend/favicon.ico": "c6bafe55812a1939468b30de274f397f2231401e",
+    "/flashcard-app-frontend/index.html": "5ff5c79a41ecd7127cbeaaadf593d054a9e08ca0",
+    "/flashcard-app-frontend/main-es2015.428de32eeabadda46d7f.js": "f05e1d34838b1c6bf4d43c43a1e7f21dbcb9935a",
+    "/flashcard-app-frontend/main-es5.428de32eeabadda46d7f.js": "7e99530a85083a6a033626a3b256064fa7549640",
+    "/flashcard-app-frontend/manifest.webmanifest": "923f8d71270411c2b992c144e16da58314933e25",
+    "/flashcard-app-frontend/polyfills-es2015.95bb65e853d2781ac3bd.js": "72ad4ccc0a3916ae4598199447cdeadd6d380570",
+    "/flashcard-app-frontend/polyfills-es5.341d48ffc88eaeae911d.js": "8aa26ea87b9958c6bd13b7c257c0e9940438e684",
+    "/flashcard-app-frontend/runtime-es2015.409e6590615fb48d139f.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/flashcard-app-frontend/runtime-es5.409e6590615fb48d139f.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/flashcard-app-frontend/styles.b60b7eea116438dcd5e6.css": "5f72641ed3bd24971e06adf11c28d1be9be6f4c9"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}
