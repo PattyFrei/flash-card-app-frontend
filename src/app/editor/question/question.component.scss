@@ -1,25 +1,6 @@
-.mat-form-field {
-  width: 296px;
-  max-width: 396px;
-  margin-right: 8px;
-  margin-bottom: 15px;
-}
-
-.big-field {
-  display: block;
-  width: 100%;
-  max-width: 600px;
-  // margin: 10px 0;
-}
-
-.radio-group-label {
-  margin-top: 20px;
-  display: block;
-}
-
-.button-row-label {
-  margin: 30px 0 15px;
-  display: block;
+.content-container {
+  margin: 0 auto;
+  max-width: 1000px;
 }
 
 mat-divider {
@@ -32,10 +13,6 @@ mat-expansion-panel {
   margin-left: 5px;
 }
 
-.answer-action-buttons {
-  margin: 10px 0;
-}
-
 mat-radio-button {
   margin: 12px 10px;
 }
@@ -43,6 +20,36 @@ mat-radio-button {
 mat-radio-group {
   margin-bottom: 5px;
   display: block;
+}
+
+mat-slide-toggle {
+  margin-bottom: 10px;
+}
+
+mat-icon {
+  margin-right: 8px;
+}
+
+.mat-form-field {
+  width: 296px;
+  max-width: 396px;
+  margin-right: 8px;
+  margin-bottom: 15px;
+}
+
+.big-field {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+}
+
+.radio-group-label {
+  margin-top: 20px;
+  display: block;
+}
+
+.answer-action-buttons {
+  margin: 10px 0;
 }
 
 .button-row {
@@ -54,17 +61,13 @@ button {
   margin: 0 10px 10px 0;
 }
 
-::ng-deep.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-  background-color: #3f51b5 !important;
+.button-row-label {
+  margin: 30px 0 15px;
+  display: block;
 }
 
-::ng-deep.mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: #3f51b5 !important;
-}
-
-::ng-deep.mat-radio-button.mat-accent.mat-radio-checked
-  .mat-radio-outer-circle {
-  border-color: #3f51b5 !important;
+.upload-file-text {
+  display: block;
 }
 
 .headers-align .mat-expansion-panel-header-title,
@@ -78,19 +81,15 @@ button {
   margin: auto 0;
 }
 
-mat-slide-toggle {
-  margin-bottom: 10px;
+::ng-deep.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  background-color: #3f51b5 !important;
 }
 
-mat-icon {
-  margin-right: 8px;
+::ng-deep.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #3f51b5 !important;
 }
 
-.upload-file-text {
-  display: block;
-}
-
-.content-container {
-  margin: 0 auto;
-  max-width: 1000px;
+::ng-deep.mat-radio-button.mat-accent.mat-radio-checked
+  .mat-radio-outer-circle {
+  border-color: #3f51b5 !important;
 }
