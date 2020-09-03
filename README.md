@@ -1,5 +1,7 @@
 # FlashCard App Frontend
 
+This quiz application has two main features: a quiz mode and an editor mode. The quiz mode allows the user to answer existing public quizzes or self-created quizzes. The editor mode can be used when the user signs-up with an Auth0 account. Within the editor the logged in user can create questions and combine them in to a quiz, which offer a range of customization options. The creator decides weather a quiz is accessible to everyone or private in their quiz collection.   
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
 
 ## Production and Test pages
