@@ -46,9 +46,9 @@ export class DeckService {
       .pipe(catchError(this.handleError));
   }
 
-  deleteFavorite(id: string): Observable<Deck> {
+  deleteFavorite(id: string): Observable<Favorite> {
     return this.httpClient
-      .delete<Deck>(`me/favorites/${id}`)
+      .delete<Favorite>(`me/favorites/${id}`)
       .pipe(catchError(this.handleError));
   }
 

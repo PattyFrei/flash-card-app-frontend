@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 
 import { Deck } from '../../../quiz/deck/deck';
 import { DeckService } from '../../../services/deck.service';
+import { SnackBarService } from '../../../services/snack-bar.service';
 
 @Component({
   selector: 'app-favorites',
@@ -11,7 +12,14 @@ import { DeckService } from '../../../services/deck.service';
   styleUrls: ['./favorites.component.scss'],
 })
 export class FavoritesComponent implements OnInit, AfterViewInit {
-  columnsToDisplay = ['name', 'topic', 'subject', 'author', 'creationDate'];
+  columnsToDisplay = [
+    'name',
+    'topic',
+    'subject',
+    'author',
+    'creationDate',
+    'delete',
+  ];
   favorites = new MatTableDataSource<Deck>();
   isLoading = false;
 
@@ -21,7 +29,10 @@ export class FavoritesComponent implements OnInit, AfterViewInit {
     return this.favorites.data.length >= 1;
   }
 
-  constructor(private deckService: DeckService) {}
+  constructor(
+    private deckService: DeckService,
+    private snackBarService: SnackBarService
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -32,6 +43,14 @@ export class FavoritesComponent implements OnInit, AfterViewInit {
     this.favorites.sort = this.sort;
   }
 
+  deleteFavorite(id: string, index: number): void {
+    this.deckService.deleteFavorite(id).subscribe((data) => {
+      const successMessage = 'Der Favorite wurde erfolgreich gelöscht!';
+      this.removeFavoriteFromTable(index);
+      this.snackBarService.open(successMessage);
+    });
+  }
+
   getFavorites(): void {
     this.deckService
       .getMyFavorites()
@@ -40,6 +59,11 @@ export class FavoritesComponent implements OnInit, AfterViewInit {
 
   doFilter(value: string): void {
     this.favorites.filter = value.trim().toLocaleLowerCase();
+  }
+
+  removeFavoriteFromTable(index: number): void {
+    this.favorites.data.splice(index, 1);
+    this.favorites._updateChangeSubscription();
   }
 
   private dataLoaded(favorites: Deck[]): void {
