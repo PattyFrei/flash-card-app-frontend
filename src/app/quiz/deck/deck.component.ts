@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { Card } from './../card/card';
-import { Deck } from './deck';
+import { Deck, Favorite } from './deck';
 import { DeckService } from './../../services/deck.service';
+import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
   selector: 'app-deck',
@@ -23,7 +24,8 @@ export class DeckComponent implements OnInit {
   constructor(
     private deckService: DeckService,
     private route: ActivatedRoute, // extracts param from URL
-    private location: Location
+    private location: Location,
+    private snackBarService: SnackBarService
   ) {
     // init local variables with values
     // wire parameters to props
@@ -34,6 +36,15 @@ export class DeckComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.deckService.getDeck(id).subscribe((deck) => this.dataLoaded(deck));
   } // hock method, fetch data here
+
+  onAddFavorite(id: string): void {
+    const deckId: Favorite = { id };
+    this.deckService.createFavorite(deckId).subscribe((favorite) => {
+      const successMessage =
+        'Der Katalog wurde erfolgreich zu deinen Favoriten hinzugefügt!';
+      this.snackBarService.open(successMessage);
+    });
+  }
 
   onGoBack(): void {
     this.location.back();
