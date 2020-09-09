@@ -39,6 +39,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,10 @@ import { environment } from '../environments/environment';
     MatCardModule,
     MatSnackBarModule,
     MatCheckboxModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    MatProgressSpinnerModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

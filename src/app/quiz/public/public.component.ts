@@ -20,7 +20,7 @@ export class PublicComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   get isDataLoaded(): boolean {
-    return this.decks.data !== undefined;
+    return this.decks.data.length >= 1;
   }
 
   get loggedIn() {

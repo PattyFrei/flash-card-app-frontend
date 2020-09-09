@@ -20,6 +20,7 @@ th {
 a {
   text-decoration: none;
 }
+
 mat-divider {
   margin: 20px 0;
 }
@@ -53,13 +54,6 @@ td.mat-cell {
   font-size: 14px;
 }
 
-// td.mat-cell:first-child,
-// td.mat-cell:last-child,
-// td.mat-cell:nth-child(2),
-// td.mat-cell:nth-child(3) {
-//   padding: 10px 15px;
-// }
-
 h3 {
   margin-top: 10px;
 }
@@ -72,4 +66,9 @@ h3 {
 
 .input-search {
   width: 100%;
+}
+
+.progress-spinner-container {
+  height: 150px;
+  margin: 25px 20px;
 }

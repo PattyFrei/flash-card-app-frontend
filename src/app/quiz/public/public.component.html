@@ -3,7 +3,11 @@
     <mat-tab label="Öffentliche Kataloge">
       <h3>Öffentliche Fragenkataloge</h3>
 
-      <form class="form">
+      <div *ngIf="!isDataLoaded" class="progress-spinner-container">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <form class="form" *ngIf="isDataLoaded">
         <mat-form-field class="input-search">
           <input
             matInput
