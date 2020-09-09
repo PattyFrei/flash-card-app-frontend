@@ -2,7 +2,6 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
-import { AuthService } from '../../../services/auth.service';
 import { Deck } from '../../quiz/../deck/deck';
 import { DeckService } from '../../../services/deck.service';
 
@@ -13,8 +12,8 @@ import { DeckService } from '../../../services/deck.service';
 })
 export class PublicComponent implements OnInit, AfterViewInit {
   columnsToDisplay = ['name', 'topic', 'subject', 'author', 'creationDate'];
-  isLoading = false;
   decks = new MatTableDataSource<Deck>();
+  isLoading = false;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -22,11 +21,7 @@ export class PublicComponent implements OnInit, AfterViewInit {
     return this.decks.data.length >= 1;
   }
 
-  get loggedIn() {
-    return this.auth.loggedIn;
-  }
-
-  constructor(private auth: AuthService, private deckService: DeckService) {}
+  constructor(private deckService: DeckService) {}
 
   ngOnInit() {
     this.isLoading = true;
