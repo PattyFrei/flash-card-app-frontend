@@ -4,45 +4,45 @@
   <table class="deck-details">
     <tbody>
       <tr>
-        <th>Titel</th>
+        <th scope="row">Titel</th>
         <td>{{ deck.name }}</td>
       </tr>
       <tr>
-        <th>Thema</th>
+        <th scope="row">Thema</th>
         <td>{{ deck.topic }}</td>
       </tr>
       <tr>
-        <th>Fachgebiet</th>
+        <th scope="row">Fachgebiet</th>
         <td>{{ deck.subject }}</td>
       </tr>
       <tr>
-        <th>Autor</th>
+        <th scope="row">Autor</th>
         <td>{{ deck.author }}</td>
       </tr>
       <tr>
-        <th>Kurs</th>
+        <th scope="row">Kurs</th>
         <td>{{ deck.course }}</td>
       </tr>
       <tr>
-        <th>Semster</th>
+        <th scope="row">Semster</th>
         <td>{{ deck.semester }}</td>
       </tr>
       <tr>
-        <th>Schwierigkeitsgrad</th>
+        <th scope="row">Schwierigkeitsgrad</th>
         <td>{{ deck.difficulty }}</td>
       </tr>
       <tr>
-        <th>Anzahl der Fragen</th>
+        <th scope="row">Anzahl der Fragen</th>
         <td>{{ deck.questions.length }}</td>
       </tr>
       <tr>
-        <th>Beschreibung</th>
+        <th scope="row">Beschreibung</th>
         <td>
           {{ deck.description }}
         </td>
       </tr>
       <tr>
-        <th>Erstellt am</th>
+        <th scope="row">Erstellt am</th>
         <td>
           {{ deck.creationDate | date: 'dd.MM.yyyy' }}
         </td>
@@ -67,6 +67,7 @@
       mat-icon-button
       class="icon"
       aria-label="icon-button with settings icon"
+      (click)="onAddFavorite(deck.id)"
     >
       <mat-icon>favorite_border</mat-icon>
     </button>

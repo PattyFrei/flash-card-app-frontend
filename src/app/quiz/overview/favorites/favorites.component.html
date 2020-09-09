@@ -1,0 +1,74 @@
+<h3>Meine Favoriten</h3>
+<p *ngIf="!isDataLoaded">Du hast noch keine Favoriten</p>
+
+<form class="form" *ngIf="isDataLoaded">
+  <mat-form-field class="input-search">
+    <input
+      matInput
+      type="text"
+      (keyup)="doFilter($event.target.value)"
+      placeholder="Suche nach Titel, Thema oder Fachgebiet.."
+    />
+  </mat-form-field>
+</form>
+
+<table
+  mat-table
+  *ngIf="isDataLoaded"
+  [dataSource]="favorites"
+  class="mat-elevation-z2"
+  matSort
+>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Titel</th>
+    <td mat-cell *matCellDef="let deck" routerLink="/deck/{{ deck.id }}">
+      {{ deck.name }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="topic">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Thema</th>
+    <td mat-cell *matCellDef="let deck" routerLink="/deck/{{ deck.id }}">
+      {{ deck.topic }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="subject">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Fachgebiet</th>
+    <td mat-cell *matCellDef="let deck" routerLink="/deck/{{ deck.id }}">
+      {{ deck.subject }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="author">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Autor</th>
+    <td mat-cell *matCellDef="let deck" routerLink="/deck/{{ deck.id }}">
+      {{ deck.owner.displayName }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="creationDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Erstellt</th>
+    <td mat-cell *matCellDef="let deck" routerLink="/deck/{{ deck.id }}">
+      {{ deck.creationDate | date: 'dd.MM.yy' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-icon>delete_forever</mat-icon>
+    </th>
+    <td mat-cell class="delete-cell" *matCellDef="let deck; let i = index">
+      <button
+        mat-icon-button
+        aria-label="del"
+        (click)="deleteFavorite(deck.id, i)"
+      >
+        <mat-icon>delete_forever</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+</table>

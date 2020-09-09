@@ -20,9 +20,6 @@ th {
 a {
   text-decoration: none;
 }
-mat-divider {
-  margin: 20px 0;
-}
 
 table.mat-table {
   width: 100%;
@@ -40,25 +37,30 @@ tr.mat-row {
 
 tr.mat-row:hover {
   background-color: #f5f5f5;
+}
+
+td.mat-cell:hover {
   cursor: pointer;
+}
+
+td.mat-cell.delete-cell {
+  text-align: center;
+}
+
+td.mat-cell.delete-cell:hover {
+  cursor: auto;
 }
 
 th.mat-header-cell {
   background-color: #3f51b5;
   color: #ffffff;
   font-size: 14px;
+  text-align: center;
 }
 
 td.mat-cell {
   font-size: 14px;
 }
-
-// td.mat-cell:first-child,
-// td.mat-cell:last-child,
-// td.mat-cell:nth-child(2),
-// td.mat-cell:nth-child(3) {
-//   padding: 10px 15px;
-// }
 
 h3 {
   margin-top: 10px;
