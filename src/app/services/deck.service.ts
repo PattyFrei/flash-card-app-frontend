@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
 
 import { Card } from './../quiz/card/card';
-import { Deck } from './../quiz/deck/deck';
+import { Deck, Favorite } from './../quiz/deck/deck';
 import { Difficulty } from './../quiz/deck/deck';
 import { DIFFICULTIES } from './../quiz/deck/difficulties';
 import { Subject } from './../quiz/card/card';
@@ -15,20 +15,6 @@ import { SUBJECTS } from './../quiz/card/subjects';
 })
 export class DeckService {
   constructor(private httpClient: HttpClient) {}
-
-  getImage(imageId: string): Observable<Blob> {
-    return this.httpClient
-      .get(`images/${imageId}`, {
-        responseType: 'blob',
-      })
-      .pipe(catchError(this.handleError));
-  }
-
-  uploadFile(formData: FormData): Observable<FormData> {
-    return this.httpClient
-      .post<FormData>(`images`, formData)
-      .pipe(catchError(this.handleError));
-  }
 
   createCard(card: Card): Observable<Card> {
     return this.httpClient
@@ -42,6 +28,12 @@ export class DeckService {
       .pipe(catchError(this.handleError));
   }
 
+  createFavorite(id: Favorite): Observable<Favorite> {
+    return this.httpClient
+      .post<Favorite>(`me/favorites`, id)
+      .pipe(catchError(this.handleError));
+  }
+
   deleteCard(id: string): Observable<Card> {
     return this.httpClient
       .delete<Card>(`cards/${id}`)
@@ -51,6 +43,12 @@ export class DeckService {
   deleteDeck(id: string): Observable<Deck> {
     return this.httpClient
       .delete<Deck>(`decks/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteFavorite(id: string): Observable<Deck> {
+    return this.httpClient
+      .delete<Deck>(`me/favorites/${id}`)
       .pipe(catchError(this.handleError));
   }
 
@@ -69,6 +67,14 @@ export class DeckService {
   getDecks(): Observable<Deck[]> {
     return this.httpClient
       .get<Deck[]>('decks')
+      .pipe(catchError(this.handleError));
+  }
+
+  getImage(imageId: string): Observable<Blob> {
+    return this.httpClient
+      .get(`images/${imageId}`, {
+        responseType: 'blob',
+      })
       .pipe(catchError(this.handleError));
   }
 
@@ -107,6 +113,12 @@ export class DeckService {
   updateDeck(id: string, deck: Deck): Observable<Deck> {
     return this.httpClient
       .patch<Deck>(`decks/${id}`, deck)
+      .pipe(catchError(this.handleError));
+  }
+
+  uploadFile(formData: FormData): Observable<FormData> {
+    return this.httpClient
+      .post<FormData>(`images`, formData)
       .pipe(catchError(this.handleError));
   }
 
