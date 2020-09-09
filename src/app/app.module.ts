@@ -40,6 +40,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { OverviewComponent } from './quiz/overview/overview.component';
+import { FavoritesComponent } from './quiz/overview/favorites/favorites.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CatalogueComponent,
     MyQuestionsComponent,
     MyCataloguesComponent,
+    OverviewComponent,
+    FavoritesComponent,
   ],
   imports: [
     BrowserModule,

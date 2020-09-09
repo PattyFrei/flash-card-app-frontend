@@ -1,0 +1,14 @@
+<div class="content-container">
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Öffentliche Kataloge">
+      <ng-template matTabContent>
+        <app-public></app-public>
+      </ng-template>
+    </mat-tab>
+    <mat-tab *ngIf="loggedIn" label="Meine Favoriten">
+      <ng-template matTabContent>
+        <app-favorites></app-favorites>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>
