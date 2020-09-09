@@ -6,10 +6,10 @@ import { CardComponent } from './quiz/card/card.component';
 import { CatalogueComponent } from './editor/catalogue/catalogue.component';
 import { DeckComponent } from './quiz/deck/deck.component';
 import { HomeComponent } from './home/home.component';
-import { PublicComponent } from './quiz/public/public.component';
-import { ProfileComponent } from './profile/profile.component';
 import { MyCataloguesComponent } from './editor/my-catalogues/my-catalogues.component';
 import { MyQuestionsComponent } from './editor/my-questions/my-questions.component';
+import { OverviewComponent } from './quiz/overview/overview.component';
+import { ProfileComponent } from './profile/profile.component';
 import { QuestionComponent } from './editor/question/question.component';
 
 const routes: Routes = [
@@ -32,7 +32,7 @@ const routes: Routes = [
     component: ProfileComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'public', component: PublicComponent },
+  { path: 'public', component: OverviewComponent },
   {
     path: 'my-catalogues',
     component: MyCataloguesComponent,
