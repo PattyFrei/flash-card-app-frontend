@@ -72,6 +72,12 @@ export class DeckService {
       .pipe(catchError(this.handleError));
   }
 
+  getMyFavorites(): Observable<Deck[]> {
+    return this.httpClient
+      .get<Deck[]>('me/favorites')
+      .pipe(catchError(this.handleError));
+  }
+
   getMyDecks(): Observable<Deck[]> {
     return this.httpClient
       .get<Deck[]>('me/decks')
