@@ -1,6 +1,17 @@
 <h3>Meine Favoriten</h3>
 <p *ngIf="!isDataLoaded">Du hast noch keine Favoriten</p>
 
+<form class="form" *ngIf="isDataLoaded">
+  <mat-form-field class="input-search">
+    <input
+      matInput
+      type="text"
+      (keyup)="doFilter($event.target.value)"
+      placeholder="Suche nach Titel, Thema oder Fachgebiet.."
+    />
+  </mat-form-field>
+</form>
+
 <table
   mat-table
   *ngIf="isDataLoaded"
