@@ -66,5 +66,9 @@ h3 {
 
 .progress-spinner-container {
   height: 150px;
-  margin: 25px 20px;
+  margin: 25px 0;
+}
+
+mat-spinner {
+  margin: 0 auto;
 }
