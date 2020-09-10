@@ -25,7 +25,7 @@ export class FavoritesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  get isDataLoaded(): boolean {
+  get hasFavorites(): boolean {
     return this.favorites.data.length >= 1;
   }
 
