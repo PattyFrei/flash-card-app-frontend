@@ -1,7 +1,7 @@
 <h3>Meine Favoriten</h3>
-<p *ngIf="!isDataLoaded">Du hast noch keine Favoriten</p>
+<p *ngIf="!hasFavorites">Du hast noch keine Favoriten.</p>
 
-<form class="form" *ngIf="isDataLoaded">
+<form class="form" *ngIf="hasFavorites">
   <mat-form-field class="input-search">
     <input
       matInput
@@ -12,13 +12,7 @@
   </mat-form-field>
 </form>
 
-<table
-  mat-table
-  *ngIf="isDataLoaded"
-  [dataSource]="favorites"
-  class="mat-elevation-z2"
-  matSort
->
+<table mat-table [dataSource]="favorites" class="mat-elevation-z2" matSort>
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Titel</th>
     <td mat-cell *matCellDef="let deck" routerLink="/deck/{{ deck.id }}">

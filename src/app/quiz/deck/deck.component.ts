@@ -2,6 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
+import { AuthService } from '../../services/auth.service';
 import { Card } from './../card/card';
 import { Deck, Favorite } from './deck';
 import { DeckService } from './../../services/deck.service';
@@ -21,7 +22,12 @@ export class DeckComponent implements OnInit {
     return this.deck !== undefined;
   }
 
+  get loggedIn() {
+    return this.auth.loggedIn;
+  }
+
   constructor(
+    private auth: AuthService,
     private deckService: DeckService,
     private route: ActivatedRoute, // extracts param from URL
     private location: Location,
