@@ -104,8 +104,7 @@ mat-progress-bar {
   background-color: #3f51b5 !important; // inner circle color change
 }
 
-::ng-deep.mat-radio-button.mat-accent.mat-radio-checked
-  .mat-radio-outer-circle {
+::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
   border-color: #3f51b5 !important; // outer ring color
 }
 
@@ -132,6 +131,10 @@ mat-progress-bar {
   font-size: 16px;
 }
 
+.result-text {
+  margin: auto 0;
+}
+
 @media (max-width: 599px) {
   .question-image {
     max-width: 100%;
@@ -140,4 +143,13 @@ mat-progress-bar {
   // .choice-group {
   //   max-width: 300px;
   // }
+}
+
+.result-container {
+  display: flex;
+}
+
+.badge-image {
+  height: 120px;
+  margin: 20px;
 }
