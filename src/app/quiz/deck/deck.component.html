@@ -16,6 +16,12 @@
         <td>{{ deck.subject }}</td>
       </tr>
       <tr>
+        <th scope="row">Beschreibung</th>
+        <td>
+          {{ deck.description }}
+        </td>
+      </tr>
+      <tr>
         <th scope="row">Autor</th>
         <td>{{ deck.author }}</td>
       </tr>
@@ -24,7 +30,7 @@
         <td>{{ deck.course }}</td>
       </tr>
       <tr>
-        <th scope="row">Semster</th>
+        <th scope="row">Semester</th>
         <td>{{ deck.semester }}</td>
       </tr>
       <tr>
@@ -34,12 +40,6 @@
       <tr>
         <th scope="row">Anzahl der Fragen</th>
         <td>{{ deck.questions.length }}</td>
-      </tr>
-      <tr>
-        <th scope="row">Beschreibung</th>
-        <td>
-          {{ deck.description }}
-        </td>
       </tr>
       <tr>
         <th scope="row">Erstellt am</th>
@@ -73,4 +73,9 @@
       <mat-icon>favorite_border</mat-icon>
     </button>
   </p>
+</div>
+
+<div *ngIf="!isDataLoaded" class="content-container">
+  <mat-spinner></mat-spinner>
+  <p class="progress-spinner-text">Quiz wird geladen..</p>
 </div>
