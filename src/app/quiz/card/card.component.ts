@@ -25,6 +25,8 @@ export class CardComponent implements OnInit {
   isDisabled = false;
   progressBarValue: number;
   questionTypeText: string;
+  resultBadge: string;
+  resultMessage: string;
   selectedAnswer: Answer;
   selectedAnswers: Answer[] = [];
   toggleCheck = false;
@@ -39,10 +41,7 @@ export class CardComponent implements OnInit {
     return this.toggleResults === true;
   }
 
-  constructor(
-    private deckService: DeckService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private deckService: DeckService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -55,8 +54,7 @@ export class CardComponent implements OnInit {
       this.progressBarValue = this.currentCardIndex * 10;
     } else if (this.deck.questions.length >= 2) {
       const progressBarRangeInDecimal = this.deck.questions.length / 10;
-      this.progressBarValue =
-        (this.currentCardIndex / progressBarRangeInDecimal) * 10;
+      this.progressBarValue = (this.currentCardIndex / progressBarRangeInDecimal) * 10;
     } else {
       this.progressBarValue = 100;
     }
@@ -116,9 +114,7 @@ export class CardComponent implements OnInit {
       if (answerIndex >= 0) {
         this.selectedAnswers.splice(answerIndex, 1);
       }
-      this.selectedAnswers.length >= 1
-        ? (this.toggleCheck = true)
-        : (this.toggleCheck = false);
+      this.selectedAnswers.length >= 1 ? (this.toggleCheck = true) : (this.toggleCheck = false);
     }
   }
 
@@ -146,13 +142,13 @@ export class CardComponent implements OnInit {
       this.isDisabled = false;
     } else {
       this.setCorrectAnswersInPercent();
+      this.setResult();
       this.toggleResults = true;
     }
   }
 
   setCorrectAnswersInPercent(): void {
-    const rawPercent =
-      (this.correctAnswerScore * 100) / this.deck.questions.length;
+    const rawPercent = (this.correctAnswerScore * 100) / this.deck.questions.length;
     this.correctAnswersInPercent = Math.round(rawPercent);
   }
 
@@ -211,6 +207,29 @@ export class CardComponent implements OnInit {
         ' der ausgewählte Antwort(en) ist/sind richtig. Es gibt insgesamt ' +
         totalCorrectAnswers +
         ' richtige Antworten.');
+    }
+  }
+
+  setResult(): void {
+    if (this.correctAnswersInPercent === 100) {
+      this.resultMessage = 'Herzlichen Glückwunsch, du hast alle Fragen richtig beantwortet!';
+      this.resultBadge = '087-winner.svg';
+    } else if (this.correctAnswersInPercent <= 99 && this.correctAnswersInPercent >= 90) {
+      this.resultMessage = 'Herzlichen Glückwunsch, du hast ein sehr gutes Ergebnis erreicht!';
+      this.resultBadge = '059-gold_medal.svg';
+    } else if (this.correctAnswersInPercent <= 89 && this.correctAnswersInPercent >= 75) {
+      this.resultMessage = 'Herzlichen Glückwunsch, du hast ein gutes Ergebnis erreicht!';
+      this.resultBadge = '054-silver_medal.svg';
+    } else if (this.correctAnswersInPercent <= 74 && this.correctAnswersInPercent >= 60) {
+      this.resultMessage = 'Du hast ein durschnittliches Ergebnis erreicht.';
+      this.resultBadge = '055-bronze_medal.svg';
+    } else if (this.correctAnswersInPercent <= 59 && this.correctAnswersInPercent >= 50) {
+      this.resultMessage = 'Du kannst das Quiz noch einmal wiederholen, wenn du möchtest.';
+      this.resultBadge = '065-emblem.svg';
+    } else {
+      this.resultMessage =
+        'Du hast weniger als die Hälfte richtig beantwortet. Du Kannst das Quiz noch einmal wiederholen, wenn du möchtest.';
+      this.resultBadge = '057-emblem.svg';
     }
   }
 
