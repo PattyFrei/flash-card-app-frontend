@@ -1,8 +1,8 @@
 {
   "tabWidth": 2,
   "useTabs": false,
-  "proseWrap": "always",
-  "printWidth": 80,
+  "proseWrap": "never",
+  "printWidth": 100,
   "singleQuote": true,
   "trailingComma": "es5"
 }
