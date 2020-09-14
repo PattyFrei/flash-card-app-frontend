@@ -212,7 +212,7 @@ export class CardComponent implements OnInit {
 
   setResult(): void {
     if (this.correctAnswersInPercent === 100) {
-      this.resultMessage = 'Herzlichen Glückwunsch, du hast alle Fragen richtig beantwortet!';
+      this.resultMessage = 'Herzlichen Glückwunsch, du hast das Quiz gemeistert!';
       this.resultBadge = '087-winner.svg';
     } else if (this.correctAnswersInPercent <= 99 && this.correctAnswersInPercent >= 90) {
       this.resultMessage = 'Herzlichen Glückwunsch, du hast ein sehr gutes Ergebnis erreicht!';
@@ -227,8 +227,7 @@ export class CardComponent implements OnInit {
       this.resultMessage = 'Du kannst das Quiz noch einmal wiederholen, wenn du möchtest.';
       this.resultBadge = '065-emblem.svg';
     } else {
-      this.resultMessage =
-        'Du hast weniger als die Hälfte richtig beantwortet. Du Kannst das Quiz noch einmal wiederholen, wenn du möchtest.';
+      this.resultMessage = 'Du kannst das Quiz noch einmal wiederholen, wenn du möchtest.';
       this.resultBadge = '057-emblem.svg';
     }
   }
