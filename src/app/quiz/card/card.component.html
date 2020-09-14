@@ -85,8 +85,8 @@
     <img class="badge-image" src="../../../assets/svg/badges/{{ resultBadge }}" alt="Badge" />
     <p class="result-text">
       {{ resultMessage }} <br />
-      Du hast {{ correctAnswerScore }} von {{ deck.questions.length }} richtig beantwortet. Damit
-      hast du {{ correctAnswersInPercent }}% der Fragen richtig beantwortet.
+      Du hast {{ correctAnswerScore }} von {{ deck.questions.length }} Fragen korrekt beantwortet.
+      Damit hast du {{ correctAnswersInPercent }}% des Fragenkatalogs richtig beantwortet.
     </p>
   </div>
   <button mat-flat-button color="primary" routerLink="/deck/{{ deck.id }}">
