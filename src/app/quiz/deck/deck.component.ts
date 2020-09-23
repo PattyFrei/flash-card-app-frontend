@@ -15,6 +15,8 @@ import { SnackBarService } from '../../services/snack-bar.service';
 })
 export class DeckComponent implements OnInit {
   selectedCard: Card;
+  favorites: Deck[];
+  isFavorite = false;
   isLoading = false;
   deck: Deck;
 
@@ -43,12 +45,36 @@ export class DeckComponent implements OnInit {
     this.deckService.getDeck(id).subscribe((deck) => this.dataLoaded(deck));
   } // hock method, fetch data here
 
+  getFavorite(deckId: string): void {
+    // this.deckService.getMyFavorite(deckId).subscribe((favorite) => {
+    //   this.isFavorite = true;
+    // });
+    this.deckService.getMyFavorites().subscribe((favorites) => {
+      this.favorites = favorites;
+      // refactor
+      this.favorites.forEach((favorite) => {
+        if (favorite.id === deckId) {
+          this.isFavorite = true;
+        }
+      });
+    });
+  }
+
   onAddFavorite(id: string): void {
     const deckId: Favorite = { id };
     this.deckService.createFavorite(deckId).subscribe((favorite) => {
-      const successMessage =
-        'Der Katalog wurde erfolgreich zu deinen Favoriten hinzugefügt!';
+      const successMessage = 'Der Katalog wurde zu deinen Favoriten hinzugefügt.';
       this.snackBarService.open(successMessage);
+      this.isFavorite = true;
+    });
+  }
+
+  onRemoveFavorite(id: string): void {
+    const deckId = id;
+    this.deckService.deleteFavorite(deckId).subscribe((favorite) => {
+      const successMessage = 'Der Katalog wurde aus deinen Favoriten entfernt.';
+      this.snackBarService.open(successMessage);
+      this.isFavorite = false;
     });
   }
 
@@ -59,5 +85,6 @@ export class DeckComponent implements OnInit {
   private dataLoaded(deck: Deck): void {
     this.isLoading = false;
     this.deck = deck;
+    this.getFavorite(deck.id);
   }
 }

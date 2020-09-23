@@ -23,7 +23,6 @@ export class MyCataloguesComponent implements OnInit, AfterViewInit {
   ];
   decks = new MatTableDataSource<Deck>();
   isLoading = false;
-  selectedId: string;
 
   @ViewChild(MatSort) sort: MatSort;
 
