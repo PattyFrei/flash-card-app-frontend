@@ -64,13 +64,22 @@
     </button>
     <span class="spacer"></span>
     <button
-      mat-icon-button
-      class="icon"
+      mat-button
+      color="accent"
       aria-label="icon-button with settings icon"
-      *ngIf="loggedIn"
+      *ngIf="loggedIn && !isFavorite"
       (click)="onAddFavorite(deck.id)"
     >
-      <mat-icon>favorite_border</mat-icon>
+      <mat-icon>favorite_border</mat-icon> Als Favorit markieren
+    </button>
+    <button
+      mat-button
+      color="accent"
+      aria-label="icon-button with settings icon"
+      *ngIf="loggedIn && isFavorite"
+      (click)="onRemoveFavorite(deck.id)"
+    >
+      <mat-icon>favorite</mat-icon> Dein Favorit
     </button>
   </p>
 </div>
