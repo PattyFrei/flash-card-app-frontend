@@ -37,7 +37,6 @@ export class OverviewComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.getAllDecks();
-    this.getFavorites();
   }
 
   getAllDecks(): void {
@@ -55,9 +54,11 @@ export class OverviewComponent implements OnInit {
   }
 
   getFavorites(): void {
-    this.deckService.getMyFavorites().subscribe((favorites) => {
-      this.favorites = favorites;
-    });
+    if (this.loggedIn) {
+      this.deckService.getMyFavorites().subscribe((favorites) => {
+        this.favorites = favorites;
+      });
+    }
   }
 
   onAddFavorite(id: string): void {

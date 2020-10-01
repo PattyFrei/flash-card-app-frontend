@@ -31,7 +31,7 @@ export class DeckComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private deckService: DeckService,
-    private route: ActivatedRoute, // extracts param from URL
+    private route: ActivatedRoute,
     private location: Location,
     private snackBarService: SnackBarService
   ) {
@@ -49,15 +49,17 @@ export class DeckComponent implements OnInit {
     // this.deckService.getMyFavorite(deckId).subscribe((favorite) => {
     //   this.isFavorite = true;
     // });
-    this.deckService.getMyFavorites().subscribe((favorites) => {
-      this.favorites = favorites;
-      // refactor
-      this.favorites.forEach((favorite) => {
-        if (favorite.id === deckId) {
-          this.isFavorite = true;
-        }
+    if (this.loggedIn) {
+      this.deckService.getMyFavorites().subscribe((favorites) => {
+        this.favorites = favorites;
+        // refactor
+        this.favorites.forEach((favorite) => {
+          if (favorite.id === deckId) {
+            this.isFavorite = true;
+          }
+        });
       });
-    });
+    }
   }
 
   onAddFavorite(id: string): void {
