@@ -40,6 +40,15 @@ mat-divider {
   margin: auto 8px;
 }
 
-.fav {
-  cursor: default !important;
+// .fav {
+//   cursor: default !important;
+// }
+
+.progress-spinner-container {
+  height: 50px;
+  margin: 25px 0;
+}
+
+mat-spinner {
+  margin: 20px auto;
 }
