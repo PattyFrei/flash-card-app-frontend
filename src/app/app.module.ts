@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PublicComponent } from './quiz/public/public.component';
+import { PublicComponent } from './quiz/overview/public/public.component';
 import { CardComponent } from './quiz/card/card.component';
 import { DeckComponent } from './quiz/deck/deck.component';
 import { httpInterceptorProviders } from './http-interceptors/index';
@@ -39,6 +39,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { OverviewComponent } from './quiz/overview/overview.component';
+import { FavoritesComponent } from './quiz/overview/favorites/favorites.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,8 @@ import { environment } from '../environments/environment';
     CatalogueComponent,
     MyQuestionsComponent,
     MyCataloguesComponent,
+    OverviewComponent,
+    FavoritesComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,7 +85,10 @@ import { environment } from '../environments/environment';
     MatCardModule,
     MatSnackBarModule,
     MatCheckboxModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    MatProgressSpinnerModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

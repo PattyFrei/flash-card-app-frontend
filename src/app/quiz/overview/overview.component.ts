@@ -1,27 +1,27 @@
-import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 
 import { AuthService } from '../../services/auth.service';
-import { Card } from './../card/card';
-import { Deck, Favorite } from './deck';
-import { DeckService } from './../../services/deck.service';
+import { Deck, Favorite } from '../quiz/../deck/deck';
+import { DeckService } from '../../services/deck.service';
 import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
-  selector: 'app-deck',
-  templateUrl: './deck.component.html',
-  styleUrls: ['./deck.component.scss'],
+  selector: 'app-overview',
+  templateUrl: './overview.component.html',
+  styleUrls: ['./overview.component.scss'],
 })
-export class DeckComponent implements OnInit {
-  selectedCard: Card;
+export class OverviewComponent implements OnInit {
+  decks: Deck[];
   favorites: Deck[];
   isFavorite = false;
   isLoading = false;
-  deck: Deck;
 
   get isDataLoaded(): boolean {
-    return this.deck !== undefined;
+    return this.decks !== undefined;
+  }
+
+  get areFavsLoaded(): boolean {
+    return this.favorites !== undefined;
   }
 
   get loggedIn() {
@@ -31,33 +31,32 @@ export class DeckComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private deckService: DeckService,
-    private route: ActivatedRoute,
-    private location: Location,
     private snackBarService: SnackBarService
-  ) {
-    // init local variables with values
-    // wire parameters to props
-  }
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    const id = this.route.snapshot.paramMap.get('id');
-    this.deckService.getDeck(id).subscribe((deck) => this.dataLoaded(deck));
-  } // hock method, fetch data here
+    this.getAllDecks();
+  }
 
-  getFavorite(deckId: string): void {
-    // this.deckService.getMyFavorite(deckId).subscribe((favorite) => {
-    //   this.isFavorite = true;
-    // });
+  getAllDecks(): void {
+    this.deckService.getDecks().subscribe((decks) => this.dataLoaded(decks));
+  }
+
+  findFavorite(deckId: string): boolean {
+    let isFavorite = false;
+    this.favorites.forEach((favorite) => {
+      if (favorite.id === deckId) {
+        isFavorite = true;
+      }
+    });
+    return isFavorite;
+  }
+
+  getFavorites(): void {
     if (this.loggedIn) {
       this.deckService.getMyFavorites().subscribe((favorites) => {
         this.favorites = favorites;
-        // refactor
-        this.favorites.forEach((favorite) => {
-          if (favorite.id === deckId) {
-            this.isFavorite = true;
-          }
-        });
       });
     }
   }
@@ -80,13 +79,9 @@ export class DeckComponent implements OnInit {
     });
   }
 
-  onGoBack(): void {
-    this.location.back();
-  }
-
-  private dataLoaded(deck: Deck): void {
+  private dataLoaded(decks: Deck[]): void {
     this.isLoading = false;
-    this.deck = deck;
-    this.getFavorite(deck.id);
+    this.decks = decks.slice(0, 4);
+    this.getFavorites();
   }
 }

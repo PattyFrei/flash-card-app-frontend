@@ -233,7 +233,9 @@ export class QuestionComponent implements OnInit {
 
   removeAnswer(index: number): void {
     this.answers.removeAt(index);
-    this.setDefaultCorrectAnswerForSingleChoice();
+    if (this.selectedQuestionType === 'single-choice') {
+      this.setDefaultCorrectAnswerForSingleChoice();
+    }
   }
 
   resetForm(): void {

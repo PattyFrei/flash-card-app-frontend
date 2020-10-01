@@ -4,45 +4,45 @@
   <table class="deck-details">
     <tbody>
       <tr>
-        <th>Titel</th>
+        <th scope="row">Titel</th>
         <td>{{ deck.name }}</td>
       </tr>
       <tr>
-        <th>Thema</th>
+        <th scope="row">Thema</th>
         <td>{{ deck.topic }}</td>
       </tr>
       <tr>
-        <th>Fachgebiet</th>
+        <th scope="row">Fachgebiet</th>
         <td>{{ deck.subject }}</td>
       </tr>
       <tr>
-        <th>Autor</th>
-        <td>{{ deck.author }}</td>
-      </tr>
-      <tr>
-        <th>Kurs</th>
-        <td>{{ deck.course }}</td>
-      </tr>
-      <tr>
-        <th>Semster</th>
-        <td>{{ deck.semester }}</td>
-      </tr>
-      <tr>
-        <th>Schwierigkeitsgrad</th>
-        <td>{{ deck.difficulty }}</td>
-      </tr>
-      <tr>
-        <th>Anzahl der Fragen</th>
-        <td>{{ deck.questions.length }}</td>
-      </tr>
-      <tr>
-        <th>Beschreibung</th>
+        <th scope="row">Beschreibung</th>
         <td>
           {{ deck.description }}
         </td>
       </tr>
       <tr>
-        <th>Erstellt am</th>
+        <th scope="row">Autor</th>
+        <td>{{ deck.author }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Kurs</th>
+        <td>{{ deck.course }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Semester</th>
+        <td>{{ deck.semester }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Schwierigkeitsgrad</th>
+        <td>{{ deck.difficulty }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Anzahl der Fragen</th>
+        <td>{{ deck.questions.length }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Erstellt am</th>
         <td>
           {{ deck.creationDate | date: 'dd.MM.yyyy' }}
         </td>
@@ -64,11 +64,27 @@
     </button>
     <span class="spacer"></span>
     <button
-      mat-icon-button
-      class="icon"
+      mat-button
+      color="accent"
       aria-label="icon-button with settings icon"
+      *ngIf="loggedIn && !isFavorite"
+      (click)="onAddFavorite(deck.id)"
     >
-      <mat-icon>favorite_border</mat-icon>
+      <mat-icon>favorite_border</mat-icon> Als Favorit markieren
+    </button>
+    <button
+      mat-button
+      color="accent"
+      aria-label="icon-button with settings icon"
+      *ngIf="loggedIn && isFavorite"
+      (click)="onRemoveFavorite(deck.id)"
+    >
+      <mat-icon>favorite</mat-icon> Dein Favorit
     </button>
   </p>
+</div>
+
+<div *ngIf="!isDataLoaded" class="content-container">
+  <mat-spinner></mat-spinner>
+  <p class="progress-spinner-text">Quiz wird geladen..</p>
 </div>

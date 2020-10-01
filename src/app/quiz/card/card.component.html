@@ -1,9 +1,6 @@
 <div class="content-container" *ngIf="isDataLoaded">
   <h2 class="deck-name">{{ deck.name }}</h2>
-  <mat-progress-bar
-    mode="determinate"
-    value="{{ progressBarValue }}"
-  ></mat-progress-bar>
+  <mat-progress-bar mode="determinate" value="{{ progressBarValue }}"></mat-progress-bar>
 
   <h2>Frage {{ currentCardIndex }} von {{ deck.questions.length }}</h2>
   <p class="question-text">{{ currentCard.questionText }}</p>
@@ -36,10 +33,7 @@
       </mat-radio-group>
     </div>
 
-    <div
-      class="checkbox-group"
-      *ngIf="currentCard.questionType === 'multiple-choice'"
-    >
+    <div class="checkbox-group" *ngIf="currentCard.questionType === 'multiple-choice'">
       <mat-checkbox
         class="checkbox-button"
         *ngFor="let answer of currentCard.answers"
@@ -53,10 +47,7 @@
     </div>
   </div>
 
-  <p
-    class="explanation-box"
-    *ngIf="currentCard.questionType === 'multiple-choice'"
-  >
+  <p class="explanation-box" *ngIf="currentCard.questionType === 'multiple-choice'">
     <span
       *ngIf="explanationText"
       class="answer-correct"
@@ -66,10 +57,7 @@
     </span>
   </p>
 
-  <p
-    class="explanation-box"
-    *ngIf="currentCard.questionType === 'single-choice'"
-  >
+  <p class="explanation-box" *ngIf="currentCard.questionType === 'single-choice'">
     <span
       *ngIf="explanationText"
       class="answer-correct"
@@ -81,20 +69,10 @@
     </span>
   </p>
 
-  <button
-    mat-flat-button
-    color="primary"
-    (click)="onCheck()"
-    [disabled]="!toggleCheck"
-  >
+  <button mat-flat-button color="primary" (click)="onCheck()" [disabled]="!toggleCheck">
     Überprüfen
   </button>
-  <button
-    mat-flat-button
-    color="primary"
-    (click)="onNext()"
-    [disabled]="!toggleNext"
-  >
+  <button mat-flat-button color="primary" (click)="onNext()" [disabled]="!toggleNext">
     Nächste Frage
   </button>
 </div>
@@ -103,14 +81,14 @@
   <h2 class="deck-name">{{ deck.name }}</h2>
   <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
   <h2>Der Fragenkatalog ist abgeschlossen.</h2>
-  <p class="result-text">
-    Du hast {{ correctAnswerScore }} von {{ deck.questions.length }} richtig
-    beantwortet.
-  </p>
-  <p class="result-text">
-    Damit hast du {{ correctAnswersInPercent }}% der Fragen richtig beantwortet.
-    <br />
-  </p>
+  <div class="result-container">
+    <img class="badge-image" src="../../../assets/svg/badges/{{ resultBadge }}" alt="Badge" />
+    <p class="result-text">
+      {{ resultMessage }} <br />
+      Du hast {{ correctAnswerScore }} von {{ deck.questions.length }} Fragen korrekt beantwortet.
+      Damit hast du {{ correctAnswersInPercent }}% des Fragenkatalogs richtig beantwortet.
+    </p>
+  </div>
   <button mat-flat-button color="primary" routerLink="/deck/{{ deck.id }}">
     Quiz erneut starten
   </button>
@@ -118,3 +96,5 @@
     Zurück zur Übersicht
   </button>
 </div>
+
+<!-- Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a>. -->

@@ -46,7 +46,12 @@
         accept=".jpg, .jpeg, .png, .gif, .bmp"
       />
     </div>
-    <img *ngIf="form.value.image" [src]="existingImage" height="100px" />
+    <img
+      *ngIf="form.value.image"
+      [src]="existingImage"
+      height="100px"
+      alt="Ausgewähltes Bild"
+    />
     <div class="upload-file-text" *ngIf="selectedFileName">
       {{ selectedFileName }} ausgewählt.
     </div>
