@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1601548303207,
+  "timestamp": 1603103717124,
   "index": "/flashcard-app-frontend/index.html",
   "assetGroups": [
     {
@@ -13,8 +13,8 @@
       "urls": [
         "/flashcard-app-frontend/favicon.ico",
         "/flashcard-app-frontend/index.html",
-        "/flashcard-app-frontend/main-es2015.1a109bfb68c7ab8fbb29.js",
-        "/flashcard-app-frontend/main-es5.1a109bfb68c7ab8fbb29.js",
+        "/flashcard-app-frontend/main-es2015.476026a72171bf1846e6.js",
+        "/flashcard-app-frontend/main-es5.476026a72171bf1846e6.js",
         "/flashcard-app-frontend/manifest.webmanifest",
         "/flashcard-app-frontend/polyfills-es2015.95bb65e853d2781ac3bd.js",
         "/flashcard-app-frontend/polyfills-es5.341d48ffc88eaeae911d.js",
@@ -94,9 +94,9 @@
     "/flashcard-app-frontend/assets/svg/placeholders/undraw_profile_pic.svg": "fc90482d15918b923ed0c764c9e3708d63d4f4c6",
     "/flashcard-app-frontend/favicon.ico": "c6bafe55812a1939468b30de274f397f2231401e",
     "/flashcard-app-frontend/fca_logo.4802589d065ab149f859.png": "ed0e9b8509444f9886272c6a87ff808a59f7d351",
-    "/flashcard-app-frontend/index.html": "68047cd6289cbd9b2646d78959907ff593b6aa0a",
-    "/flashcard-app-frontend/main-es2015.1a109bfb68c7ab8fbb29.js": "d3f9d05239ac31839441a3250da90ca94b6d5635",
-    "/flashcard-app-frontend/main-es5.1a109bfb68c7ab8fbb29.js": "b4b072bd41877d4a51e21daf20bd72bc263c842b",
+    "/flashcard-app-frontend/index.html": "15707a793e0d488a7a36fda6defcdbbbb2abde59",
+    "/flashcard-app-frontend/main-es2015.476026a72171bf1846e6.js": "8fd56ab132c9a4fbfe0319e584842c7ff7962d2e",
+    "/flashcard-app-frontend/main-es5.476026a72171bf1846e6.js": "bb9230057321eaf60acf0dca0b6ec1385eb84932",
     "/flashcard-app-frontend/manifest.webmanifest": "793004dd13c2e2ba032c44fabeeab2466ba75d9e",
     "/flashcard-app-frontend/polyfills-es2015.95bb65e853d2781ac3bd.js": "72ad4ccc0a3916ae4598199447cdeadd6d380570",
     "/flashcard-app-frontend/polyfills-es5.341d48ffc88eaeae911d.js": "ff14d90e08622190714660721edab5f43578829a",
