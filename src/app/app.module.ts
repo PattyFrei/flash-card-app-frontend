@@ -42,6 +42,7 @@ import { environment } from '../environments/environment';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OverviewComponent } from './quiz/overview/overview.component';
 import { FavoritesComponent } from './quiz/overview/favorites/favorites.component';
+import { EditorsPickComponent } from './quiz/overview/editors-pick/editors-pick.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { FavoritesComponent } from './quiz/overview/favorites/favorites.componen
     MyCataloguesComponent,
     OverviewComponent,
     FavoritesComponent,
+    EditorsPickComponent,
   ],
   imports: [
     BrowserModule,
