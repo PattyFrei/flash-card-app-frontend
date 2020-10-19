@@ -1,0 +1,58 @@
+.card-header-image {
+  background-image: url('../../../../assets/fca_logo.png');
+  background-size: cover;
+}
+
+mat-card {
+  display: inline-block;
+  margin: 5px;
+}
+
+.mat-card-header .mat-card-title {
+  font-size: 16px;
+}
+
+.mat-card-avatar {
+  height: 80px;
+  width: 80px;
+}
+
+.mat-card-subtitle {
+  margin-bottom: 8px;
+}
+
+.card-container {
+  margin-bottom: 15px;
+}
+
+.fav-title {
+  margin-top: 10px;
+}
+
+mat-divider {
+  margin: 30px 0 20px;
+}
+
+.favorite-deck {
+  display: inline;
+  color: #ff4081;
+  padding: 0 16px;
+  margin: auto 8px;
+}
+
+// .fav {
+//   cursor: default !important;
+// }
+
+.progress-spinner-container {
+  height: 130px;
+  margin: 25px 0;
+}
+
+mat-spinner {
+  margin: 20px auto;
+}
+
+.progress-spinner-text {
+  text-align: center;
+}
