@@ -1,5 +1,5 @@
 .card-header-image {
-  background-image: url('../../../assets/fca_logo.png');
+  background-image: url('../../../../assets/fca_logo.png');
   background-size: cover;
 }
 
@@ -45,11 +45,14 @@ mat-divider {
 // }
 
 .progress-spinner-container {
-  height: 100px;
+  height: 130px;
   margin: 25px 0;
 }
 
 mat-spinner {
   margin: 20px auto;
-  height: 50px;
+}
+
+.progress-spinner-text {
+  text-align: center;
 }
