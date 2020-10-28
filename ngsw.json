@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1603103717124,
+  "timestamp": 1603911812559,
   "index": "/flashcard-app-frontend/index.html",
   "assetGroups": [
     {
@@ -13,13 +13,13 @@
       "urls": [
         "/flashcard-app-frontend/favicon.ico",
         "/flashcard-app-frontend/index.html",
-        "/flashcard-app-frontend/main-es2015.476026a72171bf1846e6.js",
-        "/flashcard-app-frontend/main-es5.476026a72171bf1846e6.js",
+        "/flashcard-app-frontend/main-es2015.7e493f32a18aa66c0364.js",
+        "/flashcard-app-frontend/main-es5.7e493f32a18aa66c0364.js",
         "/flashcard-app-frontend/manifest.webmanifest",
-        "/flashcard-app-frontend/polyfills-es2015.95bb65e853d2781ac3bd.js",
-        "/flashcard-app-frontend/polyfills-es5.341d48ffc88eaeae911d.js",
-        "/flashcard-app-frontend/runtime-es2015.409e6590615fb48d139f.js",
-        "/flashcard-app-frontend/runtime-es5.409e6590615fb48d139f.js",
+        "/flashcard-app-frontend/polyfills-es2015.6022d6f28e0500e60d30.js",
+        "/flashcard-app-frontend/polyfills-es5.6e1055b712d0b250b19e.js",
+        "/flashcard-app-frontend/runtime-es2015.66c79b9d36e7169e27b0.js",
+        "/flashcard-app-frontend/runtime-es5.66c79b9d36e7169e27b0.js",
         "/flashcard-app-frontend/styles.9b7a87494af55baeaa38.css"
       ],
       "patterns": []
@@ -94,14 +94,14 @@
     "/flashcard-app-frontend/assets/svg/placeholders/undraw_profile_pic.svg": "fc90482d15918b923ed0c764c9e3708d63d4f4c6",
     "/flashcard-app-frontend/favicon.ico": "c6bafe55812a1939468b30de274f397f2231401e",
     "/flashcard-app-frontend/fca_logo.4802589d065ab149f859.png": "ed0e9b8509444f9886272c6a87ff808a59f7d351",
-    "/flashcard-app-frontend/index.html": "15707a793e0d488a7a36fda6defcdbbbb2abde59",
-    "/flashcard-app-frontend/main-es2015.476026a72171bf1846e6.js": "8fd56ab132c9a4fbfe0319e584842c7ff7962d2e",
-    "/flashcard-app-frontend/main-es5.476026a72171bf1846e6.js": "bb9230057321eaf60acf0dca0b6ec1385eb84932",
+    "/flashcard-app-frontend/index.html": "64c84e245f87f4bde1b2964469b15cf1d6f539b4",
+    "/flashcard-app-frontend/main-es2015.7e493f32a18aa66c0364.js": "9bcb0e887870a0df2944d78d17fca641b20dd278",
+    "/flashcard-app-frontend/main-es5.7e493f32a18aa66c0364.js": "10f5f0d7fe94255b710bf4dd3e61d0c6fbef5650",
     "/flashcard-app-frontend/manifest.webmanifest": "793004dd13c2e2ba032c44fabeeab2466ba75d9e",
-    "/flashcard-app-frontend/polyfills-es2015.95bb65e853d2781ac3bd.js": "72ad4ccc0a3916ae4598199447cdeadd6d380570",
-    "/flashcard-app-frontend/polyfills-es5.341d48ffc88eaeae911d.js": "ff14d90e08622190714660721edab5f43578829a",
-    "/flashcard-app-frontend/runtime-es2015.409e6590615fb48d139f.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
-    "/flashcard-app-frontend/runtime-es5.409e6590615fb48d139f.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/flashcard-app-frontend/polyfills-es2015.6022d6f28e0500e60d30.js": "cad3129c71535baaab25ac06d8429734959b0b3f",
+    "/flashcard-app-frontend/polyfills-es5.6e1055b712d0b250b19e.js": "ddab36708d3bfe0102402cd9e170eb47c267b9f8",
+    "/flashcard-app-frontend/runtime-es2015.66c79b9d36e7169e27b0.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/flashcard-app-frontend/runtime-es5.66c79b9d36e7169e27b0.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
     "/flashcard-app-frontend/styles.9b7a87494af55baeaa38.css": "3eebe832e01d3ede6314e6996d67ef348d4cdb2f"
   },
   "navigationUrls": [
